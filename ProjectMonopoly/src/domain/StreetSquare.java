@@ -43,6 +43,9 @@ public class StreetSquare extends PropertySquare implements Serializable{
 	}
 
 	public int build(){
+		// REQUIRES : An unowned Square,the player to have the required Balance. 
+		// MODIFIES : IS THIS JUST THE INPUT?
+		// EFFECTS : Builds a house if there isn't anything,a hotel if there are 5 houses,a skyscraper if there is a hotel on the square.
 		if(nSkyscrapers == 1){
 			return -1;
 		}else if(nHotels == 1){

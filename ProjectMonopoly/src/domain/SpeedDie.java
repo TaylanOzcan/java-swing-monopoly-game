@@ -12,7 +12,8 @@ public class SpeedDie implements Die {
 
 	@Override
 	public int getValue() {
-		//returns an integer in range [-2,3] --- (1, 2, 3 are normal values and -2, -1, 0 are specials such as mr. monopoly and bus)
+		//REQUIRES: The Die.
+		//EFFECTS: returns an integer in range [-2,3] --- (1, 2, 3 are normal values and -2, -1, 0 are specials such as mr. monopoly and bus)
 		faceValue = rnd.nextInt(6) - 2;
 		return faceValue;
 	}

@@ -13,6 +13,9 @@ public class MoveHandler implements Serializable{
 	}
 
 	public void movePlayer(Player p) {
+		// REQUIRES : The player to have been created,the player mustn't be in jail.
+		// MODIFIES : p,fvt,newLoc,newSquare
+		// EFFECTS : Changes the players location.
 		int fvt = Cup.getTotalValue(); //gets total face value from 2 reg and 1 speed die
 		int newLoc = p.move(fvt); //gets the new location of player
 		if(newLoc < fvt){
