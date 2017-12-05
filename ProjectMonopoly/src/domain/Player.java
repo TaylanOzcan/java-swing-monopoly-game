@@ -68,6 +68,7 @@ public class Player implements Serializable{
 	public void addVoucher(String newVoucher) {
 		this.vouchers.add(newVoucher);
 	}
+	
 	public void deleteVoucher(String voucher){
 		if(this.vouchers.contains(voucher)){
 			this.vouchers.remove(voucher);
@@ -80,14 +81,22 @@ public class Player implements Serializable{
 		return ownedSquares;
 	}
 
-	public void payRent(int rentprice){
-		setBalance(balance-rentprice) ;
+	public void payRent(int rentPrice){
+		// REQUIRES : this.balance must be greater than rentPrice
+		// MODIFIES : this.balance
+		// EFFECTS : subtracts rentprice from this.balance
+		//and returns modified balance.
+		setBalance(balance-rentPrice) ;
 	}
 
 	public void addChanceCard(String newCard) {
+		// MODIFIES : this.chanceCards
+		// EFFECTS : add newCard to this.chanceCards
 		this.chanceCards.add(newCard);
 	}
 	public void deleteChanceCard(String card){
+		// REQUIRES : this.chanceCards contains card
+		// EFFECTS : removes card from this.chanceCards
 		if(this.chanceCards.contains(card)){
 			this.chanceCards.remove(card);}
 		}
@@ -100,10 +109,15 @@ public class Player implements Serializable{
 			int b = balance - money;
 			setBalance(b);}
 	}
+	
 	public void addCommunityCard(String newCard) {
+		// MODIFIES : this.communityCards
+		// EFFECTS : add newCard to this.communityCards
 		this.communityCards.add(newCard);
 	}
 	public void deleteCommunityCard(String card){
+		// REQUIRES : this.communityCards contains card
+		// EFFECTS : removes card from this.communityCards
 		if(this.communityCards.contains(card)){
 			this.communityCards.remove(card);
 		}else{
@@ -112,19 +126,30 @@ public class Player implements Serializable{
 	}
 
 	public int move(int rollValue) {
+		// MODIFIES : this.location
+		// EFFECTS : returns modified location
 		this.location = (this.location + rollValue) % 40;
 		return this.location;
 	}
 
 	public void pay(int price) {
+		// REQUIRES : this.balance is greater than price
+		// MODIFIES : this.balance
+		// EFFECTS : subtracts price from this.balance
 		this.balance -= price;
 	}
 
 	public void increaseBalance(int moneyToAdd) {
+		// MODIFIES : this.balance
+		// EFFECTS : adds moneyToAdd to this.balance
 		this.balance += moneyToAdd;
 	}
 
 	public boolean buy() {
+		// REQUIRES : squareToBuy is in PropertySquare type
+		// MODIFIES : this.balance, this.ownedSquare
+		// EFFECTS : decreases this.balance by squareToBuy.getPrice()
+		// and adds squareToBuy to this.ownedSquares
 		PropertySquare squareToBuy = (PropertySquare)SquareFactory.getSquare(this.location);
 		if(this.balance < squareToBuy.getPrice()){
 			return false;
@@ -136,6 +161,8 @@ public class Player implements Serializable{
 	}
 	
 	public void addOwnedSquare(PropertySquare squareToBuy){
+		// MODIFIES : squareToBuy
+		// EFFECTS : adds squareToBuy to this.ownedSquares
 		squareToBuy.setOwner(this);
 		this.ownedSquares.add(squareToBuy);
 	}
