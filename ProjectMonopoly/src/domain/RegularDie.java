@@ -12,7 +12,9 @@ public class RegularDie implements Die {
 
 	@Override
 	public int getValue() {
-		//Hello Darkness my old friend
+		// REQUIRES : The Die.
+		
+		// EFFECTS : Returns the die's face value.
 		faceValue = rnd.nextInt(6) + 1;
 		return faceValue;
 	}

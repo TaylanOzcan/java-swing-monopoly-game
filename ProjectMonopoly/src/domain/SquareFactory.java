@@ -8,6 +8,9 @@ public class SquareFactory {
 
 	// other square types will be implemented in the future
 	public static void createSquares() {
+		// REQUIRES : The board.
+		// MODIFIES : IS THIS JUST THE INPUT?
+		// EFFECTS : Creates squares.
 		squares[0] = new MoneyGiverSquare(0, "GO", 200);
 		squares[1] = new StreetSquare(1, "MEDITERRANEAN AVENUE", 30, 45, 60, 75, 100, 150, 2, 30, new Color(100,10,100));
 		squares[2] = new CommunityChestSquare(2, "COMMUNITY CHEST");
