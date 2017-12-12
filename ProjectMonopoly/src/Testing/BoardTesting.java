@@ -12,6 +12,8 @@ import org.junit.Test;
 
 import domain.Board;
 import domain.Player;
+import domain.PropertySquare;
+import domain.SquareFactory;
 import domain.StreetSquare;
 
 public class BoardTesting {
@@ -82,30 +84,44 @@ public class BoardTesting {
 	}
 
 	@Test
-	public void testBuildHouse() {
+		public void testBuildHouse() {
+			ArrayList r = new ArrayList<String> ( );
+			r.add("test1");
+			r.add("test2");
+			r.add("test3");
+			Board tb = new Board(r);
+			tb.getCurrentPlayer().addOwnedSquare((PropertySquare) SquareFactory.getSquare(18));
+			StreetSquare Square = (StreetSquare)tb.getCurrentPlayer().getOwnedSquares().get(0);
+		int NumberOfHousesBeforeBuild = Square.getnHouses();
+		tb.buildHouse(0);
+		int NumberOfHousesAfterBuild = Square.getnHouses();
+		assertNotSame (NumberOfHousesBeforeBuild,NumberOfHousesAfterBuild);
+	}
+
+	@Test
+	public void testIsBuyable() {
 		ArrayList r = new ArrayList<String> ( );
 		r.add("test1");
 		r.add("test2");
 		r.add("test3");
 		Board tb = new Board(r);
-		StreetSquare Square = (StreetSquare)tb.getCurrentPlayer().getOwnedSquares().get(18).;
-	}
-
-
-
-	@Test
-	public void testEndTurn() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testIsBuyable() {
-		fail("Not yet implemented");
+		tb.getCurrentPlayer().setLocation(18);
+		tb.getCurrentPlayer().addOwnedSquare((PropertySquare) SquareFactory.getSquare(tb.getCurrentPlayer().getLocation()));
+		StreetSquare Square = (StreetSquare)tb.getCurrentPlayer().getOwnedSquares().get(0);
+		assertFalse(tb.isBuyable());
 	}
 
 	@Test
 	public void testIsBuildable() {
-		fail("Not yet implemented");
+		ArrayList r = new ArrayList<String> ( );
+		r.add("test1");
+		r.add("test2");
+		r.add("test3");
+		Board tb = new Board(r);
+		tb.getCurrentPlayer().addOwnedSquare((PropertySquare) SquareFactory.getSquare(18));
+		for( int i=0;i<5 ;i++) {
+			
+		}
 	}
 
 	@Test

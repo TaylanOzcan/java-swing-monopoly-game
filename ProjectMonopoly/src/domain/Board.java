@@ -97,7 +97,7 @@ public class Board implements Serializable{
 	}
 //Requiers : the street to be buyable (not a chance/community...) square
 	//THE STREET isn't owned 
-	//effects : returns whether the requierments is true 
+	//effects : returns whether the requirements is true 
 	public boolean isBuyable() {
 		if(PropertySquare.class.isAssignableFrom(SquareFactory.getSquare(currentPlayer.getLocation()).getClass())){
 			return !((PropertySquare)SquareFactory.getSquare(currentPlayer.getLocation())).isOwned();
@@ -106,7 +106,7 @@ public class Board implements Serializable{
 		}
 	}
 	//Requiers : the current street the player is on is a property street 
-	//Effects : it returns whether the player can buildon it or not 
+	//Effects : it returns whether the player can build on it or not 
 	public boolean isBuildable() {
 		if(SquareFactory.getSquare(currentPlayer.getLocation()).getClass() == StreetSquare.class){
 			return !((StreetSquare)SquareFactory.getSquare(currentPlayer.getLocation())).isBuildable();
