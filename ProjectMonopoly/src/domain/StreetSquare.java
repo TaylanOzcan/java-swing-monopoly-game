@@ -110,6 +110,18 @@ public class StreetSquare extends PropertySquare implements Serializable{
 	public void setBuildable(boolean isBuildable) {
 		this.isBuildable = isBuildable;
 	}
-	
+	public boolean repOk() {
+		if(this.hotelPrice <= 0 || this.house1Price <= 0 || this.house2Price <= 0 || this.house3Price <= 0 || this.house4Price <= 0 || this.id < 0 || this.name == null || this.price <= 0 || this.rent <= 0 || this.skyscraperPrice <= 0) {
+		return false;
+	}
+		return true;
 
 }
+
+	@Override
+	public String toString() {
+		return "StreetSquare [house1Price=" + house1Price + ", house2Price=" + house2Price + ", house3Price="
+				+ house3Price + ", house4Price=" + house4Price + ", hotelPrice=" + hotelPrice + ", skyscraperPrice="
+				+ skyscraperPrice + ", nHouses=" + nHouses + ", nHotels=" + nHotels + ", nSkyscrapers=" + nSkyscrapers
+				+ ", color=" + color + ", isBuildable=" + isBuildable + "]";
+	}}
