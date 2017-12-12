@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public class SquareFactory {
 
-	private static Square[] squares = new Square[116];;
+	private static Square[] squares = new Square[119];;
 
 	// other square types will be implemented in the future
 	public static void createSquares() {
@@ -126,7 +126,11 @@ public class SquareFactory {
 		squares[112] = (112, );
 		squares[113] = (113, );
 		squares[114] = (114, );
-		squares[115] = (115, );*/
+		squares[115] = (115, );
+		squares[116] = (116, );
+		squares[117] = (117, );
+		squares[118] = (118, );
+		squares[119] = (119, );*/
 
 	}
 

@@ -160,11 +160,37 @@ public class Player implements Serializable{
 		}
 	}
 	
+	public ArrayList<String> getVouchers() {
+		return vouchers;
+	}
+
+	public ArrayList<String> getChanceCards() {
+		return chanceCards;
+	}
+
+	public ArrayList<String> getCommunityCards() {
+		return communityCards;
+	}
+
 	public void addOwnedSquare(PropertySquare squareToBuy){
 		// MODIFIES : squareToBuy
 		// EFFECTS : adds squareToBuy to this.ownedSquares
 		squareToBuy.setOwner(this);
 		this.ownedSquares.add(squareToBuy);
+	}
+	
+	public boolean repOk() {
+		if(this.name == null || this.location>=0 || this.location <= 120) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Player [name=" + name + ", location=" + location + ", balance=" + balance + ", CurrentPlayer="
+				+ CurrentPlayer + ", vouchers=" + vouchers + ", chanceCards=" + chanceCards + ", communityCards="
+				+ communityCards + ", InJail=" + InJail + ", ownedSquares=" + ownedSquares + "]";
 	}
 
 }
