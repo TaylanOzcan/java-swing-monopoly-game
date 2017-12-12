@@ -22,5 +22,15 @@ public class RegularDie implements Die {
 	public int getCurrentValue(){
 		return faceValue;
 	}
+	public boolean repOk() {
+		if (faceValue>6 || faceValue < 1) {
+			return false;
+		}return true;
+	}
+
+	@Override
+	public String toString() {
+		return "RegularDie [faceValue=" + faceValue + ", rnd=" + rnd + "]";
+	}
 
 }

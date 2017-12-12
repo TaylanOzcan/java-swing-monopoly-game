@@ -28,5 +28,15 @@ public class SpeedDie implements Die {
 	public int getCurrentValue(){
 		return faceValue;
 	}
+	public boolean repOk() {
+		if(faceValue < -2 || faceValue>3) {
+			return false;
+		}return true;
+	}
+
+	@Override
+	public String toString() {
+		return "SpeedDie [faceValue=" + faceValue + ", rnd=" + rnd + "]";
+	}
 	
 }
