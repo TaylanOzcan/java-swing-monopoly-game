@@ -53,11 +53,16 @@ public class BoardTesting {
 
 	@Test
 	public void testSetNewCurrentPlayer() {
+		
 		ArrayList r = new ArrayList<String> ( );
 		r.add("test1");
 		r.add("test2");
 		r.add("test3");
 		Board tb = new Board(r);
+		Player OldCurrentPlayer = tb.getCurrentPlayer();
+		tb.setNewCurrentPlayer();
+		Player NewCurrentPlayer=tb.getCurrentPlayer();
+		assertNotSame(OldCurrentPlayer,NewCurrentPlayer);
 		
 	}
 
