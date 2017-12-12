@@ -42,6 +42,12 @@ public class Board implements Serializable{
 		currentPlayerIndex++;
 		currentPlayer = players.get(currentPlayerIndex % numOfPlayers);
 	}
+	public ArrayList<Player> GetPlayersArray() {
+		return players;
+	}
+	public int GetNumOfPlayers () {
+		return this.numOfPlayers;
+	}
 //Effects : Returns the current Player
 	public Player getCurrentPlayer(){
 		return this.currentPlayer;

@@ -26,21 +26,28 @@ public class BoardTesting {
 	@Before
 	public void setUp() throws Exception {
 	}
-	Board b = new Board(null);
+	
 	@After
 	public void tearDown() throws Exception {
 	}
 	@Test
 	public void testBoard() {
+
 		ArrayList r = new ArrayList<String> ( );
 		r.add("test1");
-		
+		Board b = new Board(r);
 		assertNotNull(b);
 	}
 
 	@Test
-	public void testCreateonePlayers() {
-		fail("Not yet implemented");
+	public void testcreatePlayers() {
+		
+		ArrayList r = new ArrayList<String> ( );
+		r.add("test1");
+		r.add("test2");
+		r.add("test3");
+		Board tb = new Board(r);
+	assertNotNull(tb.getPlayers());
 	
 	}
 
