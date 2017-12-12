@@ -48,6 +48,9 @@ public class Board implements Serializable{
 	public int GetNumOfPlayers () {
 		return this.numOfPlayers;
 	}
+	public MoveHandler getBoardMoveHandler() {
+		return this.moveHandler;
+	}
 //Effects : Returns the current Player
 	public Player getCurrentPlayer(){
 		return this.currentPlayer;

@@ -67,22 +67,21 @@ public class BoardTesting {
 	}
 
 	@Test
-	public void testGetCurrentPlayer() {
-		fail("Not yet implemented");
-	}
-
-	@Test
 	public void testRollDice() {
-		fail("Not yet implemented");
+		ArrayList r = new ArrayList<String> ( );
+		r.add("test1");
+		r.add("test2");
+		r.add("test3");
+		Board tb = new Board(r);
+		int	OldPlayerLocation = tb.getCurrentPlayer().getLocation();
+		tb.rollDice();
+		int NewPlayerLocation = tb.getCurrentPlayer().getLocation();
+		assertNotSame (OldPlayerLocation,NewPlayerLocation);
+		
 	}
 
 	@Test
 	public void testBuy() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetPlayers() {
 		fail("Not yet implemented");
 	}
 
