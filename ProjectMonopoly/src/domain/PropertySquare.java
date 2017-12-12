@@ -34,4 +34,11 @@ public abstract class PropertySquare implements Square {
 		this.isOwned = isOwned;
 	}
 
+	
+
+	@Override
+	public String toString() {
+		return "PropertySquare [id=" + id + ", name=" + name + ", price=" + price + ", rent=" + rent + ", owner="
+				+ owner + ", isOwned=" + isOwned + ", isMortgage=" + isMortgage + "]";
+	}
 }
