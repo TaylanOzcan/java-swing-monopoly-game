@@ -115,7 +115,7 @@ public class BoardTesting {
 	public void testIsBuildable() {
 		ArrayList r = new ArrayList<String> ( );
 		r.add("test1");
-		r.add("test2");
+		r.add("test2"); 
 		r.add("test3");
 		Board tb = new Board(r);
 		tb.getCurrentPlayer().addOwnedSquare((PropertySquare) SquareFactory.getSquare(18));
