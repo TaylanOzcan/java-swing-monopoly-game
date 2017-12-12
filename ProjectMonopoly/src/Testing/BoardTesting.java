@@ -53,7 +53,12 @@ public class BoardTesting {
 
 	@Test
 	public void testSetNewCurrentPlayer() {
-		fail("Not yet implemented");
+		ArrayList r = new ArrayList<String> ( );
+		r.add("test1");
+		r.add("test2");
+		r.add("test3");
+		Board tb = new Board(r);
+		
 	}
 
 	@Test
