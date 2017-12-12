@@ -12,6 +12,7 @@ import org.junit.Test;
 
 import domain.Board;
 import domain.Player;
+import domain.StreetSquare;
 
 public class BoardTesting {
 
@@ -81,34 +82,16 @@ public class BoardTesting {
 	}
 
 	@Test
-	public void testBuy() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testMortgage() {
-		fail("Not yet implemented");
-	}
-
-	@Test
 	public void testBuildHouse() {
-		fail("Not yet implemented");
+		ArrayList r = new ArrayList<String> ( );
+		r.add("test1");
+		r.add("test2");
+		r.add("test3");
+		Board tb = new Board(r);
+		StreetSquare Square = (StreetSquare)tb.getCurrentPlayer().getOwnedSquares().get(18).;
 	}
 
-	@Test
-	public void testSqueeze() {
-		fail("Not yet implemented");
-	}
 
-	@Test
-	public void testTrade() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSell() {
-		fail("Not yet implemented");
-	}
 
 	@Test
 	public void testEndTurn() {
