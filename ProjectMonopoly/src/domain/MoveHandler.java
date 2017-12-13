@@ -16,7 +16,7 @@ public class MoveHandler implements Serializable{
 		if(p.isInJail()) {
 			int totalRegFaceValue = Cup.rollRegularDice();
 			if(rolledDoubles()) {
-				p.setInJail(false);
+				p.getOutOfJail();
 				p.move(totalRegFaceValue);
 			}
 		}else {
@@ -40,8 +40,7 @@ public class MoveHandler implements Serializable{
 			}
 
 			if(rolledTriples()) {
-				p.setInJail(true);
-				p.setLocation(JailSquare.JAIL_LOCATION);
+				p.goIntoJail();
 			}else if(rolledDoubles()) {
 				p.setRollsAgain(true);
 			}

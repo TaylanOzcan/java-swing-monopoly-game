@@ -9,6 +9,8 @@ public class Player implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	public static final int JAIL_LOCATION = 10;
+	
 	private String name;
 	private int location;
 	private int balance;
@@ -41,8 +43,12 @@ public class Player implements Serializable{
 	public boolean isInJail() {
 		return this.inJail;
 	}
-	public void setInJail(boolean inJail) {
-		this.inJail = inJail;
+	public void goIntoJail() {
+		this.inJail = true;
+		this.setLocation(JAIL_LOCATION);
+	}
+	public void getOutOfJail() {
+		this.inJail = false;
 	}
 	
 	public boolean rollsAgain() {

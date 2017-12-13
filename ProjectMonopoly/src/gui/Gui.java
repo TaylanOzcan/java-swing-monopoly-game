@@ -38,7 +38,7 @@ public class Gui implements ActionListener, Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	private JFrame mainFrame;
 	private JPanel mainPanel, boardPanel, menuPanel, menuButtonsPanel, gameButtonsPanel, dicePanel, infoPanel;
 	private JButton newGameButton, loadButton, saveButton, rollButton, buyTitleDeedsButton, endTurnButton, buildHouseButton;
@@ -122,7 +122,7 @@ public class Gui implements ActionListener, Serializable{
 			currentPanel.setOpaque(false);
 
 			char direction = '0';
-			
+
 			if(i == 0){
 				currentPanel.setSize(114, 114);
 				currentPanel.setLayout(new GridLayout(4,0));
@@ -160,11 +160,11 @@ public class Gui implements ActionListener, Serializable{
 				currentPanel.setLocation(756, 186 + (i%10)*57);
 				direction = 'w';
 			}
-			
+
 			JPanel tokenPlacementPanel = new JPanel();
 			tokenPlacementPanel.setOpaque(false);
 			tokenPlacementPanels[i] = tokenPlacementPanel;
-			
+
 			BuildingContainerPanel buildingContainerPanel = new BuildingContainerPanel(direction);
 			buildingContainerPanels[i] = buildingContainerPanel;
 
@@ -300,12 +300,13 @@ public class Gui implements ActionListener, Serializable{
 			gamePlay.rollDice();
 			endTurnButton.setEnabled(true);
 			rollButton.setEnabled(false);
-			refreshDice();
+			refreshDice(true);
 		}else if(e.getSource() == endTurnButton){
 			gamePlay.endTurn();
 			endTurnButton.setEnabled(false);
 			rollButton.setEnabled(true);
 			buildHouseButton.setEnabled(true);
+			refreshDice(false);
 		}else if(e.getSource() == loadButton){
 			SaveAndLoad.load(this);
 			gamePlay.playGame(playerNames);
@@ -351,7 +352,7 @@ public class Gui implements ActionListener, Serializable{
 						buildingContainerPanels[index].addIcon();
 						JOptionPane.showMessageDialog(
 								null, "You have successfully built a " 
-								+ buildingContainerPanels[index].getBuildingName() + ".");
+										+ buildingContainerPanels[index].getBuildingName() + ".");
 					}
 				}
 				break;
@@ -365,8 +366,9 @@ public class Gui implements ActionListener, Serializable{
 
 	}
 
-	public void refreshDice(){
-		int[] values = gamePlay.getDiceValues();
+	public void refreshDice(boolean rolled){
+		int[] values = {-3, -3, -3};
+		if(rolled) values = gamePlay.getDiceValues();
 		for(int i=0 ; i<3; i++){
 			diceLabels[i].setText(DieFace.getFaceForValue(values[i]));
 		}
