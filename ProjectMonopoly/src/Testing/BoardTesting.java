@@ -90,7 +90,7 @@ public class BoardTesting {
 			r.add("test2");
 			r.add("test3");
 			Board tb = new Board(r);
-			tb.getCurrentPlayer().addOwnedSquare((PropertySquare) SquareFactory.getSquare(18));
+			tb.getCurrentPlayer().addOwnedSquare((PropertySquare) SquareFactory.getInstance().getSquare(18));
 			StreetSquare Square = (StreetSquare)tb.getCurrentPlayer().getOwnedSquares().get(0);
 		int NumberOfHousesBeforeBuild = Square.getnHouses();
 		tb.buildHouse(0);
@@ -106,7 +106,7 @@ public class BoardTesting {
 		r.add("test3");
 		Board tb = new Board(r);
 		tb.getCurrentPlayer().setLocation(18);
-		tb.getCurrentPlayer().addOwnedSquare((PropertySquare) SquareFactory.getSquare(tb.getCurrentPlayer().getLocation()));
+		tb.getCurrentPlayer().addOwnedSquare((PropertySquare) SquareFactory.getInstance().getSquare(tb.getCurrentPlayer().getLocation()));
 		StreetSquare Square = (StreetSquare)tb.getCurrentPlayer().getOwnedSquares().get(0);
 		assertFalse(tb.isBuyable());
 	}
@@ -118,7 +118,7 @@ public class BoardTesting {
 		r.add("test2"); 
 		r.add("test3");
 		Board tb = new Board(r);
-		tb.getCurrentPlayer().addOwnedSquare((PropertySquare) SquareFactory.getSquare(18));
+		tb.getCurrentPlayer().addOwnedSquare((PropertySquare) SquareFactory.getInstance().getSquare(18));
 		for( int i=0;i<5 ;i++) {
 			
 		}

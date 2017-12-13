@@ -21,7 +21,7 @@ public class MoveHandler implements Serializable{
 		if(newLoc < fvt){
 			p.increaseBalance(200); // add 200$ when player goes through the Go Square
 		}
-		Square newSquare = SquareFactory.getSquare(newLoc);
+		Square newSquare = SquareFactory.getInstance().getSquare(newLoc);
 		newSquare.getAction(p);
 	}
 }

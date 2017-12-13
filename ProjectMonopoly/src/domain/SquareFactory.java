@@ -4,12 +4,10 @@ import java.util.HashMap;
 
 public class SquareFactory {
 
-	private static Square[] squares = new Square[119];;
+	private Square[] squares = new Square[119];
+	private static SquareFactory instance;
 
-	// other square types will be implemented in the future
-	public static void createSquares() {
-		// REQUIRES : The board.
-		// MODIFIES : IS THIS JUST THE INPUT?
+	private SquareFactory() {
 		// EFFECTS : Creates squares.
 		squares[0] = new MoneyGiverSquare(0, "GO", 200);
 		squares[1] = new StreetSquare(1, "MEDITERRANEAN AVENUE", 30, 45, 60, 75, 100, 150, 2, 30, new Color(100,10,100));
@@ -133,12 +131,17 @@ public class SquareFactory {
 		squares[119] = (119, );*/
 
 	}
+	
+	public static SquareFactory getInstance() {
+		if(instance == null) instance = new SquareFactory();
+		return instance;
+	}
 
-	public static Square getSquare(int i){
+	public Square getSquare(int i){
 		return squares[i];
 	}
 
-	public static Square[] getSquares(){
+	public Square[] getSquares(){
 		return squares;
 	}
 

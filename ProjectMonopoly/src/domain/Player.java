@@ -150,7 +150,7 @@ public class Player implements Serializable{
 		// MODIFIES : this.balance, this.ownedSquare
 		// EFFECTS : decreases this.balance by squareToBuy.getPrice()
 		// and adds squareToBuy to this.ownedSquares
-		PropertySquare squareToBuy = (PropertySquare)SquareFactory.getSquare(this.location);
+		PropertySquare squareToBuy = (PropertySquare)SquareFactory.getInstance().getSquare(this.location);
 		if(this.balance < squareToBuy.getPrice()){
 			return false;
 		}else{
