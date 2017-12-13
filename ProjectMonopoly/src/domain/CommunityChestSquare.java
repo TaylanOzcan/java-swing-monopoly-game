@@ -11,8 +11,9 @@ public class CommunityChestSquare extends CardDrawSquare {
 	
 	@Override
 	public void getAction(Player p) {
-		// TODO Auto-generated method stub
-		
+		String communityCard = drawCard();
+		//CardActionHandler will handle the action
+		//not yet implemented
 	}
 
 	@Override
@@ -23,6 +24,11 @@ public class CommunityChestSquare extends CardDrawSquare {
 	@Override
 	public int getId() {
 		return this.id;
+	}
+
+	@Override
+	public String drawCard() {
+		return CardDeck.drawCommunityCard();
 	}
 
 }

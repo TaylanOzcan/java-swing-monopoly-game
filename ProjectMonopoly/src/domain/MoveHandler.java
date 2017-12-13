@@ -9,9 +9,6 @@ public class MoveHandler implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public MoveHandler(){
-	}
-
 	public void movePlayer(Player p) {
 		// REQUIRES : The player to have been created,the player mustn't be in jail.
 		// MODIFIES : p,fvt,newLoc,newSquare

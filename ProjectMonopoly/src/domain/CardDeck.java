@@ -2,69 +2,78 @@ package domain;
 import java.util.ArrayList;
 
 public class CardDeck {
-	private ArrayList<String> Chance;
-	private ArrayList<String> CommunityChest;
-
-	private ArrayList<String> TravelVouchers;
-	private static int Chancecounter=-1;
+	private static ArrayList<String> chanceCards;
+	private static ArrayList<String> communityChestCards;
+	private static ArrayList<String> travelVouchers;
+	
+	private static int chanceCardscounter=-1;
 	private static int Communitycounter=-1;
-	private static int Vouchercounter=-1;	
-	private ArrayList<String> TravelVoucher;
+	private static int Vouchercounter=-1;
+	
 	public CardDeck() {
-		//Adding Chance Cards To the deck 
+		//Adding chanceCards Cards To the deck 
+		chanceCards.add("Advance to the Pay Corner");
+		chanceCards.add("Advance to the Nearest Railroad");
+		chanceCards.add("Advance to Illinois Ave.");
+		chanceCards.add("Get Out of Jail Free!");
+		chanceCards.add("Make General Repairs to all your properties.");
+		chanceCards.add("Traffic Ticket!");
+		chanceCards.add("Buyer’s Market!");
+		chanceCards.add("Business Trip");
+		chanceCards.add("Excellent Accounting");
+		chanceCards.add("Property Taxes");
+		chanceCards.add("Advance to Squeeze Play");
+		chanceCards.add("Get Taken for a Ride");
+		chanceCards.add("Pay Back!");
+		chanceCards.add("MARDI GRAS!");
+		chanceCards.add("Changing Lanes");
+		chanceCards.add("Changing Lanes");
 
-		Chance.add("Advance to the Pay Corner");
-		Chance.add("Advance to the Nearest Railroad");
-		Chance.add("Advance to Illinois Ave.");
-		Chance.add("Get Out of Jail Free!");
-		Chance.add("Make General Repairs to all your properties.");
-		Chance.add("Traffic Ticket!");
-		Chance.add("Buyer’s Market!");
-		Chance.add("Business Trip");
-		Chance.add("Excellent Accounting");
-		Chance.add("Property Taxes");
-		Chance.add("Advance to Squeeze Play");
-		Chance.add("Get Taken for a Ride");
-		Chance.add("Pay Back!");
-		Chance.add("MARDI GRAS!");
-		Chance.add("Changing Lanes");
-		Chance.add("Changing Lanes");
-
-		//CommunityChest Cards Data 
-		CommunityChest.add("Insurance Premiums Due");
-		CommunityChest.add("Happy Birthday!");
-		CommunityChest.add("Business Trip");
-		CommunityChest.add("Entrepreneur of the Year!");
-		CommunityChest.add("You’re getting Married");
-		CommunityChest.add("Elected District Attorney");
-		CommunityChest.add("BARGAIN BUSINESS!");
-		CommunityChest.add("Be Kind, Rewind");
-		CommunityChest.add("Get Out of Jail Free!");
-		CommunityChest.add("Bank Error in Your Favor!");
-		CommunityChest.add("You Win 2nd Place in an Board Game Remix Design Contest!");
-		//TravelVouchers Cards Data 
-		TravelVouchers.add("TRANSIT TOKEN");
-		TravelVouchers.add("BUS TICKET");
-		TravelVouchers.add("FREE CAB FARE MOVE BACK 3 SPACES");
-		TravelVouchers.add("FREE CAB FARE MOVE AHEAD 3 SPACES");
+		//communityChestCards Cards Data 
+		communityChestCards.add("Insurance Premiums Due");
+		communityChestCards.add("Happy Birthday!");
+		communityChestCards.add("Business Trip");
+		communityChestCards.add("Entrepreneur of the Year!");
+		communityChestCards.add("You’re getting Married");
+		communityChestCards.add("Elected District Attorney");
+		communityChestCards.add("BARGAIN BUSINESS!");
+		communityChestCards.add("Be Kind, Rewind");
+		communityChestCards.add("Get Out of Jail Free!");
+		communityChestCards.add("Bank Error in Your Favor!");
+		communityChestCards.add("You Win 2nd Place in an Board Game Remix Design Contest!");
+		
+		//travelVouchers Cards Data 
+		travelVouchers.add("TRANSIT TOKEN");
+		travelVouchers.add("BUS TICKET");
+		travelVouchers.add("FREE CAB FARE MOVE BACK 3 SPACES");
+		travelVouchers.add("FREE CAB FARE MOVE AHEAD 3 SPACES");
 	}
 	public String DrawCard(String type) {
-		if (type == "Chance") {
-			Chancecounter +=1;
-			return Chance.get(Chancecounter);
+		if (type == "chanceCards") {
+			chanceCardscounter +=1;
+			return chanceCards.get(chanceCardscounter);
 			}
-		if (type == "CommunityChest") {
+		if (type == "communityChestCards") {
 			Communitycounter +=1;
-			return CommunityChest.get(Communitycounter);
+			return communityChestCards.get(Communitycounter);
 			}
 		if (type == "TravelVoucher") {
 			Vouchercounter +=1;
-			return TravelVouchers.get(Vouchercounter);
+			return travelVouchers.get(Vouchercounter);
 			}	
 		return "Not True Coding";	
-
-		//Adding ComunityChest Cards to the deck
-		
+	}
+	
+	public static String drawchanceCard() {
+		return chanceCards.remove(0);
+	}
+	
+	public static String drawCommunityCard() {
+		return communityChestCards.remove(0);
+	}
+	
+	public static String drawVoucher() {
+		return travelVouchers.remove(0);
 	}
 
 }

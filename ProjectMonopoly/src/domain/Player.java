@@ -34,9 +34,6 @@ public class Player implements Serializable{
 		return this.CurrentPlayer;
 	}
 	
-	public void setCurrent() {
-		this.CurrentPlayer=CurrentPlayer;
-	}
 	
 	public boolean IsInJail() {
 		return this.InJail;
