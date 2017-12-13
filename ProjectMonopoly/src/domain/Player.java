@@ -180,7 +180,7 @@ public class Player implements Serializable{
 	}
 	
 	public boolean repOk() {
-		if(this.name == null || this.location>=0 || this.location <= 120) {
+		if(this.name == null || this.location<0 || this.location > 120) {
 			return false;
 		}
 		return true;
