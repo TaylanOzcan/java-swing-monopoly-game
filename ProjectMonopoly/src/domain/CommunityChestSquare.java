@@ -28,7 +28,7 @@ public class CommunityChestSquare extends CardDrawSquare {
 
 	@Override
 	public String drawCard() {
-		return CardDeck.drawCommunityCard();
+		return CardDeck.getInstance().drawCommunityCard();
 	}
 
 }

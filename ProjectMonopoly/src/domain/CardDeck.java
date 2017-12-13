@@ -1,16 +1,19 @@
 package domain;
-import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class CardDeck {
-	private static ArrayList<String> chanceCards;
-	private static ArrayList<String> communityChestCards;
-	private static ArrayList<String> travelVouchers;
+	private Queue<String> chanceCards;
+	private Queue<String> communityChestCards;
+	private Queue<String> travelVouchers;
 	
-	private static int chanceCardscounter=-1;
-	private static int Communitycounter=-1;
-	private static int Vouchercounter=-1;
+	private static CardDeck instance;
 	
-	public CardDeck() {
+	private CardDeck() {
+		chanceCards = new LinkedList<String>();
+		communityChestCards = new LinkedList<String>();
+		travelVouchers = new LinkedList<String>();
+		
 		//Adding chanceCards Cards To the deck 
 		chanceCards.add("Advance to the Pay Corner");
 		chanceCards.add("Advance to the Nearest Railroad");
@@ -48,32 +51,22 @@ public class CardDeck {
 		travelVouchers.add("FREE CAB FARE MOVE BACK 3 SPACES");
 		travelVouchers.add("FREE CAB FARE MOVE AHEAD 3 SPACES");
 	}
-	public String DrawCard(String type) {
-		if (type == "chanceCards") {
-			chanceCardscounter +=1;
-			return chanceCards.get(chanceCardscounter);
-			}
-		if (type == "communityChestCards") {
-			Communitycounter +=1;
-			return communityChestCards.get(Communitycounter);
-			}
-		if (type == "TravelVoucher") {
-			Vouchercounter +=1;
-			return travelVouchers.get(Vouchercounter);
-			}	
-		return "Not True Coding";	
+
+	public static CardDeck getInstance() {
+		if(instance == null) instance = new CardDeck();
+		return instance;
 	}
 	
-	public static String drawchanceCard() {
-		return chanceCards.remove(0);
+	public String drawChanceCard() {
+		return chanceCards.remove();
 	}
 	
-	public static String drawCommunityCard() {
-		return communityChestCards.remove(0);
+	public String drawCommunityCard() {
+		return communityChestCards.remove();
 	}
 	
-	public static String drawVoucher() {
-		return travelVouchers.remove(0);
+	public String drawVoucher() {
+		return travelVouchers.remove();
 	}
 
 }

@@ -28,6 +28,6 @@ public class VoucherSquare extends CardDrawSquare {
 
 	@Override
 	public String drawCard() {
-		return CardDeck.drawVoucher();
+		return CardDeck.getInstance().drawVoucher();
 	}
 }

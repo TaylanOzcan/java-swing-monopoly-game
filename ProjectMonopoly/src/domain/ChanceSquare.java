@@ -28,6 +28,6 @@ public class ChanceSquare extends CardDrawSquare {
 
 	@Override
 	public String drawCard() {
-		return CardDeck.drawchanceCard();
+		return CardDeck.getInstance().drawChanceCard();
 	}
 }

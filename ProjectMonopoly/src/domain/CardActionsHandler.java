@@ -5,13 +5,12 @@ public class CardActionsHandler {
 private Square square;
 private ArrayList<Player>  players;
 private String CurrentCard;
-private CardDeck CD;
 private Pool pool;
 private Player cp;
-public CardActionsHandler (ArrayList<Player> players,Square square, CardDeck CD,Pool pool) {
+
+public CardActionsHandler (ArrayList<Player> players,Square square, Pool pool) {
 	this.players=players;
 	this.square=square;
-	this.CD=CD;
 	this.pool=pool;
 	for(int i=0;i< players.size();i++) {
 		if(players.get(i).IsCurrent())
@@ -20,7 +19,7 @@ public CardActionsHandler (ArrayList<Player> players,Square square, CardDeck CD,
 }
 public void DrawACard (String Type) {
 	if (Type == "Community") {
-		this.CurrentCard=CD.DrawCard("Community");
+		this.CurrentCard=CardDeck.getInstance().drawCommunityCard();
 		if (CurrentCard == "Insurance Premiums Due") {
 			pool.PayPool(50);
 		}
@@ -33,8 +32,8 @@ public void DrawACard (String Type) {
 			
 		}
 		if (CurrentCard == "Business Trip") {
-			cp.addVoucher(CD.DrawCard("TravelVoucher"));
-			cp.addVoucher(CD.DrawCard("TravelVoucher"));
+			cp.addVoucher(CardDeck.getInstance().drawVoucher());
+			cp.addVoucher(CardDeck.getInstance().drawVoucher());
 		}
 		if (CurrentCard == "Entrepreneur of the Year!") {
 			for (int i=0 ;i< players.size() ;i++) {

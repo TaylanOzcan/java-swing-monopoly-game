@@ -2,6 +2,8 @@ package domain;
  
 public class JailSquare implements Square {
 
+	public static final int JAIL_LOCATION = 10;
+	
 	@Override
 	public void getAction(Player p) {
 		// TODO Auto-generated method stub

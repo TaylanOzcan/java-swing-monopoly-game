@@ -16,7 +16,8 @@ public class Player implements Serializable{
 	private ArrayList<String> vouchers;
 	private ArrayList<String> chanceCards;
 	private ArrayList<String> communityCards;
-	private boolean InJail;
+	private boolean inJail;
+	private boolean rollsAgain;
 	private ArrayList<PropertySquare> ownedSquares;
 
 
@@ -24,6 +25,8 @@ public class Player implements Serializable{
 		this.name = name;
 		this.location = 0;
 		this.balance = 3200;
+		this.inJail = false;
+		this.rollsAgain = false;
 		this.vouchers = new ArrayList<String>(5);
 		this.chanceCards = new ArrayList<String>(5);
 		this.communityCards = new ArrayList<String>(5);	
@@ -35,8 +38,18 @@ public class Player implements Serializable{
 	}
 	
 	
-	public boolean IsInJail() {
-		return this.InJail;
+	public boolean isInJail() {
+		return this.inJail;
+	}
+	public void setInJail(boolean inJail) {
+		this.inJail = inJail;
+	}
+	
+	public boolean rollsAgain() {
+		return this.rollsAgain;
+	}
+	public void setRollsAgain(boolean rollsAgain) {
+		this.rollsAgain = rollsAgain;
 	}
 	
 	public String getName() {
@@ -187,7 +200,7 @@ public class Player implements Serializable{
 	public String toString() {
 		return "Player [name=" + name + ", location=" + location + ", balance=" + balance + ", CurrentPlayer="
 				+ CurrentPlayer + ", vouchers=" + vouchers + ", chanceCards=" + chanceCards + ", communityCards="
-				+ communityCards + ", InJail=" + InJail + ", ownedSquares=" + ownedSquares + "]";
+				+ communityCards + ", inJail=" + inJail + ", ownedSquares=" + ownedSquares + "]";
 	}
 
 }

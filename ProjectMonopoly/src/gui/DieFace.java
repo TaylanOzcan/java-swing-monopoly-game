@@ -3,9 +3,9 @@ package gui;
 public class DieFace {
 
 	static String[] faceTexts = {
-			"<html><center><span style='font-size:10px'>Mr.<br>Monopoly</span></center></html>",
-			"<html><center><span style='font-size:10px'>Mr.<br>Monopoly</span></center></html>",
 			"<html><center><span style='font-size:10px'>Bus</span></center></html>",
+			"<html><center><span style='font-size:10px'>Mr.<br>Monopoly</span></center></html>",
+			"<html><center><span style='font-size:10px'>Mr.<br>Monopoly</span></center></html>",
 
 			"<html><span style='font-size:10px'>"
 					+ "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>"

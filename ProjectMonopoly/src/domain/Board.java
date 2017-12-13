@@ -37,18 +37,21 @@ public class Board implements Serializable{
 	//Effects : Sets the new Current Player 
 	//Modifies : CurrentPlayer to become the next player
 	public void setNewCurrentPlayer(){
-		currentPlayerIndex++;
-		currentPlayer = players.get(currentPlayerIndex % numOfPlayers);
+		if(currentPlayer.rollsAgain()) {
+			currentPlayer.setRollsAgain(false);
+		}else {
+			currentPlayerIndex++;
+			currentPlayer = players.get(currentPlayerIndex % numOfPlayers);
+		}
 	}
-	public ArrayList<Player> GetPlayersArray() {
-		return players;
-	}
+
 	public int GetNumOfPlayers () {
 		return this.numOfPlayers;
 	}
 	public MoveHandler getBoardMoveHandler() {
 		return this.moveHandler;
 	}
+	
 	//Effects : Returns the current Player
 	public Player getCurrentPlayer(){
 		return this.currentPlayer;

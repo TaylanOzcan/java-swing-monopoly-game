@@ -32,23 +32,23 @@ class SpeedDieTesting {
 	void testGetValue() {
 		SpeedDie Speeddie =new SpeedDie();
 		Random rnd = new Random ();
-		Assert.assertTrue(( -3 < Speeddie.getValue() && Speeddie.getValue() < 4));
+		assertTrue(( -3 < Speeddie.roll() && Speeddie.roll() < 4));
 	}
 
 	@Test
 	void testDoSpecialMrMonopoly()  {
 		SpeedDie Speeddie =new SpeedDie();
-if (Speeddie.getValue() == -1 || Speeddie.getValue() == 0)
-		assertEquals(Speeddie.DoSpecial(),"Mr Monopoly");
-if (Speeddie.getValue() == -2)
-	assertEquals(Speeddie.DoSpecial(),"Bus Icon");
+		if (Speeddie.roll() == -1 || Speeddie.roll() == 0)
+			assertEquals(Speeddie.DoSpecial(),"Mr Monopoly");
+		if (Speeddie.roll() == -2)
+			assertEquals(Speeddie.DoSpecial(),"Bus Icon");
 
 	}
 
 	@Test
 	void testGetCurrentValue() {
 		SpeedDie Speeddie =new SpeedDie();
-		Assert.assertTrue(( -3 < Speeddie.getValue() && Speeddie.getValue() < 4));
+		assertTrue(( -3 < Speeddie.roll() && Speeddie.roll() < 4));
 	}
 
 }

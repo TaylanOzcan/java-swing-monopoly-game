@@ -11,9 +11,8 @@ public class RegularDie implements Die {
 	}
 
 	@Override
-	public int getValue() {
+	public int roll() {
 		// REQUIRES : The Die.
-		
 		// EFFECTS : Returns the die's face value.
 		faceValue = rnd.nextInt(6) + 1;
 		return faceValue;
@@ -22,8 +21,9 @@ public class RegularDie implements Die {
 	public int getCurrentValue(){
 		return faceValue;
 	}
+	
 	public boolean repOk() {
-		if (faceValue>6 || faceValue < 1) {
+		if (faceValue > 6 || faceValue < 1) {
 			return false;
 		}return true;
 	}
