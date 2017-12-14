@@ -20,7 +20,7 @@ public class BoardTesting {
 
 	@Test
 	public void testBoard() {
-		ArrayList r = new ArrayList<String> ( );
+		ArrayList<String> r = new ArrayList<String>();
 		r.add("test1");
 		Board b = new Board(r);
 		assertNotNull(b);
@@ -28,7 +28,7 @@ public class BoardTesting {
 
 	@Test
 	public void testcreatePlayers() {
-		ArrayList r = new ArrayList<String> ( );
+		ArrayList<String> r = new ArrayList<String>();
 		r.add("test1");
 		r.add("test2");
 		r.add("test3");
@@ -38,7 +38,7 @@ public class BoardTesting {
 
 	@Test
 	public void testSetNewCurrentPlayer() {
-		ArrayList r = new ArrayList<String> ( );
+		ArrayList<String> r = new ArrayList<String>();
 		r.add("test1");
 		r.add("test2");
 		r.add("test3");
@@ -50,21 +50,21 @@ public class BoardTesting {
 	}
 
 	@Test
-	public void testRollDice() {
-		ArrayList r = new ArrayList<String> ( );
+	public void testRollDiceAndMove() {
+		ArrayList<String> r = new ArrayList<String>();
 		r.add("test1");
 		r.add("test2");
 		r.add("test3");
 		Board tb = new Board(r);
 		int	OldPlayerLocation = tb.getCurrentPlayer().getLocation();
-		tb.rollDice();
+		tb.rollDiceAndMove();
 		int NewPlayerLocation = tb.getCurrentPlayer().getLocation();
 		assertNotSame (OldPlayerLocation,NewPlayerLocation);
 	}
 
 	@Test
 	public void testBuildHouse() {
-		ArrayList r = new ArrayList<String> ( );
+		ArrayList<String> r = new ArrayList<String>();
 		r.add("test1");
 		r.add("test2");
 		r.add("test3");
@@ -79,7 +79,7 @@ public class BoardTesting {
 
 	@Test
 	public void testIsBuyable() {
-		ArrayList r = new ArrayList<String> ( );
+		ArrayList<String> r = new ArrayList<String>();
 		r.add("test1");
 		r.add("test2");
 		r.add("test3");
@@ -92,7 +92,7 @@ public class BoardTesting {
 
 	@Test
 	public void testIsBuildable() {
-		ArrayList r = new ArrayList<String> ( );
+		ArrayList<String> r = new ArrayList<String>();
 		r.add("test1");
 		r.add("test2"); 
 		r.add("test3");

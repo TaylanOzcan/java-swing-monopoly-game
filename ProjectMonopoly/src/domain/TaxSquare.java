@@ -1,7 +1,14 @@
 package domain;
 
 public class TaxSquare implements Square {
-
+	private int id;
+	private String name;
+	
+	public TaxSquare(int id, String name){
+		this.id = id;
+		this.name = name;
+	}
+	
 	@Override
 	public void getAction(Player p) {
 		// TODO Auto-generated method stub
@@ -10,14 +17,12 @@ public class TaxSquare implements Square {
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		return name;
 	}
 
 	@Override
 	public int getId() {
-		// TODO Auto-generated method stub
-		return 0;
+		return id;
 	}
 
 }

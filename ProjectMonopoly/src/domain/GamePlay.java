@@ -17,8 +17,8 @@ public class GamePlay implements Serializable{
 		board = new Board(playerNames);
 	}
 
-	public void rollDice(){
-		board.rollDice();
+	public void rollDiceAndMove(){
+		board.rollDiceAndMove();
 	}
 
 	public boolean buy(){

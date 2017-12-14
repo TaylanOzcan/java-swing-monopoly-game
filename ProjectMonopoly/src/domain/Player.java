@@ -144,7 +144,7 @@ public class Player implements Serializable{
 	public int move(int rollValue) {
 		// MODIFIES : this.location
 		// EFFECTS : returns modified location
-		this.location = (this.location + rollValue) % 40;
+		this.location = (this.location + rollValue); // % 40;
 		return this.location;
 	}
 

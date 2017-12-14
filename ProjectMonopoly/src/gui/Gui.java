@@ -17,6 +17,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -39,6 +40,10 @@ public class Gui implements ActionListener, Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 
+	private static final int INNER_LAYER = 0;
+	private static final int MIDDLE_LAYER = 1;
+	private static final int OUTER_LAYER = 2;
+	
 	private JFrame mainFrame;
 	private JPanel mainPanel, boardPanel, menuPanel, menuButtonsPanel, gameButtonsPanel, dicePanel, infoPanel;
 	private JButton newGameButton, loadButton, saveButton, rollButton, buyTitleDeedsButton, endTurnButton, buildHouseButton;
@@ -114,50 +119,67 @@ public class Gui implements ActionListener, Serializable{
 		Color boardColor = new Color (192,226,202);
 		boardPanel.setBackground(boardColor);
 
-		tokenPlacementPanels = new JPanel[40];
-		buildingContainerPanels = new BuildingContainerPanel[40];
-
-		for(int i=0; i<40; i++){
+		tokenPlacementPanels = new JPanel[120];
+		buildingContainerPanels = new BuildingContainerPanel[120];
+		addPanelsIntoBoard(MIDDLE_LAYER);
+		addPanelsIntoBoard(INNER_LAYER);
+		addPanelsIntoBoard(OUTER_LAYER);
+	}
+	
+	public void addPanelsIntoBoard(int layer) {
+		int step=0, startIndex=0, endIndex=0, startLoc=0, height=114, width=57;
+		
+		switch(layer) {
+		case INNER_LAYER: startIndex=40;endIndex=64;startLoc=638;height=108;width=55;break;
+		case MIDDLE_LAYER: startIndex=0;endIndex=40;startLoc=756;break;
+		case OUTER_LAYER: startIndex=64;endIndex=120;startLoc=877;height=116;width=58;break;
+		}
+		
+		step = (endIndex - startIndex)/4;
+		
+		for(int i=startIndex; i<endIndex; i++){
 			JPanel currentPanel = new JPanel();
 			currentPanel.setOpaque(false);
+			//currentPanel.setBorder(BorderFactory.createLineBorder(Color.red));
 
 			char direction = '0';
+			int stepDistance = (startIndex==0 ? (i%step)*width : ((i%startIndex)%step)*width);
 
-			if(i == 0){
-				currentPanel.setSize(114, 114);
+			if(i == startIndex){
+				currentPanel.setSize(width*2, height);
 				currentPanel.setLayout(new GridLayout(4,0));
-				currentPanel.setLocation(756, 756);
-			}else if(i < 10){
-				currentPanel.setSize(57, 114);
+				currentPanel.setLocation(startLoc, startLoc);
+			}else if(i < startIndex + step){
+				currentPanel.setSize(width, height);
 				currentPanel.setLayout(new GridLayout(4,0));
-				currentPanel.setLocation(756 - (i%10)*57, 756);
+				currentPanel.setLocation(startLoc - stepDistance, startLoc);
 				direction = 's';
-			}else if(i == 10){
-				currentPanel.setSize(114, 114);
+			}else if(i == startIndex + step){
+				currentPanel.setSize(height, width*2);
 				currentPanel.setLayout(new GridLayout(4,0));
-				currentPanel.setLocation(129, 756);
-			}else if(i < 20){
-				currentPanel.setSize(114, 57);
+				currentPanel.setLocation(startLoc - ((step+1) * width), startLoc);
+			}else if(i < startIndex + 2*step){
+				currentPanel.setSize(height, width);
 				currentPanel.setLayout(new GridLayout(0,4));
-				currentPanel.setLocation(129, 756 - (i%10)*57);
+				currentPanel.setLocation(startLoc - ((step+1) * width), startLoc - stepDistance);
 				direction = 'e';
-			}else if(i == 20){
-				currentPanel.setSize(114, 114);
+			}else if(i == startIndex + 2*step){
+				currentPanel.setSize(width*2, height);
 				currentPanel.setLayout(new GridLayout(4,0));
-				currentPanel.setLocation(129, 129);
-			}else if(i < 30){
-				currentPanel.setSize(57, 114);
+				currentPanel.setLocation(startLoc - ((step+1) * width), startLoc - ((step+1) * width));
+			}else if(i < startIndex + 3*step){
+				currentPanel.setSize(width, height);
 				currentPanel.setLayout(new GridLayout(4,0));
-				currentPanel.setLocation(186 + (i%10)*57, 129);
+				currentPanel.setLocation(startLoc - ((step+1) * width) + width + stepDistance, startLoc - ((step+1) * width));
 				direction = 'n';
-			}else if(i == 30){
-				currentPanel.setSize(114, 114);
+			}else if(i == startIndex + 3*step){
+				currentPanel.setSize(height, width*2);
 				currentPanel.setLayout(new GridLayout(4,0));
-				currentPanel.setLocation(756, 129);
-			}else if(i < 40){
-				currentPanel.setSize(114, 57);
+				currentPanel.setLocation(startLoc, startLoc - ((step+1) * width));
+			}else if(i < endIndex){
+				currentPanel.setSize(height, width);
 				currentPanel.setLayout(new GridLayout(0,4));
-				currentPanel.setLocation(756, 186 + (i%10)*57);
+				currentPanel.setLocation(startLoc, startLoc - ((step+1) * width) + width + stepDistance);
 				direction = 'w';
 			}
 
@@ -168,7 +190,7 @@ public class Gui implements ActionListener, Serializable{
 			BuildingContainerPanel buildingContainerPanel = new BuildingContainerPanel(direction);
 			buildingContainerPanels[i] = buildingContainerPanel;
 
-			if(i < 30 && i > 10){
+			if(direction=='e' || direction=='n'){
 				currentPanel.add(new JLabel());
 				currentPanel.add(tokenPlacementPanel);
 				currentPanel.add(new JLabel());
@@ -297,7 +319,7 @@ public class Gui implements ActionListener, Serializable{
 			buildHouseButton.setEnabled(true);
 			gamePlay.playGame(playerNames);
 		}else if(e.getSource() == rollButton){
-			gamePlay.rollDice();
+			gamePlay.rollDiceAndMove();
 			endTurnButton.setEnabled(true);
 			rollButton.setEnabled(false);
 			refreshDice(true);

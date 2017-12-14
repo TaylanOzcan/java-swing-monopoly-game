@@ -57,7 +57,7 @@ public class Board implements Serializable{
 		return this.currentPlayer;
 	}
 	//Effects : delegates the move handler to move the player
-	public void rollDice() {
+	public void rollDiceAndMove() {
 		moveHandler.movePlayer(currentPlayer);
 	}
 	//Effects : returns a boolean of whether the player bought or not 	 
