@@ -1,0 +1,27 @@
+package domain;
+
+public class SubwaySquare implements Square{
+	
+	private int id;
+	private String name;
+	
+	public SubwaySquare(int id, String name){
+		this.id = id;
+		this.name = name;
+	}
+	
+	@Override
+	public void getAction(Player p) {
+		// subway actions
+	}
+	
+	@Override
+	public String getName() {
+		return name;
+	}
+
+	@Override
+	public int getId() {
+		return id;
+	}
+}

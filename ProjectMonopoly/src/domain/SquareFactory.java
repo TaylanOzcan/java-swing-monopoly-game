@@ -9,7 +9,7 @@ public class SquareFactory {
 
 	private SquareFactory() {
 		// EFFECTS : Creates squares.
-		squares[0] = new MoneyGiverSquare(0, "GO", 200);
+		squares[0] = new RegularSquare(0, "GO");
 		squares[1] = new StreetSquare(1, "MEDITERRANEAN AVENUE", 30, 45, 60, 75, 100, 150, 2, 30, new Color(100,10,100));
 		squares[2] = new CommunityChestSquare(2, "COMMUNITY CHEST");
 		squares[3] = new StreetSquare(3, "BALTIC AVENUE", 30, 45, 60, 75, 100, 150, 2, 30, new Color(100,10,100));
@@ -19,7 +19,7 @@ public class SquareFactory {
 		squares[7] = new ChanceSquare(7, "CHANCE");
 		squares[8] = new StreetSquare(8, "VERMONT AVENUE", 30, 45, 60, 75, 100, 150, 2, 30, new Color(10,20,180));
 		squares[9] = new StreetSquare(9, "CONNECTICUT AVENUE", 30, 45, 60, 75, 100, 150, 2, 30, new Color(10,20,180));
-		squares[10] = new RegularSquare(10, "10");
+		squares[10] = new RegularSquare(10, "Jail");
 		squares[11] = new StreetSquare(11, "ST. CHARLES PLACE", 30, 45, 60, 75, 100, 150, 2, 30, new Color(200,10,180));
 		squares[12] = new RegularSquare(12, "12");
 		squares[13] = new StreetSquare(13, "STATES AVENUE", 30, 45, 60, 75, 100, 150, 2, 30, new Color(200,10,180));
@@ -55,7 +55,7 @@ public class SquareFactory {
 		squares[43] = new TestSquare(43, "");
 		squares[44] = new TestSquare(44, "");
 		squares[45] = new TestSquare(45, "");
-		squares[46] = new TestSquare(46, "");
+		squares[46] = new BonusSquare(46, "Bonus");
 		squares[47] = new TestSquare(47, "");
 		squares[48] = new TestSquare(48, "");
 		squares[49] = new TestSquare(49, "");
@@ -63,17 +63,17 @@ public class SquareFactory {
 		squares[51] = new TestSquare(51, "");
 		squares[52] = new TestSquare(52, "");
 		squares[53] = new TestSquare(53, "");
-		squares[54] = new TestSquare(54, "");
+		squares[54] = new TaxRefundSquare(54, "Tax Refund");
 		squares[55] = new TestSquare(55, "");
 		squares[56] = new TestSquare(56, "");
 		squares[57] = new TestSquare(57, "");
-		squares[58] = new TestSquare(58, "");
+		squares[58] = new TunnelSquare(58, "Holland Tunnel 1");
 		squares[59] = new TestSquare(59, "");
 		squares[60] = new TestSquare(60, "");
 		squares[61] = new TestSquare(61, "");
 		squares[62] = new TestSquare(62, "");
 		squares[63] = new TestSquare(63, "");
-		squares[64] = new TestSquare(64, "");
+		squares[64] = new SubwaySquare(64, "Subway");
 		squares[65] = new TestSquare(65, "");
 		squares[66] = new TestSquare(66, "");
 		squares[67] = new TestSquare(67, "");
@@ -87,7 +87,7 @@ public class SquareFactory {
 		squares[75] = new TestSquare(75, "");
 		squares[76] = new TestSquare(76, "");
 		squares[77] = new TestSquare(77, "");
-		squares[78] = new TestSquare(78, "");
+		squares[78] = new TunnelSquare(78, "Holland Tunnel 2");
 		squares[79] = new TestSquare(79, "");
 		squares[80] = new TestSquare(80, "");
 		squares[81] = new TestSquare(81, "");
@@ -101,7 +101,7 @@ public class SquareFactory {
 		squares[89] = new TestSquare(89, "");
 		squares[90] = new TestSquare(90, "");
 		squares[91] = new TestSquare(91, "");
-		squares[92] = new TestSquare(92, "");
+		squares[92] = new RegularSquare(92, "Payday");
 		squares[93] = new TestSquare(93, "");
 		squares[94] = new TestSquare(94, "");
 		squares[95] = new TestSquare(95, "");
@@ -115,7 +115,7 @@ public class SquareFactory {
 		squares[103] = new TestSquare(103, "");
 		squares[104] = new TestSquare(104, "");
 		squares[105] = new TestSquare(105, "");
-		squares[106] = new TestSquare(106, "");
+		squares[106] = new GoToJailSquare(106, "Go To Jail");
 		squares[107] = new TestSquare(107, "");
 		squares[108] = new TestSquare(108, "");
 		squares[109] = new TestSquare(109, "");
@@ -124,7 +124,7 @@ public class SquareFactory {
 		squares[112] = new TestSquare(112, "");
 		squares[113] = new TestSquare(113, "");
 		squares[114] = new TestSquare(114, "");
-		squares[115] = new TestSquare(115, "");
+		squares[115] = new BirthdayGiftSquare(115, "Birthday Gift");
 		squares[116] = new TestSquare(116, "");
 		squares[117] = new TestSquare(117, "");
 		squares[118] = new TestSquare(118, "");

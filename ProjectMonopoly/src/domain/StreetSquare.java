@@ -7,7 +7,7 @@ public class StreetSquare extends PropertySquare implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	int house1Price;
 	int house2Price;
 	int house3Price;
@@ -19,6 +19,7 @@ public class StreetSquare extends PropertySquare implements Serializable{
 	int nSkyscrapers;
 	Color color;
 	boolean isBuildable;
+	boolean isMortgaged;
 
 	public StreetSquare(int id, String name, int house1Price, int house2Price, int house3Price, 
 			int house4Price, int hotelPrice, int skyscraperPrice, int rent, int price, Color color){
@@ -35,11 +36,11 @@ public class StreetSquare extends PropertySquare implements Serializable{
 		this.color = color;
 		this.isBuildable = true;
 	}
-	
+
 	@Override
 	public void getAction(Player p) {
-		// TODO Auto-generated method stub
-
+		// pay rent if owned by another player
+		// notify gui to activate buy button if not owned
 	}
 
 	public int build(){
@@ -79,7 +80,7 @@ public class StreetSquare extends PropertySquare implements Serializable{
 	public int getHotelPrice() {
 		return hotelPrice;
 	}
-	
+
 	public int getnHouses() {
 		return nHouses;
 	}
@@ -96,11 +97,11 @@ public class StreetSquare extends PropertySquare implements Serializable{
 
 	@Override
 	public String getName() {
-		return this.name;
+		return name;
 	}
 	@Override
 	public int getId() {
-		return this.id;
+		return id;
 	}
 
 	public boolean isBuildable() {
@@ -112,16 +113,18 @@ public class StreetSquare extends PropertySquare implements Serializable{
 	}
 	public boolean repOk() {
 		if(this.hotelPrice <= 0 || this.house1Price <= 0 || this.house2Price <= 0 || this.house3Price <= 0 || this.house4Price <= 0 || this.id < 0 || this.name == null || this.price <= 0 || this.rent <= 0 || this.skyscraperPrice <= 0) {
-		return false;
-	}
+			return false;
+		}
 		return true;
 
-}
+	}
 
 	@Override
 	public String toString() {
 		return "StreetSquare [house1Price=" + house1Price + ", house2Price=" + house2Price + ", house3Price="
 				+ house3Price + ", house4Price=" + house4Price + ", hotelPrice=" + hotelPrice + ", skyscraperPrice="
 				+ skyscraperPrice + ", nHouses=" + nHouses + ", nHotels=" + nHotels + ", nSkyscrapers=" + nSkyscrapers
-				+ ", color=" + color + ", isBuildable=" + isBuildable + "]";
-	}}
+				+ ", color=" + color + ", isBuildable=" + isBuildable + ", isMortgaged=" + isMortgaged + "]";
+	}
+
+}

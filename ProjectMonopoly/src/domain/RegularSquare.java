@@ -11,7 +11,6 @@ public class RegularSquare implements Square {
 
 	@Override
 	public void getAction(Player p) {
-		// TODO Auto-generated method stub
 		
 	}
 

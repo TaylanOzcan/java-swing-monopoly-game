@@ -6,8 +6,12 @@ public abstract class PropertySquare implements Square {
 	int price;
 	int rent;
 	Player owner;
-	boolean isOwned ;
-	boolean isMortgage;
+	boolean isOwned;
+	
+	public PropertySquare() {
+		this.isOwned = false;
+		this.owner = null;
+	}
 	
 	public boolean isOwned(){
 		return isOwned;
@@ -39,6 +43,6 @@ public abstract class PropertySquare implements Square {
 	@Override
 	public String toString() {
 		return "PropertySquare [id=" + id + ", name=" + name + ", price=" + price + ", rent=" + rent + ", owner="
-				+ owner + ", isOwned=" + isOwned + ", isMortgage=" + isMortgage + "]";
+				+ owner + ", isOwned=" + isOwned + "]";
 	}
 }

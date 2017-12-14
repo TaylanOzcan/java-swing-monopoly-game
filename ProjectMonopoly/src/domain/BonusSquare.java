@@ -1,20 +1,19 @@
 package domain;
 
-public class MoneyGiverSquare implements Square {
+public class BonusSquare implements Square {
 
-	private int amountToGive;
 	private int id;
 	private String name;
+	private final int AMOUNT_TO_GIVE = 50;
 	
-	public MoneyGiverSquare(int id, String name, int amountToGive){
+	public BonusSquare(int id, String name){
 		this.id = id;
 		this.name = name;
-		this.amountToGive = amountToGive;
 	}
 	
 	@Override
 	public void getAction(Player p) {
-		p.EditBalance("Increase", amountToGive);
+		p.increaseBalance(AMOUNT_TO_GIVE);
 	}
 
 	@Override
