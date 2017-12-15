@@ -20,6 +20,7 @@ public class Player implements Serializable{
 	private ArrayList<String> communityCards;
 	private boolean inJail;
 	private boolean rollsAgain;
+	private boolean reverseDirection;
 	private ArrayList<PropertySquare> ownedSquares;
 
 
@@ -29,10 +30,19 @@ public class Player implements Serializable{
 		this.balance = 3200;
 		this.inJail = false;
 		this.rollsAgain = false;
+		this.reverseDirection = false;
 		this.vouchers = new ArrayList<String>(5);
 		this.chanceCards = new ArrayList<String>(5);
 		this.communityCards = new ArrayList<String>(5);	
 		this.ownedSquares = new ArrayList<PropertySquare>(10);
+	}
+
+	public boolean isReverseDirection() {
+		return reverseDirection;
+	}
+
+	public void setReverseDirection(boolean reverseDirection) {
+		this.reverseDirection = reverseDirection;
 	}
 
 	public boolean IsCurrent() {

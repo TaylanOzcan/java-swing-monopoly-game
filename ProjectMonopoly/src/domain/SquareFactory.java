@@ -71,7 +71,7 @@ public class SquareFactory {
 		squares[59] = new TestSquare(59, "");
 		squares[60] = new TestSquare(60, "");
 		squares[61] = new TestSquare(61, "");
-		squares[62] = new TestSquare(62, "");
+		squares[62] = new ReverseDirectionSquare(62, "Reverse Direction");
 		squares[63] = new TestSquare(63, "");
 		squares[64] = new SubwaySquare(64, "Subway");
 		squares[65] = new TestSquare(65, "");
