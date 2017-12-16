@@ -122,8 +122,8 @@ public class Gui implements ActionListener, Serializable{
 		initializeBoard();
 		initializeMenu();
 
-		mainPanel.setPreferredSize(mainPanel.getPreferredSize());
-		mainPanel.setBackground(new Color (192,226,202));
+		//mainPanel.setPreferredSize(mainPanel.getPreferredSize());
+		//mainPanel.setBackground(new Color (192,226,202));
 
 		mainFrame.add(mainPanel);
 		//mainFrame.pack();
@@ -296,6 +296,10 @@ public class Gui implements ActionListener, Serializable{
 		menuPanel.add(bottomMenuPanel);
 		menuPanel.setBorder(new EmptyBorder(20, 40, 20, 40));
 
+		JLabel emptyLabel = new JLabel();//
+		emptyLabel.setPreferredSize(new Dimension(50,1000));//
+		mainPanel.add(emptyLabel);//
+		
 		mainPanel.add(menuPanel);
 		menuPanel.setPreferredSize(new Dimension(600,1000));
 	}
