@@ -11,7 +11,7 @@ public class TestSquare implements Square {
 	
 	@Override
 	public void getAction(Player p) {
-		System.out.println("test square " + id + "\n");
+		//System.out.println("test square " + id + "\n");
 	}
 
 	@Override

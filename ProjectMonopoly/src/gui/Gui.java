@@ -45,8 +45,10 @@ public class Gui implements ActionListener, Serializable{
 	private static final int OUTER_LAYER = 2;
 	
 	private JFrame mainFrame;
-	private JPanel mainPanel, boardPanel, menuPanel, menuButtonsPanel, gameButtonsPanel, dicePanel, infoPanel;
-	private JButton newGameButton, loadButton, saveButton, rollButton, buyTitleDeedsButton, endTurnButton, buildHouseButton;
+	private JPanel mainPanel, boardPanel, menuPanel, menuButtonsPanel,
+						gameButtonsPanel, dicePanel, infoPanel;
+	private JButton newGameButton, loadButton, saveButton, rollButton,
+						buyTitleDeedsButton, endTurnButton, buildHouseButton, exitButton;
 	private JLabel[] tokenLabels, playerInfoLabels, diceLabels;
 	private JLabel currentPlayerLabel;
 
@@ -71,6 +73,22 @@ public class Gui implements ActionListener, Serializable{
 			g.drawImage(image, 0, 0, 1000, 1000, this);
 		}
 	}
+	
+	class MyMainPanel extends JPanel{
+		private static final long serialVersionUID = 1L;
+		private BufferedImage image;
+		public MyMainPanel() {
+			try{
+				image = ImageIO.read(new File("bg_mainPanel.jpg"));
+			}catch(IOException e){
+				e.printStackTrace();
+			}
+		}
+		public void paintComponent(Graphics g){
+			super.paintComponent(g);
+			g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
+		}
+	}
 
 	public Gui(){
 		this.gamePlay = new GamePlay();
@@ -86,6 +104,7 @@ public class Gui implements ActionListener, Serializable{
 		endTurnButton.addActionListener(this);
 		buyTitleDeedsButton.addActionListener(this);
 		buildHouseButton.addActionListener(this);
+		exitButton.addActionListener(this);
 	}
 
 	public void initializeGui(){
@@ -96,9 +115,9 @@ public class Gui implements ActionListener, Serializable{
 			}        
 		});
 
-		mainPanel = new JPanel();
+		mainPanel = new MyMainPanel();
 		mainPanel.setLayout(new GridBagLayout());
-		mainPanel.setBackground(Color.GRAY);
+		//mainPanel.setBackground(Color.GRAY);
 
 		initializeBoard();
 		initializeMenu();
@@ -107,7 +126,9 @@ public class Gui implements ActionListener, Serializable{
 		mainPanel.setBackground(new Color (192,226,202));
 
 		mainFrame.add(mainPanel);
-		mainFrame.pack();
+		//mainFrame.pack();
+		mainFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		mainFrame.setUndecorated(true);
 		mainFrame.setVisible(true);
 	}
 
@@ -235,6 +256,7 @@ public class Gui implements ActionListener, Serializable{
 		newGameButton = new JButton("New Game");
 		loadButton = new JButton("Load");
 		saveButton = new JButton("Save");
+		exitButton = new JButton("Exit");
 		rollButton = new JButton("Play Turn");
 		endTurnButton = new JButton("End Turn");
 		buyTitleDeedsButton = new JButton("Buy Title Deeds");
@@ -245,10 +267,11 @@ public class Gui implements ActionListener, Serializable{
 		buildHouseButton.setEnabled(false);
 		rollButton.setEnabled(false);
 
-		menuButtonsPanel.setLayout(new GridLayout(0, 3, 20, 0));
+		menuButtonsPanel.setLayout(new GridLayout(0, 4, 20, 0));
 		menuButtonsPanel.add(newGameButton);
 		menuButtonsPanel.add(saveButton);
 		menuButtonsPanel.add(loadButton);
+		menuButtonsPanel.add(exitButton);
 
 		gameButtonsPanel.setLayout(new GridLayout(0, 2, 20, 0));
 		gameButtonsPanel.add(buyTitleDeedsButton);
@@ -336,6 +359,8 @@ public class Gui implements ActionListener, Serializable{
 		}else if(e.getSource() == saveButton){
 			SaveAndLoad.save(this);
 			loadButton.setEnabled(true);
+		}else if(e.getSource() == exitButton) {
+			System.exit(0);			
 		}else if(e.getSource() == buyTitleDeedsButton){
 			if(gamePlay.buy()){
 				JOptionPane.showMessageDialog(
