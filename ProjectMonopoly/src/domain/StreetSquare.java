@@ -17,12 +17,12 @@ public class StreetSquare extends PropertySquare implements Serializable{
 	int nHouses;
 	int nHotels;
 	int nSkyscrapers;
-	Color color;
+	String color;
 	boolean isBuildable;
 	boolean isMortgaged;
 
 	public StreetSquare(int id, String name, int house1Price, int house2Price, int house3Price, 
-			int house4Price, int hotelPrice, int skyscraperPrice, int rent, int price, Color color){
+			int house4Price, int hotelPrice, int skyscraperPrice, int rent, int price, String color){
 		this.id = id;
 		this.name = name;
 		this.price = price;
@@ -39,7 +39,9 @@ public class StreetSquare extends PropertySquare implements Serializable{
 
 	@Override
 	public void getAction(Player p) {
-		// pay rent if owned by another player
+		if(isOwned() && owner != p) {
+			p.payRent(rent, owner);
+		}
 		// notify gui to activate buy button if not owned
 	}
 
@@ -91,7 +93,7 @@ public class StreetSquare extends PropertySquare implements Serializable{
 		return nSkyscrapers;
 	}
 
-	public Color getColor() {
+	public String getColor() {
 		return color;
 	}
 

@@ -43,12 +43,12 @@ public class Gui implements ActionListener, Serializable{
 	private static final int INNER_LAYER = 0;
 	private static final int MIDDLE_LAYER = 1;
 	private static final int OUTER_LAYER = 2;
-	
+
 	private JFrame mainFrame;
 	private JPanel mainPanel, boardPanel, menuPanel, menuButtonsPanel,
-						gameButtonsPanel, dicePanel, infoPanel;
+	gameButtonsPanel, dicePanel, infoPanel;
 	private JButton newGameButton, loadButton, saveButton, rollButton,
-						buyTitleDeedsButton, endTurnButton, buildHouseButton, exitButton;
+	buyTitleDeedsButton, endTurnButton, buildHouseButton, exitButton;
 	private JLabel[] tokenLabels, playerInfoLabels, diceLabels;
 	private JLabel currentPlayerLabel;
 
@@ -73,13 +73,13 @@ public class Gui implements ActionListener, Serializable{
 			g.drawImage(image, 0, 0, 1000, 1000, this);
 		}
 	}
-	
+
 	class MyMainPanel extends JPanel{
 		private static final long serialVersionUID = 1L;
 		private BufferedImage image;
 		public MyMainPanel() {
 			try{
-				image = ImageIO.read(new File("bg_mainPanel.jpg"));
+				image = ImageIO.read(new File("bg_mainPanel.png"));
 			}catch(IOException e){
 				e.printStackTrace();
 			}
@@ -146,18 +146,18 @@ public class Gui implements ActionListener, Serializable{
 		addPanelsIntoBoard(INNER_LAYER);
 		addPanelsIntoBoard(OUTER_LAYER);
 	}
-	
+
 	public void addPanelsIntoBoard(int layer) {
 		int step=0, startIndex=0, endIndex=0, startLoc=0, height=114, width=57;
-		
+
 		switch(layer) {
 		case INNER_LAYER: startIndex=40;endIndex=64;startLoc=638;height=108;width=55;break;
 		case MIDDLE_LAYER: startIndex=0;endIndex=40;startLoc=756;break;
 		case OUTER_LAYER: startIndex=64;endIndex=120;startLoc=877;height=116;width=58;break;
 		}
-		
+
 		step = (endIndex - startIndex)/4;
-		
+
 		for(int i=startIndex; i<endIndex; i++){
 			JPanel currentPanel = new JPanel();
 			currentPanel.setOpaque(false);
@@ -232,11 +232,15 @@ public class Gui implements ActionListener, Serializable{
 		dicePanel = new JPanel();
 		infoPanel = new JPanel();
 		gameButtonsPanel = new JPanel();
-		currentPlayerLabel = new JLabel("<html><center><span style='font-size:20px'>" 
-				+ "Welcome to Monopoly <br></span></center></html>", SwingConstants.CENTER);
+		currentPlayerLabel = new JLabel("<html><center><span style='font-size:32px'>" 
+				+ "Ultimate Monopoly</span>"
+				+ "<span style='font-size:11px'><br>prepared by team RND3 "
+				+ "for COMP 302 term project</span>"
+				+ "</center></html>", SwingConstants.CENTER);
+		currentPlayerLabel.setForeground(Color.WHITE);
 
 		JPanel topMenuPanel = new JPanel();
-		topMenuPanel.setLayout(new GridLayout(4, 0, 0,40));
+		topMenuPanel.setLayout(new GridLayout(4, 0, 0, 40));
 		JPanel bottomMenuPanel = new JPanel();
 
 		diceLabels = new JLabel[3];
@@ -272,10 +276,12 @@ public class Gui implements ActionListener, Serializable{
 		menuButtonsPanel.add(saveButton);
 		menuButtonsPanel.add(loadButton);
 		menuButtonsPanel.add(exitButton);
+		menuButtonsPanel.setOpaque(false);
 
 		gameButtonsPanel.setLayout(new GridLayout(0, 2, 20, 0));
 		gameButtonsPanel.add(buyTitleDeedsButton);
 		gameButtonsPanel.add(buildHouseButton);
+		gameButtonsPanel.setOpaque(false);
 
 		dicePanel.setLayout(new GridLayout(0, 5, 20, 20));
 		dicePanel.add(rollButton);
@@ -283,15 +289,18 @@ public class Gui implements ActionListener, Serializable{
 		dicePanel.add(diceLabels[1]); // regular die 2
 		dicePanel.add(diceLabels[2]); // speed die
 		dicePanel.add(endTurnButton);
+		dicePanel.setOpaque(false);
 
 		menuPanel.setLayout(new GridLayout(2, 0, 0, 20));
-		//menuPanel.setBackground(Color.GRAY);
+		menuPanel.setOpaque(false);
 
 		topMenuPanel.add(menuButtonsPanel);
 		topMenuPanel.add(new JPanel().add(currentPlayerLabel));
 		topMenuPanel.add(gameButtonsPanel);
 		topMenuPanel.add(dicePanel);
 		bottomMenuPanel.add(infoPanel);
+		topMenuPanel.setOpaque(false);
+		bottomMenuPanel.setOpaque(false);
 		menuPanel.add(topMenuPanel);
 		menuPanel.add(bottomMenuPanel);
 		menuPanel.setBorder(new EmptyBorder(20, 40, 20, 40));
@@ -299,7 +308,7 @@ public class Gui implements ActionListener, Serializable{
 		JLabel emptyLabel = new JLabel();//
 		emptyLabel.setPreferredSize(new Dimension(50,1000));//
 		mainPanel.add(emptyLabel);//
-		
+
 		mainPanel.add(menuPanel);
 		menuPanel.setPreferredSize(new Dimension(600,1000));
 	}
@@ -310,8 +319,22 @@ public class Gui implements ActionListener, Serializable{
 
 		if(e.getSource() == newGameButton){
 			String input = JOptionPane.showInputDialog(
-					null, "How many players are you gonna play with ?");
-			int inputNumPlayers = Integer.parseInt(input);
+					null, "Select the number of players");
+
+			int inputNumPlayers;
+			try{
+				inputNumPlayers = Integer.parseInt(input);
+				if(inputNumPlayers<2 || inputNumPlayers>8) {
+					JOptionPane.showMessageDialog(
+							null, "Number of players must be between 2 and 8.");
+					return;
+				}
+			}catch(NumberFormatException nfe) {
+				JOptionPane.showMessageDialog(
+						null, "You must enter a number.");
+				return;
+			}
+
 			playerInfoLabels = new JLabel[inputNumPlayers];
 			tokenLabels = new JLabel[inputNumPlayers];
 			playerNames = new ArrayList<String>(inputNumPlayers);
@@ -364,7 +387,13 @@ public class Gui implements ActionListener, Serializable{
 			SaveAndLoad.save(this);
 			loadButton.setEnabled(true);
 		}else if(e.getSource() == exitButton) {
-			System.exit(0);			
+			int dialogButton = JOptionPane.YES_NO_OPTION;
+			int dialogResult = JOptionPane.showConfirmDialog(null, "Do you want to exit the game?", "Exit",dialogButton);
+			if(dialogResult == JOptionPane.YES_OPTION){
+				System.exit(0);
+			}else {
+				return;
+			}
 		}else if(e.getSource() == buyTitleDeedsButton){
 			if(gamePlay.buy()){
 				JOptionPane.showMessageDialog(
@@ -372,6 +401,7 @@ public class Gui implements ActionListener, Serializable{
 			}else{
 				JOptionPane.showMessageDialog(
 						null, "You cannot buy this square.");
+				return;
 			}
 		}else if(e.getSource() == buildHouseButton){
 			ArrayList<String> squareNames = gamePlay.getOwnedSquareNames();
@@ -393,12 +423,14 @@ public class Gui implements ActionListener, Serializable{
 			case JOptionPane.OK_OPTION:
 				if(comboBox.getSelectedIndex() < 0){
 					JOptionPane.showMessageDialog(
-							null, "No squares selected.");					
+							null, "No squares selected.");	
+					return;
 				}else{
 					int index = gamePlay.buildHouse(comboBox.getSelectedIndex());
 					if(index < 0){
 						JOptionPane.showMessageDialog(
 								null, "You have already built a skyscraper.\nYou cannot build more.");
+						return;
 					}else{
 						buildingContainerPanels[index].addIcon();
 						JOptionPane.showMessageDialog(

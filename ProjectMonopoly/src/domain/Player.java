@@ -144,12 +144,13 @@ public class Player implements Serializable{
 		return ownedSquares;
 	}
 
-	public void payRent(int rentPrice){
+	public void payRent(int rentPrice, Player renter){
 		// REQUIRES : this.balance must be greater than rentPrice
 		// MODIFIES : this.balance
 		// EFFECTS : subtracts rentprice from this.balance
 		//and returns modified balance.
-		setBalance(balance-rentPrice) ;
+		this.increaseBalance(-rentPrice);
+		renter.increaseBalance(rentPrice);
 	}
 
 	public void addChanceCard(String newCard) {
