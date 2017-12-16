@@ -1,5 +1,6 @@
 package domain;
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SquareFactory {
@@ -88,7 +89,7 @@ public class SquareFactory {
 		squares[76] = new StreetSquare(76, "MAGAZINE STREET",40, 100, 300, 450, 600, 1100, 8, 120,"Light Green");
 		squares[77] = new StreetSquare(77, "BOURBON STREET",40, 100, 300, 450, 600, 1100, 8, 120,"Light Green");
 		squares[78] = new TunnelSquare(78, "Holland Tunnel 2");
-		squares[79] = new TestSquare(79, "AUCTION");
+		squares[79] = new AuctionSquare(79, "Auction");
 		squares[80] = new StreetSquare(80, "KATY FREEWAY",55, 160, 475, 650, 800, 1300, 11, 150,"Light Yellow");
 		squares[81] = new StreetSquare(81, "WESTHEIMER ROAD",55, 160, 475, 650, 800, 1300, 11, 150,"Light Yellow");
 		squares[82] = new TestSquare(82, "INTERNET SERVICE PROVIDER");
@@ -142,6 +143,16 @@ public class SquareFactory {
 
 	public Square[] getSquares(){
 		return squares;
+	}
+	
+	public ArrayList<Square> getUnownedStreetSquares() {
+		ArrayList<Square> unownedStreetSquares = new ArrayList<Square>(10);
+		for(int i=0; i<squares.length; i++) {
+			if(squares[i].getClass() == StreetSquare.class && !((StreetSquare)squares[i]).isOwned) {
+				unownedStreetSquares.add(squares[i]);
+			}
+		}
+		return unownedStreetSquares;
 	}
 
 }

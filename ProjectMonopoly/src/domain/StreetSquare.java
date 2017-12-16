@@ -39,10 +39,13 @@ public class StreetSquare extends PropertySquare implements Serializable{
 
 	@Override
 	public void getAction(Player p) {
-		if(isOwned() && owner != p) {
-			p.payRent(rent, owner);
+		if(isOwned()) {
+			if(owner != p) {
+				p.payRent(rent, owner);
+			}
+		}else {
+			// notify gui to activate buy button if not owned
 		}
-		// notify gui to activate buy button if not owned
 	}
 
 	public int build(){

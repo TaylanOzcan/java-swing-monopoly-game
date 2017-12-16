@@ -12,6 +12,7 @@ public class Board implements Serializable{
 	private int currentPlayerIndex;
 	private int numOfPlayers;
 	private MoveHandler moveHandler;
+	private ActionHandler actionHandler;
 
 	//Effects: It effects the creation process of players as the number is taken 
 	//from the playerNames size ,Makes new instance of the move handler, and makes
@@ -22,6 +23,7 @@ public class Board implements Serializable{
 		this.numOfPlayers = playerNames.size();
 		this.players = new ArrayList<Player>(numOfPlayers);
 		this.moveHandler = new MoveHandler();
+		this.actionHandler = new ActionHandler();
 		createPlayers(playerNames);
 		this.currentPlayerIndex = 0;
 		this.currentPlayer = players.get(0);
@@ -49,16 +51,20 @@ public class Board implements Serializable{
 		}
 	}
 
-	public int GetNumOfPlayers () {
+	public int getNumOfPlayers () {
 		return this.numOfPlayers;
 	}
+	
 	public MoveHandler getBoardMoveHandler() {
 		return this.moveHandler;
+	}
+	public ActionHandler getActionHandler() {
+		return this.actionHandler;
 	}
 
 	//Effects : Returns the current Player
 	public Player getCurrentPlayer(){
-		return this.currentPlayer;
+		return currentPlayer;
 	}
 	//Effects : delegates the move handler to move the player
 	public void rollDiceAndMove() {

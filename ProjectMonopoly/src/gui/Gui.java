@@ -30,10 +30,16 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import domain.ActionHandler;
+import domain.AuctionSquare;
 import domain.GamePlay;
+import domain.Player;
+import domain.PropertyListener;
 import domain.SaveAndLoad;
+import domain.Square;
+import domain.StreetSquare;
 
-public class Gui implements ActionListener, Serializable{
+public class Gui implements ActionListener, PropertyListener , Serializable{
 
 	/**
 	 * 
@@ -105,6 +111,11 @@ public class Gui implements ActionListener, Serializable{
 		buyTitleDeedsButton.addActionListener(this);
 		buildHouseButton.addActionListener(this);
 		exitButton.addActionListener(this);
+	}
+
+	private void addPropertyListeners() {
+		gamePlay.getBoard().getActionHandler().addPropertyListener(this);
+		((AuctionSquare) gamePlay.getSquare(79)).addPropertyListener(this);
 	}
 
 	public void initializeGui(){
@@ -232,10 +243,10 @@ public class Gui implements ActionListener, Serializable{
 		dicePanel = new JPanel();
 		infoPanel = new JPanel();
 		gameButtonsPanel = new JPanel();
-		currentPlayerLabel = new JLabel("<html><center><span style='font-size:32px'>" 
+		currentPlayerLabel = new JLabel("<html><center><span style='font-size:40px'>" 
 				+ "Ultimate Monopoly</span>"
-				+ "<span style='font-size:11px'><br>prepared by team RND3 "
-				+ "for COMP 302 term project</span>"
+				/*+ "<span style='font-size:11px'><br>prepared by team RND3 "
+				+ "for COMP 302 term project</span>"*/
 				+ "</center></html>", SwingConstants.CENTER);
 		currentPlayerLabel.setForeground(Color.WHITE);
 
@@ -368,16 +379,20 @@ public class Gui implements ActionListener, Serializable{
 			saveButton.setEnabled(true);
 			buildHouseButton.setEnabled(true);
 			gamePlay.playGame(playerNames);
+			addPropertyListeners();
 		}else if(e.getSource() == rollButton){
 			gamePlay.rollDiceAndMove();
 			endTurnButton.setEnabled(true);
 			rollButton.setEnabled(false);
 			refreshDice();
 		}else if(e.getSource() == endTurnButton){
-			gamePlay.endTurn();
 			endTurnButton.setEnabled(false);
 			rollButton.setEnabled(true);
 			buildHouseButton.setEnabled(true);
+			if(buyTitleDeedsButton.isEnabled()) {
+				gamePlay.checkAuction();
+			}
+			gamePlay.endTurn();
 			refreshDice();
 		}else if(e.getSource() == loadButton){
 			SaveAndLoad.load(this);
@@ -483,4 +498,100 @@ public class Gui implements ActionListener, Serializable{
 		boolean buyable = gamePlay.isBuyable();
 		buyTitleDeedsButton.setEnabled(buyable);
 	}
+
+	@Override
+	public void onPropertyEvent(Object source, String name, Object value) {
+		if(source.getClass()==ActionHandler.class) {
+			if(name.equals("startAuction")) {
+				int highestBid = 0;
+				ArrayList<Player> players = new ArrayList<Player>(8);
+				StreetSquare auctedSquare = (StreetSquare) value;
+
+				JOptionPane.showMessageDialog(
+						null, "Auction is starting for " + auctedSquare.getName());
+				
+				for(Player p: gamePlay.getPlayers()) {
+					players.add(p);
+				}
+				
+				int counter = players.size();
+				Player winner=players.get(counter-1);
+				
+				while(counter>1) {
+					for(int i=0; i<counter; i++) {
+						Player p = players.get(i);
+						int balance = p.getBalance();
+
+						while(true) {
+							String input = JOptionPane.showInputDialog(
+									null, p.getName() + ", place your bid for " + auctedSquare.getName() +
+											(highestBid>0 ? ("\n(Current highest bid is " + highestBid + ")") : ""));
+							int currentBid;
+							try{
+								currentBid = Integer.parseInt(input);
+								if(currentBid>highestBid) {
+									if(balance<currentBid) {
+										JOptionPane.showMessageDialog(
+												null, "You do not have enough balance");
+									}else {
+										highestBid = currentBid;
+										winner = p;
+										break;
+									}
+								}else {
+									JOptionPane.showMessageDialog(
+											null, "You must place a higher bet, or click cancel to withdraw");
+								}
+							}catch(NumberFormatException nfe) {
+								if(null==input) {
+									players.remove(p);
+									i--;
+									counter--;
+									break;
+								}else {
+									JOptionPane.showMessageDialog(
+											null, "You must enter a valid amount");
+								}
+							}
+						}	
+						if(players.size()==1) break;
+					}
+				}
+				JOptionPane.showMessageDialog(
+						null, "Winner is " + winner.getName() + " with " + highestBid + " $");
+				gamePlay.endAuction(winner, highestBid, auctedSquare);
+			}
+		}else if(source.getClass()==AuctionSquare.class) {
+			if(name.equals("auctionDialog")) {
+				ArrayList<Square> squares = gamePlay.getUnownedStreetSquares();
+				JPanel panel = new JPanel();
+				panel.add(new JLabel(((Player) value).getName() + ", select an unowned square for auction"));
+				DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
+
+				for(int i=0; i < squares.size(); i++){
+					model.addElement(squares.get(i).getName());
+				}
+
+				JComboBox<String> comboBox = new JComboBox<String>(model);
+				panel.add(comboBox);
+
+				int result = JOptionPane.showConfirmDialog(
+						null, panel, "Squares", JOptionPane.OK_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+				while(true) {
+					if(result == JOptionPane.OK_OPTION) {
+						int index = comboBox.getSelectedIndex();
+						if(index < 0){
+							JOptionPane.showMessageDialog(
+									null, "No squares selected.");	
+						}else{
+							gamePlay.startAuction((StreetSquare)squares.get(index));
+							break;
+						}
+					}
+				}
+			}
+		}
+	}
+	
 }

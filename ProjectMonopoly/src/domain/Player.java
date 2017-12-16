@@ -215,13 +215,21 @@ public class Player implements Serializable{
 		// EFFECTS : decreases this.balance by squareToBuy.getPrice()
 		// and adds squareToBuy to this.ownedSquares
 		PropertySquare squareToBuy = (PropertySquare)SquareFactory.getInstance().getSquare(this.location);
+		return buy(squareToBuy);
+	}
+	
+	public boolean buy(PropertySquare squareToBuy) {
 		if(this.balance < squareToBuy.getPrice()){
 			return false;
 		}else{
-			this.pay(squareToBuy.getPrice());
-			this.addOwnedSquare(squareToBuy);
-			return true;
+			return buyFor(squareToBuy, squareToBuy.getPrice());
 		}
+	}
+	
+	public boolean buyFor(PropertySquare squareToBuy, int price) {
+		this.pay(price);
+		this.addOwnedSquare(squareToBuy);
+		return true;
 	}
 	
 	public ArrayList<String> getVouchers() {
