@@ -41,5 +41,9 @@ public class SpeedDie implements Die {
 	public String toString() {
 		return "SpeedDie [faceValue=" + faceValue + ", rnd=" + rnd + "]";
 	}
+
+	public void setCurrentValue(int i) {
+		this.faceValue = i;
+	}
 	
 }

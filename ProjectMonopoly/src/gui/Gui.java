@@ -235,7 +235,7 @@ public class Gui implements ActionListener, Serializable{
 		newGameButton = new JButton("New Game");
 		loadButton = new JButton("Load");
 		saveButton = new JButton("Save");
-		rollButton = new JButton("Roll Dice");
+		rollButton = new JButton("Play Turn");
 		endTurnButton = new JButton("End Turn");
 		buyTitleDeedsButton = new JButton("Buy Title Deeds");
 		buildHouseButton = new JButton("Build House");
@@ -322,13 +322,13 @@ public class Gui implements ActionListener, Serializable{
 			gamePlay.rollDiceAndMove();
 			endTurnButton.setEnabled(true);
 			rollButton.setEnabled(false);
-			refreshDice(true);
+			refreshDice();
 		}else if(e.getSource() == endTurnButton){
 			gamePlay.endTurn();
 			endTurnButton.setEnabled(false);
 			rollButton.setEnabled(true);
 			buildHouseButton.setEnabled(true);
-			refreshDice(false);
+			refreshDice();
 		}else if(e.getSource() == loadButton){
 			SaveAndLoad.load(this);
 			gamePlay.playGame(playerNames);
@@ -388,9 +388,8 @@ public class Gui implements ActionListener, Serializable{
 
 	}
 
-	public void refreshDice(boolean rolled){
-		int[] values = {-3, -3, -3};
-		if(rolled) values = gamePlay.getDiceValues();
+	public void refreshDice(){
+		int[] values = gamePlay.getDiceValues();
 		for(int i=0 ; i<3; i++){
 			diceLabels[i].setText(DieFace.getFaceForValue(values[i]));
 		}

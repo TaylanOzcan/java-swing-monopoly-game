@@ -30,5 +30,11 @@ public class Cup {
 	public static int getSpeedValue() {
 		return speedDie.getCurrentValue();
 	}
+	
+	public static void clearFaceValues() {
+		regDie1.setCurrentValue(-3);
+		regDie2.setCurrentValue(-3);
+		speedDie.setCurrentValue(-3);
+	}
 
 }

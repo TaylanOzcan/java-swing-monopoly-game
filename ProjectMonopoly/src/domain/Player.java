@@ -20,6 +20,11 @@ public class Player implements Serializable{
 	private ArrayList<String> communityCards;
 	private boolean inJail;
 	private boolean rollsAgain;
+	private boolean rolledMonopoly;
+	private boolean rolledBus;
+	private boolean rolledDoubles;
+	private int consecutiveDoublesCount;
+	
 	private boolean reverseDirection;
 	private ArrayList<PropertySquare> ownedSquares;
 
@@ -35,6 +40,38 @@ public class Player implements Serializable{
 		this.chanceCards = new ArrayList<String>(5);
 		this.communityCards = new ArrayList<String>(5);	
 		this.ownedSquares = new ArrayList<PropertySquare>(10);
+	}
+	
+	public boolean getRolledBus() {
+		return rolledBus;
+	}
+
+	public void setRolledBus(boolean rolledBus) {
+		this.rolledBus = rolledBus;
+	}
+
+	public boolean getRolledMonopoly() {
+		return rolledMonopoly;
+	}
+
+	public void setRolledMonopoly(boolean rolledMonopoly) {
+		this.rolledMonopoly = rolledMonopoly;
+	}
+
+	public void rolledDoubles() {
+		if(rolledDoubles) {
+			consecutiveDoublesCount++;
+		}
+		setRolledDoubles(true);
+	}
+
+	public void setRolledDoubles(boolean rolledDoubles) {
+		this.rolledDoubles = rolledDoubles;
+		if(rolledDoubles==false) consecutiveDoublesCount = 0;
+	}
+
+	public int getConsecutiveDoublesCount() {
+		return consecutiveDoublesCount;
 	}
 
 	public boolean isReverseDirection() {

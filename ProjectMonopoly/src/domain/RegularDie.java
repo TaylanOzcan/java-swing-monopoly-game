@@ -32,5 +32,9 @@ public class RegularDie implements Die {
 	public String toString() {
 		return "RegularDie [faceValue=" + faceValue + ", rnd=" + rnd + "]";
 	}
+	
+	public void setCurrentValue(int i) {
+		this.faceValue = i;
+	}
 
 }

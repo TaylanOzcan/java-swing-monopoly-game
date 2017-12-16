@@ -37,7 +37,11 @@ public class Board implements Serializable{
 	//Effects : Sets the new Current Player 
 	//Modifies : CurrentPlayer to become the next player
 	public void setNewCurrentPlayer(){
-		if(currentPlayer.rollsAgain()) {
+		if(currentPlayer.getRolledBus()) {
+			return;
+		}else if(currentPlayer.getRolledMonopoly()) {
+			return;
+		}else if(currentPlayer.rollsAgain()){
 			currentPlayer.setRollsAgain(false);
 		}else {
 			currentPlayerIndex++;
@@ -51,7 +55,7 @@ public class Board implements Serializable{
 	public MoveHandler getBoardMoveHandler() {
 		return this.moveHandler;
 	}
-	
+
 	//Effects : Returns the current Player
 	public Player getCurrentPlayer(){
 		return this.currentPlayer;
@@ -94,6 +98,7 @@ public class Board implements Serializable{
 	}
 
 	public void endTurn() {
+		Cup.clearFaceValues();
 		setNewCurrentPlayer();
 	}
 	//Requiers : the street to be buyable (not a chance/community...) square

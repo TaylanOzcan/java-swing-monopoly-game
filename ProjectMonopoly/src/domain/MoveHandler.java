@@ -15,24 +15,49 @@ public class MoveHandler implements Serializable{
 		// EFFECTS : Changes the players location.
 		int initLoc = p.getLocation();
 		int finalLoc;
-
-		if(p.isInJail()) {
+		
+		if(p.getRolledMonopoly()) {
+			mrMonopolyMove(p);
+			p.setRolledMonopoly(false);
+		}else if(p.getRolledBus()) {
+			busMove(p);
+			p.setRolledBus(false);
+		}else if(p.isInJail()) {
 			int totalRegFaceValue = Cup.rollRegularDice();
-			if(rolledDoubles()) {
+			if(doublesRolled()) {
 				p.getOutOfJail();
 				finalLoc = computeLoc(initLoc, totalRegFaceValue, false);
 				p.setLocation(finalLoc);
 			}
 		}else {
 			int totalFaceValue = Cup.rollAllDice(); //gets total face value from 2 reg and 1 speed die
+			
+			if(triplesRolled()) {
+				// player goes to any square
+				p.setRolledDoubles(false);
+				return;
+			}else if(doublesRolled()) {
+				p.rolledDoubles();
+				if(p.getConsecutiveDoublesCount()==3) {
+					p.goIntoJail();
+					p.setRolledDoubles(false);
+					return;
+				}
+				p.setRollsAgain(true);
+			}else {
+				p.setRolledDoubles(false);
+			}
+
 			finalLoc = computeLoc(initLoc, totalFaceValue, p.isReverseDirection());
 
-			if(finalLoc>=40 && finalLoc<55 && ((initLoc<40 && initLoc>24) || (initLoc<62 && initLoc>51 &&totalFaceValue%2==0))) {
+			if(finalLoc>=40 && finalLoc<55 && ((initLoc<40 && initLoc>24)
+					|| (initLoc<62 && initLoc>51 &&totalFaceValue%2==0))) {
 				finalLoc -= 40;
 				p.increaseBalance(200);
 			}else if(finalLoc>=120) {
 				finalLoc -= 56;
-			}else if(finalLoc>=64 && finalLoc<79 && ((initLoc<64 && initLoc>48) || (initLoc<36 && initLoc>25 &&totalFaceValue%2==0))) {
+			}else if(finalLoc>=64 && finalLoc<79 && ((initLoc<64 && initLoc>48)
+					|| (initLoc<36 && initLoc>25 &&totalFaceValue%2==0))) {
 				finalLoc -= 24;
 			}
 
@@ -45,17 +70,12 @@ public class MoveHandler implements Serializable{
 			int speedVal = Cup.speedDie.getCurrentValue();
 			if(speedVal < 1) {
 				if(speedVal > -2) { // Mr. Monopoly
-					p.setRollsAgain(true);
+					p.setRolledMonopoly(true);
 				}else { // Bus icon
-					// to be implemented
+					p.setRolledBus(true);
 				}
 			}
-
-			if(rolledTriples()) {
-				p.goIntoJail();
-			}else if(rolledDoubles()) {
-				p.setRollsAgain(true);
-			}
+			
 		}
 	}
 
@@ -90,12 +110,20 @@ public class MoveHandler implements Serializable{
 		return finalLoc;
 	}
 
-	private boolean rolledTriples() {
-		return rolledDoubles() && (Cup.regDie1.getCurrentValue() == Cup.speedDie.getCurrentValue());
+	private boolean triplesRolled() {
+		return doublesRolled() && (Cup.regDie1.getCurrentValue() == Cup.speedDie.getCurrentValue());
 	}
 
-	private boolean rolledDoubles() {
+	private boolean doublesRolled() {
 		return Cup.regDie1.getCurrentValue() == Cup.regDie2.getCurrentValue();
+	}
+
+	private  void mrMonopolyMove(Player p) {
+		// go to the nearest unowned street
+	}
+
+	private void busMove(Player p) {
+		// go to the nearest chance or community chest square
 	}
 
 }
