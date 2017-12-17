@@ -14,7 +14,7 @@ public class IconFactory {
 				"<html><center><span style='font-size:8px'>H</span></center><html>"
 				, SwingConstants.CENTER);
 		houseLabel.setPreferredSize(new Dimension(10, 10));
-		houseLabel.setBackground(new Color(255, 220, 120, 255));
+		houseLabel.setBackground(new Color(40, 250, 120, 255));
 		houseLabel.setOpaque(true);
 		houseLabel.setBorder(LineBorder.createGrayLineBorder());
 		return houseLabel;
@@ -23,7 +23,7 @@ public class IconFactory {
 	public static JLabel newHotelLabel() {
 		JLabel hotelLabel = new JLabel("H", SwingConstants.CENTER);
 		hotelLabel.setPreferredSize(new Dimension(14, 14));
-		hotelLabel.setBackground(new Color(100, 255, 100, 255));
+		hotelLabel.setBackground(new Color(250, 80, 60, 255));
 		hotelLabel.setOpaque(true);
 		hotelLabel.setBorder(LineBorder.createGrayLineBorder());
 		return hotelLabel;

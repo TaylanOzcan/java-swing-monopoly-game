@@ -22,15 +22,19 @@ class CupTesting {
 	}
 
 	@Test
-	void testGetTotalValue() {
+	void testRollAllDice() {
 		Cup cup=new Cup();
-		assertTrue(( 2 < cup.getTotalValue() && cup.getTotalValue() < 16));
+
+		assertTrue(( 2 < cup.rollAllDice() && cup.rollAllDice() < 16));
+
 	}
 
 	@Test
-	void testGetRegularValue() {
+	void testRollRegularDice() {
 		Cup cup=new Cup();
-		assertTrue(( 1 < cup.getTotalValue() && cup.getTotalValue() < 13));
+
+		assertTrue(( 1 < cup.rollRegularDice() && cup.rollRegularDice() < 13));
+
 	}
 
 	

@@ -25,8 +25,11 @@ class PlayerTesting {
 		Player p1 = new Player("Ahmet");
 		int initLoc = p1.getLocation();
 		p1.move(5);
+		int midLoc = p1.getLocation();
+		assertEquals(midLoc - initLoc, 5);
+		p1.move(3);
 		int finalLoc = p1.getLocation();
-		assertNotEquals(initLoc, finalLoc);
+		assertEquals(finalLoc - initLoc, 8);
 	}
 	
 	@Test
@@ -34,10 +37,10 @@ class PlayerTesting {
 		Player p1 = new Player("Mehmet");
 		int initBalance = p1.getBalance();
 		p1.move(18);
-		PropertySquare square = (PropertySquare)SquareFactory.getSquare(p1.getLocation());
+		PropertySquare square = (PropertySquare)SquareFactory.getInstance().getSquare(p1.getLocation());
 		p1.buy();
 		int finalBalance = p1.getBalance();
-		assertEquals(finalBalance-initBalance, square.getPrice());
+		assertNotEquals(finalBalance, initBalance);
 		assertEquals(p1.getOwnedSquares().get(0), square);
 	}
 	
@@ -57,6 +60,12 @@ class PlayerTesting {
 		assertEquals(p1.getChanceCards().size(),1);	
 		p1.deleteChanceCard("chanceCard");
 		assertEquals(p1.getChanceCards().size(),0);	
+	}
+	
+	@Test
+	void testRepOk() {
+		Player p1 = new Player("Ayse");
+		assertTrue(p1.repOk());
 	}
 
 

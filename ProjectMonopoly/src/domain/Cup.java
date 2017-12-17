@@ -5,32 +5,36 @@ public class Cup {
 	public static RegularDie regDie1 = new RegularDie();
 	public static RegularDie regDie2 = new RegularDie();
 	public static SpeedDie speedDie = new SpeedDie();
-	private static String SpeedAction = null;
 
 	// returns the total face values of 2 regular and 1 speed dice
-	public static int getTotalValue() {
+	public static int rollAllDice() {
 		int total = 0;
-		total += regDie1.getValue();
-		total += regDie2.getValue();
+		total += regDie1.roll();
+		total += regDie2.roll();
+		int speedVal = speedDie.roll();
 
-		if(speedDie.getValue() > 0){
-			total += speedDie.getCurrentValue();
-		}
-		else{
-			SpeedAction = speedDie.DoSpecial();
+		if(speedVal > 0){ // Pips (1,2 or 3)
+			total += speedVal;
 		}
 		return total;
 	}
 
 	// rolls and returns the total face value of 2 regular dice
-	public static int getRegularValue(){
+	public static int rollRegularDice(){
 		int total = 0;
-		total += regDie1.getValue();
-		total += regDie2.getValue();
+		total += regDie1.roll();
+		total += regDie2.roll();
 		return total;
 	}
 	
-	public String getSpeedAction() {
-		return SpeedAction;
+	public static int getSpeedValue() {
+		return speedDie.getCurrentValue();
 	}
+	
+	public static void clearFaceValues() {
+		regDie1.setCurrentValue(-3);
+		regDie2.setCurrentValue(-3);
+		speedDie.setCurrentValue(-3);
+	}
+
 }

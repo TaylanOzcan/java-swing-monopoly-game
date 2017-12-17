@@ -1,21 +1,33 @@
 package domain;
 public class VoucherSquare extends CardDrawSquare {
 
+	private int id;
+	private String name;
+	
+	public VoucherSquare(int id, String name){
+		this.id = id;
+		this.name = name;
+	}
+	
 	@Override
 	public void getAction(Player p) {
-		// TODO Auto-generated method stub
-		
+		String voucher = drawCard();
+		//CardActionHandler will handle the action
+		//not yet implemented
 	}
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.name;
 	}
 
 	@Override
 	public int getId() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.id;
+	}
+
+	@Override
+	public String drawCard() {
+		return CardDeck.getInstance().drawVoucher();
 	}
 }

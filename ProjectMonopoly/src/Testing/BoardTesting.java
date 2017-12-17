@@ -18,25 +18,9 @@ import domain.StreetSquare;
 
 public class BoardTesting {
 
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-	}
-
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
-
-	@Before
-	public void setUp() throws Exception {
-	}
-	
-	@After
-	public void tearDown() throws Exception {
-	}
 	@Test
 	public void testBoard() {
-
-		ArrayList r = new ArrayList<String> ( );
+		ArrayList<String> r = new ArrayList<String>();
 		r.add("test1");
 		Board b = new Board(r);
 		assertNotNull(b);
@@ -44,20 +28,17 @@ public class BoardTesting {
 
 	@Test
 	public void testcreatePlayers() {
-		
-		ArrayList r = new ArrayList<String> ( );
+		ArrayList<String> r = new ArrayList<String>();
 		r.add("test1");
 		r.add("test2");
 		r.add("test3");
 		Board tb = new Board(r);
-	assertNotNull(tb.getPlayers());
-	
+		assertNotNull(tb.getPlayers());
 	}
 
 	@Test
 	public void testSetNewCurrentPlayer() {
-		
-		ArrayList r = new ArrayList<String> ( );
+		ArrayList<String> r = new ArrayList<String>();
 		r.add("test1");
 		r.add("test2");
 		r.add("test3");
@@ -66,32 +47,30 @@ public class BoardTesting {
 		tb.setNewCurrentPlayer();
 		Player NewCurrentPlayer=tb.getCurrentPlayer();
 		assertNotSame(OldCurrentPlayer,NewCurrentPlayer);
-		
 	}
 
 	@Test
-	public void testRollDice() {
-		ArrayList r = new ArrayList<String> ( );
+	public void testRollDiceAndMove() {
+		ArrayList<String> r = new ArrayList<String>();
 		r.add("test1");
 		r.add("test2");
 		r.add("test3");
 		Board tb = new Board(r);
 		int	OldPlayerLocation = tb.getCurrentPlayer().getLocation();
-		tb.rollDice();
+		tb.rollDiceAndMove();
 		int NewPlayerLocation = tb.getCurrentPlayer().getLocation();
 		assertNotSame (OldPlayerLocation,NewPlayerLocation);
-		
 	}
 
 	@Test
-		public void testBuildHouse() {
-			ArrayList r = new ArrayList<String> ( );
-			r.add("test1");
-			r.add("test2");
-			r.add("test3");
-			Board tb = new Board(r);
-			tb.getCurrentPlayer().addOwnedSquare((PropertySquare) SquareFactory.getSquare(18));
-			StreetSquare Square = (StreetSquare)tb.getCurrentPlayer().getOwnedSquares().get(0);
+	public void testBuildHouse() {
+		ArrayList<String> r = new ArrayList<String>();
+		r.add("test1");
+		r.add("test2");
+		r.add("test3");
+		Board tb = new Board(r);
+		tb.getCurrentPlayer().addOwnedSquare((PropertySquare) SquareFactory.getInstance().getSquare(18));
+		StreetSquare Square = (StreetSquare)tb.getCurrentPlayer().getOwnedSquares().get(0);
 		int NumberOfHousesBeforeBuild = Square.getnHouses();
 		tb.buildHouse(0);
 		int NumberOfHousesAfterBuild = Square.getnHouses();
@@ -100,27 +79,27 @@ public class BoardTesting {
 
 	@Test
 	public void testIsBuyable() {
-		ArrayList r = new ArrayList<String> ( );
+		ArrayList<String> r = new ArrayList<String>();
 		r.add("test1");
 		r.add("test2");
 		r.add("test3");
 		Board tb = new Board(r);
 		tb.getCurrentPlayer().setLocation(18);
-		tb.getCurrentPlayer().addOwnedSquare((PropertySquare) SquareFactory.getSquare(tb.getCurrentPlayer().getLocation()));
+		tb.getCurrentPlayer().addOwnedSquare((PropertySquare) SquareFactory.getInstance().getSquare(tb.getCurrentPlayer().getLocation()));
 		StreetSquare Square = (StreetSquare)tb.getCurrentPlayer().getOwnedSquares().get(0);
 		assertFalse(tb.isBuyable());
 	}
 
 	@Test
 	public void testIsBuildable() {
-		ArrayList r = new ArrayList<String> ( );
+		ArrayList<String> r = new ArrayList<String>();
 		r.add("test1");
 		r.add("test2"); 
 		r.add("test3");
 		Board tb = new Board(r);
-		tb.getCurrentPlayer().addOwnedSquare((PropertySquare) SquareFactory.getSquare(18));
+		tb.getCurrentPlayer().addOwnedSquare((PropertySquare) SquareFactory.getInstance().getSquare(18));
 		for( int i=0;i<5 ;i++) {
-			
+
 		}
 	}
 

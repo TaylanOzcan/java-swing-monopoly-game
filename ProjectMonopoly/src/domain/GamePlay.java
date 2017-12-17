@@ -12,13 +12,17 @@ public class GamePlay implements Serializable{
 
 	public GamePlay(){
 	}
+	
+	public Board getBoard() {
+		return board;
+	}
 
 	public void playGame(ArrayList<String> playerNames){
 		board = new Board(playerNames);
 	}
 
-	public void rollDice(){
-		board.rollDice();
+	public void rollDiceAndMove(){
+		board.rollDiceAndMove();
 	}
 
 	public boolean buy(){
@@ -92,6 +96,30 @@ public class GamePlay implements Serializable{
 		values[1] = Cup.regDie2.getCurrentValue();
 		values[2] = Cup.speedDie.getCurrentValue();
 		return values;
+	}
+
+	public void endAuction(Player winner, int highestBid, StreetSquare auctedSquare) {
+		board.getActionHandler().endAuction(winner, highestBid, auctedSquare);
+	}
+
+	public void startAuction(StreetSquare s) {
+		board.getActionHandler().startAuction(s);
+	}
+	
+	public Square getSquare(int i) {
+		return SquareFactory.getInstance().getSquare(i);
+	}
+
+	public ArrayList<Square> getUnownedStreetSquares() {
+		return SquareFactory.getInstance().getUnownedStreetSquares();
+	}
+
+	public void checkAuction() {
+		board.getActionHandler().checkAuction(board.getCurrentPlayer());
+	}
+
+	public Player getCurrentPlayer() {
+		return board.getCurrentPlayer();
 	}
 
 }

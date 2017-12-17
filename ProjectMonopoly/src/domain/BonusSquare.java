@@ -1,18 +1,19 @@
 package domain;
 
-public class TaxSquare implements Square {
+public class BonusSquare implements Square {
+
 	private int id;
 	private String name;
+	private final int AMOUNT_TO_GIVE = 50;
 	
-	public TaxSquare(int id, String name){
+	public BonusSquare(int id, String name){
 		this.id = id;
 		this.name = name;
 	}
 	
 	@Override
 	public void getAction(Player p) {
-		// TODO Auto-generated method stub
-		
+		p.increaseBalance(AMOUNT_TO_GIVE);
 	}
 
 	@Override
