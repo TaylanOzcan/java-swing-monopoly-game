@@ -144,7 +144,11 @@ public class SquareFactory {
 	public Square[] getSquares(){
 		return squares;
 	}
-	
+	/**
+	 * @requires:Nothing.
+	 * @modifies:unownedStreetSquares
+	 * @effects:Adds unowned Squares to the list unownedStreetSquares.
+	 */
 	public ArrayList<Square> getUnownedStreetSquares() {
 		ArrayList<Square> unownedStreetSquares = new ArrayList<Square>(10);
 		for(int i=0; i<squares.length; i++) {
