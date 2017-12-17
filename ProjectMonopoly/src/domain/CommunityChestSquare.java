@@ -25,7 +25,11 @@ public class CommunityChestSquare extends CardDrawSquare {
 	public int getId() {
 		return this.id;
 	}
-
+	/**
+	 * @requires:Nothing.
+	 * @modifies:Nothing.
+	 * @effects:Draw card.
+	 */
 	@Override
 	public String drawCard() {
 		return CardDeck.getInstance().drawCommunityCard();

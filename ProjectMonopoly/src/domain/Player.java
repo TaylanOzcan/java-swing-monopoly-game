@@ -57,7 +57,11 @@ public class Player implements Serializable{
 	public void setRolledMonopoly(boolean rolledMonopoly) {
 		this.rolledMonopoly = rolledMonopoly;
 	}
-
+	/**
+	 * @requires:The dice to have been rolled.
+	 * @modifies:setRolledDoubles
+	 * @effects:The player rolls again.
+	 */
 	public void rolledDoubles() {
 		if(rolledDoubles) {
 			consecutiveDoublesCount++;
@@ -90,17 +94,28 @@ public class Player implements Serializable{
 	public boolean isInJail() {
 		return this.inJail;
 	}
+	/**
+	 * @requires:The player to have landed on Jail Square or done an action that resulted him to be transported to Jail Square.
+	 * @modifies:Player's location.
+	 * @effects:Player's location has been updated as Jail Square.
+	 */
 	public void goIntoJail() {
 		this.inJail = true;
 		this.setLocation(JAIL_LOCATION);
 	}
+	/**
+	 * @requires:The player to be in Jail.
+	 * @modifies:Player's location
+	 * @effects:Player is taken out of the Jail Square.
+	 */
 	public void getOutOfJail() {
 		this.inJail = false;
 	}
-
+	
 	public boolean rollsAgain() {
 		return this.rollsAgain;
 	}
+	
 	public void setRollsAgain(boolean rollsAgain) {
 		this.rollsAgain = rollsAgain;
 	}
@@ -131,7 +146,11 @@ public class Player implements Serializable{
 	public void addVoucher(String newVoucher) {
 		this.vouchers.add(newVoucher);
 	}
-
+	/**
+	 * @requires:The player to have a voucher.
+	 * @modifies:Player's voucher amount.
+	 * @effects:Delete a voucher from a player.
+	 */
 	public void deleteVoucher(String voucher){
 		if(this.vouchers.contains(voucher)){
 			this.vouchers.remove(voucher);
@@ -143,27 +162,39 @@ public class Player implements Serializable{
 	public ArrayList<PropertySquare> getOwnedSquares() {
 		return ownedSquares;
 	}
-
+	/**
+	 * @requires: this.balance must be greater than rentPrice
+	 * @modifies: this.balance
+	 * @effects: subtracts rent price from this.balance and returns modified balance.
+	 */
 	public void payRent(int rentPrice, Player renter){
-		// REQUIRES : this.balance must be greater than rentPrice
-		// MODIFIES : this.balance
-		// EFFECTS : subtracts rentprice from this.balance
-		//and returns modified balance.
 		this.increaseBalance(-rentPrice);
 		renter.increaseBalance(rentPrice);
 	}
-
+	/**
+	 * @requires: Nothing.
+	 * @modifies: this.chanceCards
+	 * @effects: add newCard to this.chanceCards
+	 */
 	public void addChanceCard(String newCard) {
-		// MODIFIES : this.chanceCards
-		// EFFECTS : add newCard to this.chanceCards
+	
 		this.chanceCards.add(newCard);
 	}
+	/**
+	 * @requires:  this.chanceCards contains card
+	 * @modifies: Nothing.
+	 * @effects: removes card from this.chanceCards
+	 */
 	public void deleteChanceCard(String card){
-		// REQUIRES : this.chanceCards contains card
-		// EFFECTS : removes card from this.chanceCards
+		
 		if(this.chanceCards.contains(card)){
 			this.chanceCards.remove(card);}
 	}
+	/**
+	 * @requires:Nothing
+	 * @modifies:Player's balance.
+	 * @effects: Increase or Decrease player balance.
+	 */
 
 	public void EditBalance(String Type,int money){
 		if (Type=="Increase") {
@@ -173,50 +204,76 @@ public class Player implements Serializable{
 			int b = balance - money;
 			setBalance(b);}
 	}
+	/**
+	 * @requires: Nothing.
+	 * @modifies: this.communityCards.
+	 * @effects: add New card to this.communityCards
+	 */
 
 	public void addCommunityCard(String newCard) {
-		// MODIFIES : this.communityCards
-		// EFFECTS : add newCard to this.communityCards
+		
 		this.communityCards.add(newCard);
 	}
+	/**
+	 * @requires:  this.communityCards contains card
+	 * @modifies: Nothing.
+	 * @effects: removes card from this.communityCards
+	 */
+
 	public void deleteCommunityCard(String card){
-		// REQUIRES : this.communityCards contains card
-		// EFFECTS : removes card from this.communityCards
+		
 		if(this.communityCards.contains(card)){
 			this.communityCards.remove(card);
 		}else{
 			//give an error
 		}
 	}
+	/**
+	 * @requires: Nothing.
+	 * @modifies: this.loc
+	 * @effects: return modified loc
+	 */
 
 	public int move(int rollValue) {
-		// MODIFIES : this.location
-		// EFFECTS : returns modified location
+		
 		this.location = (this.location + rollValue); // % 40;
 		return this.location;
 	}
+	/**
+	 * @requires:  this.balance > price
+	 * @modifies: this.balance
+	 * @effects: subtracts price from this.balance
+	 */
 
 	public void pay(int price) {
-		// REQUIRES : this.balance is greater than price
-		// MODIFIES : this.balance
-		// EFFECTS : subtracts price from this.balance
 		this.balance -= price;
 	}
+	/**
+	 * @modifies:  this.balance
+	 * @requires: Nothing.
+	 * @effects: adds moneyToAdd to this.balance
+	 */
 
 	public void increaseBalance(int moneyToAdd) {
-		// MODIFIES : this.balance
-		// EFFECTS : adds moneyToAdd to this.balance
+	
 		this.balance += moneyToAdd;
 	}
+	/**
+	 * @requires:   squareToBuy is in PropertySquare type
+	 * @modifies: this.balance, this.ownedSquare
+	 * @effects: decreases this.balance by squareToBuy.getPrice() and adds squareToBuy to this.ownedSquares
+	 */
 
 	public boolean buy() {
-		// REQUIRES : squareToBuy is in PropertySquare type
-		// MODIFIES : this.balance, this.ownedSquare
-		// EFFECTS : decreases this.balance by squareToBuy.getPrice()
-		// and adds squareToBuy to this.ownedSquares
+	
 		PropertySquare squareToBuy = (PropertySquare)SquareFactory.getInstance().getSquare(this.location);
 		return buy(squareToBuy);
 	}
+	/**
+	 * @requires: Nothing.
+	 * @modifies: Nothing.
+	 * @effects: returns true or false depending on player balance compared to square price.
+	 */
 
 	public boolean buy(PropertySquare squareToBuy) {
 		if(this.balance < squareToBuy.getPrice()){
@@ -225,6 +282,11 @@ public class Player implements Serializable{
 			return buyFor(squareToBuy, squareToBuy.getPrice());
 		}
 	}
+	/**
+	 * @requires: Buying process to have been started.
+	 * @modifies: price, squareToBuy.
+	 * @effects: pays the price and adds squareToBuy to owned squares.
+	 */
 
 	public boolean buyFor(PropertySquare squareToBuy, int price) {
 		this.pay(price);
@@ -243,6 +305,11 @@ public class Player implements Serializable{
 	public ArrayList<String> getCommunityCards() {
 		return communityCards;
 	}
+	/**
+	 * @requires:  this.chanceCards contains card
+	 * @modifies: Nothing.
+	 * @effects: removes card from this.chanceCards
+	 */
 
 	public void addOwnedSquare(PropertySquare squareToBuy){
 		// MODIFIES : squareToBuy

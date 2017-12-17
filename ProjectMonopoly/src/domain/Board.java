@@ -28,16 +28,23 @@ public class Board implements Serializable{
 		this.currentPlayerIndex = 0;
 		this.currentPlayer = players.get(0);
 	}
-
-	//Effects: adds players to the array of players 
-	//Modifies : List of players 
+	/**
+	 * @requires: Naught
+	 * @modifies:  List of players 
+	 * @effects : adds players to the array of players 
+	 */
+	
 	public void createPlayers(ArrayList<String> playerNames){
 		for(int i=0; i<numOfPlayers; i++){
 			players.add(i, new Player(playerNames.get(i)));
 		}
 	}
-	//Effects : Sets the new Current Player 
-	//Modifies : CurrentPlayer to become the next player
+	/**
+	 * @requires: Nothing
+	 * @modifies: CurrentPlayer 
+	 * @effects : Sets the new Current Player
+	 */
+	
 	public void setNewCurrentPlayer(){
 		if(currentPlayer.getRolledBus()) {
 			return;
@@ -61,20 +68,39 @@ public class Board implements Serializable{
 	public ActionHandler getActionHandler() {
 		return this.actionHandler;
 	}
-
+	/**
+	 * @requires: Nothing
+	 * @modifies: Nothing
+	 * @effects : Returns the current Player  
+	 */
 	//Effects : Returns the current Player
 	public Player getCurrentPlayer(){
 		return currentPlayer;
 	}
-	//Effects : delegates the move handler to move the player
+	/**
+	 * @requires: Nothing
+	 * @modifies: player location 
+	 * @effects :delegates the move handler to move the player
+	 */
+	
 	public void rollDiceAndMove() {
 		moveHandler.movePlayer(currentPlayer);
 	}
-	//Effects : returns a boolean of whether the player bought or not 	 
+	/**
+	 * @requires: Nothing
+	 * @modifies: player balance
+	 * @effects : returns a boolean of whether the player bought or not 	
+	 */
+		 
 	public boolean buy() {
 		return currentPlayer.buy();
 	}
-	//Effects : returns the array of Players
+	/**
+	 * @requires: Nothing
+	 * @modifies: Nothing
+	 * @effects :  returns the array of Players
+	 */
+
 	public ArrayList<Player> getPlayers() {
 		return players;
 	}
@@ -82,7 +108,12 @@ public class Board implements Serializable{
 	public void mortgage() {
 		//to be implemented
 	}
-	//Effects : it returns the street index that we want to build a street on
+	/**
+	 * @requires: Nothing
+	 * @modifies: squareToBuildHouse
+	 * @effects : it returns the street index that we want to build a street on
+	 */
+
 	public int buildHouse(int squareIndex) {
 		StreetSquare squareToBuildHouse = (StreetSquare)currentPlayer.getOwnedSquares().get(squareIndex);
 		return squareToBuildHouse.build();
@@ -102,14 +133,21 @@ public class Board implements Serializable{
 		// TODO Auto-generated method stub
 
 	}
-
+	/**
+	 * @requires: the street to be buyable (not a chance/community...)
+	 * @modifies: Nothing
+	 * @effects : returns whether the requirements is true  
+	 */
 	public void endTurn() {
 		Cup.clearFaceValues();
 		setNewCurrentPlayer();
 	}
-	//Requiers : the street to be buyable (not a chance/community...) square
-	//THE STREET isn't owned 
-	//effects : returns whether the requirements is true 
+	/**
+	 * @requires: the street to be buyable (not a chance/community...)
+	 * @modifies: Nothing
+	 * @effects : returns whether the requirements is true  
+	 */
+	 
 	public boolean isBuyable() {
 		if(PropertySquare.class.isAssignableFrom(SquareFactory.getInstance().getSquare(currentPlayer.getLocation()).getClass())){
 			return !((PropertySquare)SquareFactory.getInstance().getSquare(currentPlayer.getLocation())).isOwned();
@@ -117,8 +155,12 @@ public class Board implements Serializable{
 			return false;
 		}
 	}
-	//Requiers : the current street the player is on is a property street 
-	//Effects : it returns whether the player can build on it or not 
+	/**
+	 * @requires: the current street the player is on is a property street 
+	 * @modifies: Nothing
+	 * @effects   it returns whether the player can build on it or not 
+	 */
+	
 	public boolean isBuildable() {
 		if(SquareFactory.getInstance().getSquare(currentPlayer.getLocation()).getClass() == StreetSquare.class){
 			return ((StreetSquare)SquareFactory.getInstance().getSquare(currentPlayer.getLocation())).isBuildable();
@@ -126,8 +168,12 @@ public class Board implements Serializable{
 			return false;
 		}
 	}
-	//Effects : Put the player information in the player arraylist 
-	//Modifies : Infolist 
+	/**
+	 * @requires:Nothing.
+	 * @modifies:  Infolist  .
+	 * @effects   Put the player information in the player arraylist
+	 */
+	 
 	public ArrayList<String> getPlayerInfo() {
 		ArrayList<String> infoList = new ArrayList<String>(numOfPlayers);
 		for(int i = 0; i < players.size(); i++){

@@ -9,7 +9,11 @@ public class GoToJailSquare implements Square {
 		this.id = id;
 		this.name = name;
 	}
-	
+	/**
+	 * @requires:Player to have done an action that would make him go to Jail.
+	 * @modifies:Players location.
+	 * @effects:Players location is set to Jail.
+	 */
 	@Override
 	public void getAction(Player p) {
 		p.goIntoJail();

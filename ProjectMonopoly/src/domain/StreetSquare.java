@@ -36,7 +36,11 @@ public class StreetSquare extends PropertySquare implements Serializable{
 		this.color = color;
 		this.isBuildable = true;
 	}
-
+	/**
+	 * @requires:The player to land on a Street square owned by another player.
+	 * @modifies:Player's balance.
+	 * @effects:Decreases Player's balance by the rent amount of the square he is placed on(if that square is owned by another player).
+	 */
 	@Override
 	public void getAction(Player p) {
 		if(isOwned()) {
@@ -49,9 +53,11 @@ public class StreetSquare extends PropertySquare implements Serializable{
 	}
 
 	public int build(){
-		// REQUIRES : An unowned Square,the player to have the required Balance. 
-		// MODIFIES : IS THIS JUST THE INPUT?
-		// EFFECTS : Builds a house if there isn't anything,a hotel if there are 5 houses,a skyscraper if there is a hotel on the square.
+		/**
+		 * @requires:The player to own the square he wants to build on.
+		 * @modifies:The property of the square.
+		 * @effects:Adds either a hotel,a house or a skyscraper to the square.
+		 */
 		if(nSkyscrapers == 1){
 			return -1;
 		}else if(nHotels == 1){

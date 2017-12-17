@@ -25,7 +25,11 @@ public class ChanceSquare extends CardDrawSquare {
 	public int getId() {
 		return this.id;
 	}
-
+	/**
+	 * @requires:Nothing.
+	 * @modifies:Nothing.
+	 * @effects:Draw card.
+	 */
 	@Override
 	public String drawCard() {
 		return CardDeck.getInstance().drawChanceCard();

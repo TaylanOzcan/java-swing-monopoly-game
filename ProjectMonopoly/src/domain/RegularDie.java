@@ -9,11 +9,13 @@ public class RegularDie implements Die {
 	public RegularDie(){
 		this.rnd = new Random();
 	}
-
+	/**
+	 * @requires:The Die.
+	 * @modifies:The Die's face value.
+	 * @effects:Returns the die's face value.
+	 */
 	@Override
 	public int roll() {
-		// REQUIRES : The Die.
-		// EFFECTS : Returns the die's face value.
 		faceValue = rnd.nextInt(6) + 1;
 		return faceValue;
 	}

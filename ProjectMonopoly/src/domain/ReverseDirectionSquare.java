@@ -9,7 +9,11 @@ public class ReverseDirectionSquare implements Square {
 		this.id = id;
 		this.name = name;
 	}
-	
+	/**
+	 * @requires:The player to land on Reverse Direction Square.
+	 * @modifies:The direction of the player.
+	 * @effects:The player's direction is reversed.
+	 */
 	@Override
 	public void getAction(Player p) {
 		p.setReverseDirection(true);

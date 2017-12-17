@@ -25,7 +25,11 @@ public class VoucherSquare extends CardDrawSquare {
 	public int getId() {
 		return this.id;
 	}
-
+	/**
+	 * @requires:The player to land on a Card Draw Square.
+	 * @modifies:Nothing.
+	 * @effects:Gives a player a card.
+	 */
 	@Override
 	public String drawCard() {
 		return CardDeck.getInstance().drawVoucher();

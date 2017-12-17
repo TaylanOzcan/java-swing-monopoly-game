@@ -6,7 +6,11 @@ public class Cup {
 	public static RegularDie regDie2 = new RegularDie();
 	public static SpeedDie speedDie = new SpeedDie();
 
-	// returns the total face values of 2 regular and 1 speed dice
+	/**
+	 * @requires:Nothing.
+	 * @modifies:Die value.
+	 * @effects:Returns the value of dice roll total.
+	 */
 	public static int rollAllDice() {
 		int total = 0;
 		total += regDie1.roll();
@@ -18,8 +22,12 @@ public class Cup {
 		}
 		return total;
 	}
-
-	// rolls and returns the total face value of 2 regular dice
+	/**
+	 * @requires:Nothing.
+	 * @modifies: total .
+	 * @effects  returns the total face value of 2 regular dice
+	 */
+	
 	public static int rollRegularDice(){
 		int total = 0;
 		total += regDie1.roll();
@@ -30,7 +38,11 @@ public class Cup {
 	public static int getSpeedValue() {
 		return speedDie.getCurrentValue();
 	}
-	
+	/**
+	 * @requires:Nothing.
+	 * @modifies: regDie 1 2 and speedDie .
+	 * @effects  sets the given die values to -3.
+	 */
 	public static void clearFaceValues() {
 		regDie1.setCurrentValue(-3);
 		regDie2.setCurrentValue(-3);

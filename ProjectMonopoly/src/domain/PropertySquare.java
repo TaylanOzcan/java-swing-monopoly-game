@@ -21,11 +21,13 @@ public abstract class PropertySquare implements Square {
 		this.owner = newowner;
 		this.isOwned = true;
 	}
+	/**
+	 * @requires:An owner to have been assigned to a square.
+	 * @modifies:isOwned and the owner.
+	 * @effects:Deletes the owner from a property.
+	 */
 	
 	public void deleteOwner(){
-		// REQUIRES : An owner.
-		// MODIFIES : isOwned,owner.
-		// EFFECTS : Deletes an owner.
 		this.owner = null;
 		this.isOwned = false;
 	}

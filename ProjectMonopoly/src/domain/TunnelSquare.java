@@ -8,7 +8,11 @@ public class TunnelSquare implements Square {
 		this.id = id;
 		this.name = name;
 	}
-	
+	/**
+	 * @requires:The player to land on the tunnel.
+	 * @modifies:The player's location.
+	 * @effects:The player is sent from sq58 to sq78 or from sq78 to sq58.
+	 */
 	@Override
 	public void getAction(Player p) {
 		if(id==58) {

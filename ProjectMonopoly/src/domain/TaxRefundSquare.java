@@ -9,7 +9,11 @@ public class TaxRefundSquare implements Square{
 		this.id = id;
 		this.name = name;
 	}
-	
+	/**
+	 * @requires:The player to land on Tax Return Square.
+	 * @modifies:Player's and Pool's balance.
+	 * @effects:Decreases from Pool's balance and adds that amount to Player's balance.
+	 */
 	@Override
 	public void getAction(Player p) {
 		Pool.getFromPool(p, Pool.getBalance() / 2);

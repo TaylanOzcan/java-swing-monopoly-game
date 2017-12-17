@@ -49,7 +49,11 @@ public class GamePlay implements Serializable{
 	public void endTurn() {
 		board.endTurn();
 	}
-
+	/**
+	 * @requires:Nothing.
+	 * @modifies:squareNames.
+	 * @effects: adds the name of the owned squares to squareNames.
+	 */
 	public ArrayList<String> getOwnedSquareNames() {
 		ArrayList<PropertySquare> squares = board.getCurrentPlayer().getOwnedSquares();
 		ArrayList<String> squareNames = new ArrayList<String>(squares.size());
@@ -58,7 +62,11 @@ public class GamePlay implements Serializable{
 		}
 		return squareNames;
 	}
-
+	/**
+	 * @requires:Nothing.
+	 * @modifies: positions.
+	 * @effects: adds the location of player to positions.
+	 */
 	public ArrayList<Integer> getPlayerPositions() {
 		ArrayList<Integer> positions = new ArrayList<Integer>(board.getPlayers().size());
 		for(Player p: board.getPlayers()){

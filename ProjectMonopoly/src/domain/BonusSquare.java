@@ -10,7 +10,11 @@ public class BonusSquare implements Square {
 		this.id = id;
 		this.name = name;
 	}
-	
+	/**
+	 * @requires:Player to land on bonus square.
+	 * @modifies:Player balance.
+	 * @effects:Player is given money.
+	 */
 	@Override
 	public void getAction(Player p) {
 		p.increaseBalance(AMOUNT_TO_GIVE);
