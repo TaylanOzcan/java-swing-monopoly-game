@@ -36,5 +36,12 @@ public class Cup {
 		regDie2.setCurrentValue(-3);
 		speedDie.setCurrentValue(-3);
 	}
+	public int getRegDie1Value() {
+		return regDie1.getCurrentValue();
+	}
+	public int getRegDie2Value() {
+		return regDie2.getCurrentValue();
+	}
+	
 
 }

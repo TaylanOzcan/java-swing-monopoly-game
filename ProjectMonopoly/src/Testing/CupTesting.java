@@ -12,15 +12,6 @@ import junit.framework.Assert;
 
 class CupTesting {
 
-	@BeforeEach
-	void setUp() throws Exception {
-		Cup cup =new Cup();
-	}
-
-	@AfterEach
-	void tearDown() throws Exception {
-	}
-
 	@Test
 	void testRollAllDice() {
 		Cup cup=new Cup();
@@ -36,7 +27,15 @@ class CupTesting {
 		assertTrue(( 1 < cup.rollRegularDice() && cup.rollRegularDice() < 13));
 
 	}
-
+	@Test
+	void testClearFaceValues() {
+		Cup cup=new Cup();
+		cup.clearFaceValues();
+		assertSame(-3 , cup.getRegDie1Value() );
+		assertSame(-3 , cup.getRegDie2Value() );
+		assertSame(-3 , cup.getSpeedValue() );
+		
+	}
 	
 
 }
