@@ -243,8 +243,8 @@ public class Gui implements ActionListener, PropertyListener , Serializable{
 		dicePanel = new JPanel();
 		infoPanel = new JPanel();
 		gameButtonsPanel = new JPanel();
-		currentPlayerLabel = new JLabel("<html><center><span style='font-size:40px'>" 
-				+ "Ultimate Monopoly</span>"
+		currentPlayerLabel = new JLabel("<html><center><span style='font-size:24px'>" 
+				+ "Welcome to<br>Ultimate Monopoly</span>"
 				/*+ "<span style='font-size:11px'><br>prepared by team RND3 "
 				+ "for COMP 302 term project</span>"*/
 				+ "</center></html>", SwingConstants.CENTER);
@@ -351,9 +351,17 @@ public class Gui implements ActionListener, PropertyListener , Serializable{
 			playerNames = new ArrayList<String>(inputNumPlayers);
 
 			for (int i = 0; i < inputNumPlayers; i++) {
-				String inputName = JOptionPane.showInputDialog(
-						null, "Player " + (i+1) + " name?");
-				playerNames.add(inputName);
+				while(true) {
+					String inputName = JOptionPane.showInputDialog(
+							null, "Player " + (i+1) + " name?");
+					if(inputName==null || inputName.length() < 1) {
+						JOptionPane.showMessageDialog(
+								null, "You must enter a valid name.");
+					}else{
+						playerNames.add(inputName);
+						break;
+					}
+				}
 			}
 
 			for (int i = 0; i < inputNumPlayers ; i++) {
@@ -509,14 +517,14 @@ public class Gui implements ActionListener, PropertyListener , Serializable{
 
 				JOptionPane.showMessageDialog(
 						null, "Auction is starting for " + auctedSquare.getName());
-				
+
 				for(Player p: gamePlay.getPlayers()) {
 					players.add(p);
 				}
-				
+
 				int counter = players.size();
 				Player winner=players.get(counter-1);
-				
+
 				while(counter>1) {
 					for(int i=0; i<counter; i++) {
 						Player p = players.get(i);
@@ -525,7 +533,7 @@ public class Gui implements ActionListener, PropertyListener , Serializable{
 						while(true) {
 							String input = JOptionPane.showInputDialog(
 									null, p.getName() + ", place your bid for " + auctedSquare.getName() +
-											(highestBid>0 ? ("\n(Current highest bid is " + highestBid + ")") : ""));
+									(highestBid>0 ? ("\n(Current highest bid is " + highestBid + ")") : ""));
 							int currentBid;
 							try{
 								currentBid = Integer.parseInt(input);
@@ -560,6 +568,12 @@ public class Gui implements ActionListener, PropertyListener , Serializable{
 				JOptionPane.showMessageDialog(
 						null, "Winner is " + winner.getName() + " with " + highestBid + " $");
 				gamePlay.endAuction(winner, highestBid, auctedSquare);
+			}else if(name.equals("mrMonopolyAction")) {
+				JOptionPane.showMessageDialog(
+						null, "You get an extra move for rolling Mr. Monopoly");
+			}else if(name.equals("busAction")) {
+				JOptionPane.showMessageDialog(
+						null, "You get a voucher for rolling bus");
 			}
 		}else if(source.getClass()==AuctionSquare.class) {
 			if(name.equals("auctionDialog")) {
@@ -593,5 +607,5 @@ public class Gui implements ActionListener, PropertyListener , Serializable{
 			}
 		}
 	}
-	
+
 }

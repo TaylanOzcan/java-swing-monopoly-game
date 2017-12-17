@@ -22,12 +22,12 @@ public class Cup {
 		}
 		return total;
 	}
+	
 	/**
 	 * @requires:Nothing.
 	 * @modifies: total .
 	 * @effects  returns the total face value of 2 regular dice
 	 */
-	
 	public static int rollRegularDice(){
 		int total = 0;
 		total += regDie1.roll();

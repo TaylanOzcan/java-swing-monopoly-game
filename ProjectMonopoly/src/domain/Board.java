@@ -18,7 +18,6 @@ public class Board implements Serializable{
 	//from the playerNames size ,Makes new instance of the move handler, and makes
 	//the current player as the first player in the newly created list of Players 
 	//as well as delegating SquareFactory to createSquares.
-
 	public Board(ArrayList<String> playerNames){
 		this.numOfPlayers = playerNames.size();
 		this.players = new ArrayList<Player>(numOfPlayers);
@@ -28,12 +27,12 @@ public class Board implements Serializable{
 		this.currentPlayerIndex = 0;
 		this.currentPlayer = players.get(0);
 	}
+	
 	/**
 	 * @requires: Naught
 	 * @modifies:  List of players 
 	 * @effects : adds players to the array of players 
 	 */
-	
 	public void createPlayers(ArrayList<String> playerNames){
 		for(int i=0; i<numOfPlayers; i++){
 			players.add(i, new Player(playerNames.get(i)));

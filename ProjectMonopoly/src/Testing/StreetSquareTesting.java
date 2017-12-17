@@ -12,8 +12,6 @@ import domain.StreetSquare;
 
 class StreetSquareTesting {
 
-	
-
 	@Test
 	void testHouse() {
 		Player p = new Player("a");

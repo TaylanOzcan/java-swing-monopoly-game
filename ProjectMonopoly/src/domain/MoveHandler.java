@@ -9,10 +9,12 @@ public class MoveHandler implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * @requires:The player to have been created,the player mustn't be in jail.
+	 * @modifies:p,fvt,newLoc,newSquare
+	 * @effects:Changes the players location.
+	 */
 	public void movePlayer(Player p) {
-		// REQUIRES : The player to have been created,the player mustn't be in jail.
-		// MODIFIES : p,fvt,newLoc,newSquare
-		// EFFECTS : Changes the players location.
 		int initLoc = p.getLocation();
 		int finalLoc;
 		

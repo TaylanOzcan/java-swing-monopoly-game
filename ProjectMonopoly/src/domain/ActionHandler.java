@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class ActionHandler {
 
 	private ArrayList<PropertyListener> propertyListeners;
-	
+
 	public ActionHandler() {
 		propertyListeners = new ArrayList<PropertyListener>();
 	}
@@ -13,8 +13,8 @@ public class ActionHandler {
 	public void addPropertyListener(PropertyListener pl) {
 		propertyListeners.add(pl);
 	}
-	
-	
+
+
 	public void publishPropertyEvent(String name, Object value) {
 		for(PropertyListener pl: propertyListeners) {
 			pl.onPropertyEvent(this, name, value);
@@ -40,12 +40,24 @@ public class ActionHandler {
 	/**
 	 * @requires:
 	 * @modifies:Nothing.
-	 * @effects:Checks if 
+	 * @effects:Starts auction if currentPlayer is on a StreetSquare
 	 */
 	public void checkAuction(Player currentPlayer) {
 		Square currentSquare = SquareFactory.getInstance().getSquare(currentPlayer.getLocation());
 		if(currentSquare.getClass() == StreetSquare.class){
 			startAuction((StreetSquare)currentSquare);
 		}
+	}
+
+
+	public void mrMonopolyAction(Player currentPlayer) {
+		// send the player to nearest unowned square
+		publishPropertyEvent("mrMonopolyAction", currentPlayer/*may be changed with the square to be sent*/);
+	}
+
+	public void busAction(Player currentPlayer) {
+		// give a voucher to the player
+		publishPropertyEvent("busAction", currentPlayer/*may be changed with the voucher given*/);
+
 	}
 }

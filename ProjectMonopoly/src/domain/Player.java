@@ -195,7 +195,6 @@ public class Player implements Serializable{
 	 * @modifies:Player's balance.
 	 * @effects: Increase or Decrease player balance.
 	 */
-
 	public void EditBalance(String Type,int money){
 		if (Type=="Increase") {
 			int b = balance + money;
@@ -209,7 +208,6 @@ public class Player implements Serializable{
 	 * @modifies: this.communityCards.
 	 * @effects: add New card to this.communityCards
 	 */
-
 	public void addCommunityCard(String newCard) {
 		
 		this.communityCards.add(newCard);
@@ -219,7 +217,6 @@ public class Player implements Serializable{
 	 * @modifies: Nothing.
 	 * @effects: removes card from this.communityCards
 	 */
-
 	public void deleteCommunityCard(String card){
 		
 		if(this.communityCards.contains(card)){
@@ -233,7 +230,6 @@ public class Player implements Serializable{
 	 * @modifies: this.loc
 	 * @effects: return modified loc
 	 */
-
 	public int move(int rollValue) {
 		
 		this.location = (this.location + rollValue); // % 40;
@@ -244,7 +240,6 @@ public class Player implements Serializable{
 	 * @modifies: this.balance
 	 * @effects: subtracts price from this.balance
 	 */
-
 	public void pay(int price) {
 		this.balance -= price;
 	}
@@ -253,7 +248,6 @@ public class Player implements Serializable{
 	 * @requires: Nothing.
 	 * @effects: adds moneyToAdd to this.balance
 	 */
-
 	public void increaseBalance(int moneyToAdd) {
 	
 		this.balance += moneyToAdd;
@@ -263,7 +257,6 @@ public class Player implements Serializable{
 	 * @modifies: this.balance, this.ownedSquare
 	 * @effects: decreases this.balance by squareToBuy.getPrice() and adds squareToBuy to this.ownedSquares
 	 */
-
 	public boolean buy() {
 	
 		PropertySquare squareToBuy = (PropertySquare)SquareFactory.getInstance().getSquare(this.location);
@@ -274,7 +267,6 @@ public class Player implements Serializable{
 	 * @modifies: Nothing.
 	 * @effects: returns true or false depending on player balance compared to square price.
 	 */
-
 	public boolean buy(PropertySquare squareToBuy) {
 		if(this.balance < squareToBuy.getPrice()){
 			return false;
@@ -287,7 +279,6 @@ public class Player implements Serializable{
 	 * @modifies: price, squareToBuy.
 	 * @effects: pays the price and adds squareToBuy to owned squares.
 	 */
-
 	public boolean buyFor(PropertySquare squareToBuy, int price) {
 		this.pay(price);
 		this.addOwnedSquare(squareToBuy);
@@ -306,14 +297,11 @@ public class Player implements Serializable{
 		return communityCards;
 	}
 	/**
-	 * @requires:  this.chanceCards contains card
-	 * @modifies: Nothing.
-	 * @effects: removes card from this.chanceCards
+	 * @requires: Nothing
+	 * @modifies: squareToBuy
+	 * @effects: adds squareToBuy to this.ownedSquares
 	 */
-
 	public void addOwnedSquare(PropertySquare squareToBuy){
-		// MODIFIES : squareToBuy
-		// EFFECTS : adds squareToBuy to this.ownedSquares
 		squareToBuy.setOwner(this);
 		this.ownedSquares.add(squareToBuy);
 	}

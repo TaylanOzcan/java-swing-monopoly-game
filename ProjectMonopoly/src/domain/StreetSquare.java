@@ -52,12 +52,12 @@ public class StreetSquare extends PropertySquare implements Serializable{
 		}
 	}
 
+	/**
+	 * @requires:The player to own the square he wants to build on.
+	 * @modifies:The property of the square.
+	 * @effects:Adds either a hotel,a house or a skyscraper to the square.
+	 */
 	public int build(){
-		/**
-		 * @requires:The player to own the square he wants to build on.
-		 * @modifies:The property of the square.
-		 * @effects:Adds either a hotel,a house or a skyscraper to the square.
-		 */
 		if(nSkyscrapers == 1){
 			return -1;
 		}else if(nHotels == 1){
