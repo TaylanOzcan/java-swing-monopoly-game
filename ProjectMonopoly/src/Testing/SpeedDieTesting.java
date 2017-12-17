@@ -21,23 +21,23 @@ class SpeedDieTesting {
 	}
 
 	@AfterEach
-	void tearDown() throws Exception {
+	public void tearDown() throws Exception {
 	}
 
 	@Test
-	void testSpeedDie() {
+	public void testSpeedDie() {
 		assertNotNull(new SpeedDie());	
 	}
 
 	@Test
-	void testGetValue() {
+	public void testGetValue() {
 		SpeedDie Speeddie =new SpeedDie();
 		Random rnd = new Random ();
 		assertTrue(( -3 < Speeddie.roll() && Speeddie.roll() < 4));
 	}
 
 	@Test
-	void testDoSpecialMrMonopoly()  {
+	public void testDoSpecialMrMonopoly()  {
 		SpeedDie Speeddie =new SpeedDie();
 		if (Speeddie.roll() == -1 || Speeddie.roll() == 0)
 			assertEquals(Speeddie.DoSpecial(),"Mr Monopoly");
@@ -47,13 +47,13 @@ class SpeedDieTesting {
 	}
 
 	@Test
-	void testGetCurrentValue() {
+	public void testGetCurrentValue() {
 		SpeedDie Speeddie =new SpeedDie();
 		assertTrue(( -3 < Speeddie.roll() && Speeddie.roll() < 4));
 	}
 	
 	@Test
-	void testRepOk() {
+	public void testRepOk() {
 		SpeedDie sd =new SpeedDie();
 		assertTrue(sd.repOk());
 	}

@@ -14,7 +14,7 @@ import junit.framework.Assert;
 class CupTesting {
 
 	@Test
-	void testRollAllDice() {
+	public void testRollAllDice() {
 		Cup cup=new Cup();
 
 		assertTrue(( 2 < cup.rollAllDice() && cup.rollAllDice() < 16));
@@ -22,14 +22,14 @@ class CupTesting {
 	}
 
 	@Test
-	void testRollRegularDice() {
+	public void testRollRegularDice() {
 		Cup cup=new Cup();
 
 		assertTrue(( 1 < cup.rollRegularDice() && cup.rollRegularDice() < 13));
 
 	}
 	@Test
-	void testClearFaceValues() {
+	public void testClearFaceValues() {
 		Cup cup=new Cup();
 		cup.clearFaceValues();
 		assertSame(-3 , cup.getRegDie1Value() );
@@ -39,7 +39,7 @@ class CupTesting {
 	}
 	
 	@Test
-	void testRepOk() {
+	public void testRepOk() {
 		Cup cup=new Cup();
 		assertTrue(cup.repOk());
 	}

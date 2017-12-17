@@ -13,7 +13,7 @@ import domain.StreetSquare;
 class PlayerTesting {
 
 	@Test
-	void testCreate() {
+	public void testCreate() {
 		Player p1 = new Player("Ali");
 		assertEquals(p1.getBalance(), 3200);
 		assertEquals(p1.getLocation(), 0);
@@ -21,7 +21,7 @@ class PlayerTesting {
 	}
 	
 	@Test
-	void testMove() {
+	public void testMove() {
 		Player p1 = new Player("Ahmet");
 		int initLoc = p1.getLocation();
 		p1.move(5);
@@ -33,7 +33,7 @@ class PlayerTesting {
 	}
 	
 	@Test
-	void testBuy(){
+	public void testBuy(){
 		Player p1 = new Player("Mehmet");
 		int initBalance = p1.getBalance();
 		p1.move(18);
@@ -45,7 +45,7 @@ class PlayerTesting {
 	}
 	
 	@Test
-	void testAddCard() {
+	public void testAddCard() {
 		Player p1 = new Player("Ayse");
 		p1.addChanceCard("chanceCard");
 		assertNotNull(p1.getChanceCards());
@@ -53,7 +53,7 @@ class PlayerTesting {
 	}
 	
 	@Test
-	void testDeleteCard() {
+	public void testDeleteCard() {
 		Player p1 = new Player("Ayse");
 		p1.addChanceCard("chanceCard");
 		p1.deleteChanceCard("ch");
@@ -63,7 +63,7 @@ class PlayerTesting {
 	}
 	
 	@Test
-	void testRepOk() {
+	public void testRepOk() {
 		Player p1 = new Player("Ayse");
 		assertTrue(p1.repOk());
 	}

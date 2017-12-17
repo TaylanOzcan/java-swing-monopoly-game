@@ -13,7 +13,7 @@ import domain.StreetSquare;
 class StreetSquareTesting {
 
 	@Test
-	void testHouse() {
+	public void testHouse() {
 		Player p = new Player("a");
 		StreetSquare s1 = new StreetSquare(0, "name", 10, 10, 10, 10, 10, 10, 10, 10, "red");
 		s1.setOwner(p);
@@ -23,7 +23,7 @@ class StreetSquareTesting {
 		
 	}
 	@Test
-	void testHotel() {
+	public void testHotel() {
 		Player p = new Player("aa");
 		StreetSquare s2 = new StreetSquare(0, "abc", 10, 10, 10, 10, 10, 10, 10, 10, "green");
 		s2.setOwner(p);
@@ -37,7 +37,7 @@ class StreetSquareTesting {
 	}
 	
 	@Test
-	void testSkyscraper() {
+	public void testSkyscraper() {
 		Player p = new Player("aaa");
 		StreetSquare s3 = new StreetSquare(0, "def", 10, 10, 10, 10, 10, 10, 10, 10, "yellow");
 		s3.setOwner(p);
@@ -52,7 +52,7 @@ class StreetSquareTesting {
 	}
 	
 	@Test
-	void testRepOk() {
+	public void testRepOk() {
 		StreetSquare s4 = new StreetSquare(0, "ghi", 10, 10, 10, 10, 10, 10, 10, 10, "grey");
 		assertTrue(s4.repOk());
 	}
