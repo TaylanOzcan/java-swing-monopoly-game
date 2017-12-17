@@ -46,8 +46,10 @@ public class Board implements Serializable{
 	
 	public void setNewCurrentPlayer(){
 		if(currentPlayer.getRolledBus()) {
+			actionHandler.busAction(currentPlayer);
 			return;
 		}else if(currentPlayer.getRolledMonopoly()) {
+			actionHandler.mrMonopolyAction(currentPlayer);
 			return;
 		}else if(currentPlayer.rollsAgain()){
 			currentPlayer.setRollsAgain(false);

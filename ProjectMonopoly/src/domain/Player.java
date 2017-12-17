@@ -232,7 +232,7 @@ public class Player implements Serializable{
 	 */
 	public int move(int rollValue) {
 		
-		this.location = (this.location + rollValue); // % 40;
+		this.location = (this.location + rollValue);
 		return this.location;
 	}
 	/**
