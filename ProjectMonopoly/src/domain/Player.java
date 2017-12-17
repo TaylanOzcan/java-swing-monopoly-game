@@ -236,7 +236,7 @@ public class Player implements Serializable{
 		return this.location;
 	}
 	/**
-	 * @requires:  this.balance > price
+	 * @requires:  this.balance is greater than price
 	 * @modifies: this.balance
 	 * @effects: subtracts price from this.balance
 	 */
