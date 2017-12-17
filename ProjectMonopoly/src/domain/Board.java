@@ -121,7 +121,7 @@ public class Board implements Serializable{
 	//Effects : it returns whether the player can build on it or not 
 	public boolean isBuildable() {
 		if(SquareFactory.getInstance().getSquare(currentPlayer.getLocation()).getClass() == StreetSquare.class){
-			return !((StreetSquare)SquareFactory.getInstance().getSquare(currentPlayer.getLocation())).isBuildable();
+			return ((StreetSquare)SquareFactory.getInstance().getSquare(currentPlayer.getLocation())).isBuildable();
 		}else{
 			return false;
 		}

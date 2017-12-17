@@ -11,6 +11,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import domain.Board;
+import domain.Cup;
 import domain.Player;
 import domain.PropertySquare;
 import domain.SquareFactory;
@@ -74,11 +75,26 @@ public class BoardTesting {
 		int NumberOfHousesBeforeBuild = Square.getnHouses();
 		tb.buildHouse(0);
 		int NumberOfHousesAfterBuild = Square.getnHouses();
-		assertNotSame (NumberOfHousesBeforeBuild,NumberOfHousesAfterBuild); //assert they increasd by one 
+		assertNotSame (NumberOfHousesBeforeBuild,NumberOfHousesAfterBuild); //assert they increasd 
+		assertSame (NumberOfHousesBeforeBuild,NumberOfHousesAfterBuild-1);//assert housed has increased by one
+	}
+	@Test 
+	public void testNumberofHousesBuild() {
+		ArrayList<String> r = new ArrayList<String>();
+		r.add("test1");
+		r.add("test2");
+		r.add("test3");
+		Board tb = new Board(r);
+		tb.getCurrentPlayer().addOwnedSquare((PropertySquare) SquareFactory.getInstance().getSquare(18));
+		StreetSquare Square = (StreetSquare)tb.getCurrentPlayer().getOwnedSquares().get(0);
+		int NumberOfHousesBeforeBuild = Square.getnHouses();
+		tb.buildHouse(0);
+		int NumberOfHousesAfterBuild = Square.getnHouses();
+		assertSame (NumberOfHousesBeforeBuild,NumberOfHousesAfterBuild-1);//assert housed has increased by one
 	}
 
 	@Test
-	public void testIsBuyable() {
+	public void testIsntBuyable() {
 		ArrayList<String> r = new ArrayList<String>();
 		r.add("test1");
 		r.add("test2");
@@ -89,6 +105,16 @@ public class BoardTesting {
 		StreetSquare Square = (StreetSquare)tb.getCurrentPlayer().getOwnedSquares().get(0);
 		assertFalse(tb.isBuyable());
 	}
+	@Test
+	public void testIsBuyable() {
+		ArrayList<String> r = new ArrayList<String>();
+		r.add("test1");
+		r.add("test2");
+		r.add("test3");
+		Board tb = new Board(r);
+		tb.getCurrentPlayer().setLocation(108);
+		assertTrue (tb.isBuyable());
+	}
 
 	@Test
 	public void testIsBuildable() {
@@ -97,10 +123,18 @@ public class BoardTesting {
 		r.add("test2"); 
 		r.add("test3");
 		Board tb = new Board(r);
-		tb.getCurrentPlayer().addOwnedSquare((PropertySquare) SquareFactory.getInstance().getSquare(18));
-		for( int i=0;i<5 ;i++) {
-
-		}
+		tb.getCurrentPlayer().setLocation(24);
+		assertTrue(tb.isBuildable());
+	}
+	@Test
+	public void testIsntBuildable() {
+		ArrayList<String> r = new ArrayList<String>();
+		r.add("test1");
+		r.add("test2"); 
+		r.add("test3");
+		Board tb = new Board(r);
+		tb.getCurrentPlayer().setLocation(4);
+		assertFalse(tb.isBuildable());
 	}
 
 
