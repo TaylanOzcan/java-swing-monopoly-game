@@ -9,9 +9,6 @@ public class GamePlay implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	private Board board;
-
-	public GamePlay(){
-	}
 	
 	public Board getBoard() {
 		return board;

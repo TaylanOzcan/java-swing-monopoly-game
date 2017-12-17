@@ -9,6 +9,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import domain.Player;
 import domain.SpeedDie;
 import junit.framework.Assert;
 
@@ -45,11 +46,16 @@ class SpeedDieTesting {
 
 	}
 
-
 	@Test
 	void testGetCurrentValue() {
 		SpeedDie Speeddie =new SpeedDie();
 		assertTrue(( -3 < Speeddie.roll() && Speeddie.roll() < 4));
+	}
+	
+	@Test
+	void testRepOk() {
+		SpeedDie sd =new SpeedDie();
+		assertTrue(sd.repOk());
 	}
 
 

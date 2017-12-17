@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import domain.Cup;
+import domain.Player;
 import domain.SpeedDie;
 import junit.framework.Assert;
 
@@ -37,5 +38,10 @@ class CupTesting {
 		
 	}
 	
+	@Test
+	void testRepOk() {
+		Cup cup=new Cup();
+		assertTrue(cup.repOk());
+	}
 
 }

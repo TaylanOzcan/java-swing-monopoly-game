@@ -8,9 +8,9 @@ public class Player implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	public static final int JAIL_LOCATION = 10;
-	
+
 	private String name;
 	private int location;
 	private int balance;
@@ -24,7 +24,7 @@ public class Player implements Serializable{
 	private boolean rolledBus;
 	private boolean rolledDoubles;
 	private int consecutiveDoublesCount;
-	
+
 	private boolean reverseDirection;
 	private ArrayList<PropertySquare> ownedSquares;
 
@@ -41,7 +41,7 @@ public class Player implements Serializable{
 		this.communityCards = new ArrayList<String>(5);	
 		this.ownedSquares = new ArrayList<PropertySquare>(10);
 	}
-	
+
 	public boolean getRolledBus() {
 		return rolledBus;
 	}
@@ -85,8 +85,8 @@ public class Player implements Serializable{
 	public boolean IsCurrent() {
 		return this.CurrentPlayer;
 	}
-	
-	
+
+
 	public boolean isInJail() {
 		return this.inJail;
 	}
@@ -97,18 +97,18 @@ public class Player implements Serializable{
 	public void getOutOfJail() {
 		this.inJail = false;
 	}
-	
+
 	public boolean rollsAgain() {
 		return this.rollsAgain;
 	}
 	public void setRollsAgain(boolean rollsAgain) {
 		this.rollsAgain = rollsAgain;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
-	
+
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -116,7 +116,7 @@ public class Player implements Serializable{
 	public int getLocation() {
 		return location;
 	}
-	
+
 	public void setLocation(int location) {
 		this.location = location;
 	}
@@ -131,7 +131,7 @@ public class Player implements Serializable{
 	public void addVoucher(String newVoucher) {
 		this.vouchers.add(newVoucher);
 	}
-	
+
 	public void deleteVoucher(String voucher){
 		if(this.vouchers.contains(voucher)){
 			this.vouchers.remove(voucher);
@@ -139,7 +139,7 @@ public class Player implements Serializable{
 			//give an error
 		}
 	}
-	
+
 	public ArrayList<PropertySquare> getOwnedSquares() {
 		return ownedSquares;
 	}
@@ -163,17 +163,17 @@ public class Player implements Serializable{
 		// EFFECTS : removes card from this.chanceCards
 		if(this.chanceCards.contains(card)){
 			this.chanceCards.remove(card);}
-		}
+	}
 
 	public void EditBalance(String Type,int money){
 		if (Type=="Increase") {
-		int b = balance + money;
-		setBalance(b);}
+			int b = balance + money;
+			setBalance(b);}
 		if (Type=="Decrease") {
 			int b = balance - money;
 			setBalance(b);}
 	}
-	
+
 	public void addCommunityCard(String newCard) {
 		// MODIFIES : this.communityCards
 		// EFFECTS : add newCard to this.communityCards
@@ -217,7 +217,7 @@ public class Player implements Serializable{
 		PropertySquare squareToBuy = (PropertySquare)SquareFactory.getInstance().getSquare(this.location);
 		return buy(squareToBuy);
 	}
-	
+
 	public boolean buy(PropertySquare squareToBuy) {
 		if(this.balance < squareToBuy.getPrice()){
 			return false;
@@ -225,13 +225,13 @@ public class Player implements Serializable{
 			return buyFor(squareToBuy, squareToBuy.getPrice());
 		}
 	}
-	
+
 	public boolean buyFor(PropertySquare squareToBuy, int price) {
 		this.pay(price);
 		this.addOwnedSquare(squareToBuy);
 		return true;
 	}
-	
+
 	public ArrayList<String> getVouchers() {
 		return vouchers;
 	}
@@ -250,12 +250,13 @@ public class Player implements Serializable{
 		squareToBuy.setOwner(this);
 		this.ownedSquares.add(squareToBuy);
 	}
-	
+
 	public boolean repOk() {
 		if(this.name == null || this.location<0 || this.location > 120) {
 			return false;
+		}else {
+			return true;
 		}
-		return true;
 	}
 
 	@Override

@@ -43,5 +43,18 @@ public class Cup {
 		return regDie2.getCurrentValue();
 	}
 	
+	public boolean repOk() {
+		if(regDie1==null || regDie2==null || speedDie==null) {
+			return false;
+		}else {
+			return true;
+		}
+	}
+
+	@Override
+	public String toString() {
+		return "Cup [One random instance of rolling: RegDie1: " + regDie1.roll() + 
+				" ,RegDie2: "+ regDie2.roll() + " ,speedDie: " + speedDie.roll() + "]";
+	}
 
 }

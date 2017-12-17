@@ -143,4 +143,22 @@ public class Board implements Serializable{
 		}
 		return infoList;
 	}
+	
+	public boolean repOk() {
+		if(players.size() < 2 || players.size() > 8 || !players.contains(currentPlayer)
+				|| currentPlayerIndex < 0 || currentPlayerIndex > players.size() - 1 || numOfPlayers < 2
+				|| numOfPlayers > 8 || moveHandler == null || actionHandler == null){
+			return false;
+		}else {
+			return true;
+		}
+	}
+
+	@Override
+	public String toString() {
+		return "Board [players=" + players + ", currentPlayer=" + currentPlayer + ", currentPlayerIndex="
+				+ currentPlayerIndex + ", numOfPlayers=" + numOfPlayers + ", moveHandler=" + moveHandler
+				+ ", actionHandler=" + actionHandler + "]";
+	}
+	
 }

@@ -1,6 +1,7 @@
 package Testing;
 
 import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 
@@ -12,6 +13,7 @@ import org.junit.Test;
 
 import domain.Board;
 import domain.Cup;
+import domain.GamePlay;
 import domain.Player;
 import domain.PropertySquare;
 import domain.SquareFactory;
@@ -78,6 +80,7 @@ public class BoardTesting {
 		assertNotSame (NumberOfHousesBeforeBuild,NumberOfHousesAfterBuild); //assert they increasd 
 		assertSame (NumberOfHousesBeforeBuild,NumberOfHousesAfterBuild-1);//assert housed has increased by one
 	}
+
 	@Test 
 	public void testNumberofHousesBuild() {
 		ArrayList<String> r = new ArrayList<String>();
@@ -126,6 +129,7 @@ public class BoardTesting {
 		tb.getCurrentPlayer().setLocation(24);
 		assertTrue(tb.isBuildable());
 	}
+
 	@Test
 	public void testIsntBuildable() {
 		ArrayList<String> r = new ArrayList<String>();
@@ -137,5 +141,16 @@ public class BoardTesting {
 		assertFalse(tb.isBuildable());
 	}
 
+	@Test
+	public void testRepOk() {
+		GamePlay gamePlay = new GamePlay();
+		ArrayList<String> playerNames = new ArrayList<String>();
+		playerNames.add("test1");
+		playerNames.add("test2");
+		gamePlay.playGame(playerNames);
+		Board b = gamePlay.getBoard();
+		
+		assertTrue(b.repOk());
+	}
 
 }
