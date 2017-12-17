@@ -31,8 +31,7 @@ class SpeedDieTesting {
 	@Test
 	void testGetValue() {
 		SpeedDie Speeddie =new SpeedDie();
-		Random rnd = new Random ();
-		Assert.assertTrue(( -3 < Speeddie.getValue() && Speeddie.getValue() < 4));
+		assertTrue(( -3 < Speeddie.getValue() && Speeddie.getValue() < 4));
 	}
 
 	@Test
@@ -45,10 +44,5 @@ if (Speeddie.getValue() == -2)
 
 	}
 
-	@Test
-	void testGetCurrentValue() {
-		SpeedDie Speeddie =new SpeedDie();
-		Assert.assertTrue(( -3 < Speeddie.getValue() && Speeddie.getValue() < 4));
-	}
 
 }

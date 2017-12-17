@@ -24,13 +24,13 @@ class CupTesting {
 	@Test
 	void testGetTotalValue() {
 		Cup cup=new Cup();
-		Assert.assertTrue(( 2 < cup.getTotalValue() && cup.getTotalValue() < 16));
+		assertTrue(( 2 < cup.getTotalValue() && cup.getTotalValue() < 16));
 	}
 
 	@Test
 	void testGetRegularValue() {
 		Cup cup=new Cup();
-		Assert.assertTrue(( 1 < cup.getTotalValue() && cup.getTotalValue() < 13));
+		assertTrue(( 1 < cup.getTotalValue() && cup.getTotalValue() < 13));
 	}
 
 	

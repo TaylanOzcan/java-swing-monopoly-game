@@ -95,7 +95,7 @@ public class BoardTesting {
 		int NumberOfHousesBeforeBuild = Square.getnHouses();
 		tb.buildHouse(0);
 		int NumberOfHousesAfterBuild = Square.getnHouses();
-		assertNotSame (NumberOfHousesBeforeBuild,NumberOfHousesAfterBuild);
+		assertNotSame (NumberOfHousesBeforeBuild,NumberOfHousesAfterBuild); //assert they increasd by one 
 	}
 
 	@Test
@@ -124,9 +124,5 @@ public class BoardTesting {
 		}
 	}
 
-	@Test
-	public void testGetPlayerInfo() {
-		fail("Not yet implemented");
-	}
 
 }
