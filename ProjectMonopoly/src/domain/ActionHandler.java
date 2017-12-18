@@ -60,4 +60,13 @@ public class ActionHandler {
 		publishPropertyEvent("busAction", currentPlayer/*may be changed with the voucher given*/);
 
 	}
+
+	public void rollsAgainAction(Player currentPlayer) {
+		currentPlayer.setRollsAgain(false);
+		publishPropertyEvent("rollsAgainAction", currentPlayer);
+	}
+
+	public void newTurnAction(Player currentPlayer) {
+		publishPropertyEvent("newTurnAction", currentPlayer);
+	}
 }

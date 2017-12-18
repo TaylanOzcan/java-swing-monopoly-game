@@ -52,7 +52,8 @@ public class Board implements Serializable{
 			actionHandler.mrMonopolyAction(currentPlayer);
 			return;
 		}else if(currentPlayer.rollsAgain()){
-			currentPlayer.setRollsAgain(false);
+			actionHandler.rollsAgainAction(currentPlayer);
+			return;
 		}else {
 			currentPlayerIndex++;
 			currentPlayer = players.get(currentPlayerIndex % numOfPlayers);
@@ -142,6 +143,7 @@ public class Board implements Serializable{
 	public void endTurn() {
 		Cup.clearFaceValues();
 		setNewCurrentPlayer();
+		actionHandler.newTurnAction(currentPlayer);
 	}
 	/**
 	 * @requires: the street to be buyable (not a chance/community...)
@@ -159,7 +161,7 @@ public class Board implements Serializable{
 	/**
 	 * @requires: the current street the player is on is a property street 
 	 * @modifies: Nothing
-	 * @effects   it returns whether the player can build on it or not 
+	 * @effects:  it returns whether the player can build on it or not 
 	 */
 	
 	public boolean isBuildable() {
@@ -171,16 +173,16 @@ public class Board implements Serializable{
 	}
 	/**
 	 * @requires:Nothing.
-	 * @modifies:  Infolist  .
-	 * @effects   Put the player information in the player arraylist
+	 * @modifies: Infolist  .
+	 * @effects: Put the player information in the player arraylist
 	 */
 	 
 	public ArrayList<String> getPlayerInfo() {
 		ArrayList<String> infoList = new ArrayList<String>(numOfPlayers);
 		for(int i = 0; i < players.size(); i++){
 			Player p = players.get(i);
-			String info = "<html><center><span style='font-size:16px'>" + (i+1) + ": " + p.getName() + "</span>"
-					+ "<br><br><span style='font-size:12px'>$ " + p.getBalance() + "</span><br><br>"
+			String info = "<html><center>"/*<span style='font-size:16px'>" + (i+1) + ": " + p.getName() + "</span><br><br>"*/
+					+ "<span style='font-size:18px'>$" + p.getBalance() + "</span><br><br>"
 					+ "<span style='font-size:10px'>";
 			for(PropertySquare s : p.getOwnedSquares()){
 				info += s.getName() + "<br>";
