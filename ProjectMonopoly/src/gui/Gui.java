@@ -3,6 +3,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -251,7 +252,7 @@ public class Gui implements ActionListener, PropertyListener , Serializable{
 		JPanel topMenuPanel = new JPanel();
 		topMenuPanel.setLayout(new GridLayout(4, 0, 0, 35));
 		JPanel bottomMenuPanel = new JPanel();
-		bottomMenuPanel.setLayout(new BorderLayout());//(new GridLayout(0, 2));
+		bottomMenuPanel.setLayout(new GridLayout(0, 1));
 
 		diceLabels = new JLabel[3];
 		diceLabels[0] = new JLabel("", SwingConstants.CENTER);
@@ -306,6 +307,8 @@ public class Gui implements ActionListener, PropertyListener , Serializable{
 
 		infoSelectionPanel.setLayout(new BorderLayout());
 		playerNamesComboBox.setPreferredSize(new Dimension(0,40));
+		((JLabel)playerNamesComboBox.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
+		playerNamesComboBox.setFont(playerNamesComboBox.getFont().deriveFont(20.0f));
 		infoSelectionPanel.add(playerNamesComboBox, BorderLayout.NORTH);
 		infoSelectionPanel.add(infoPanel);
 		//infoPanel.setPreferredSize(new Dimension(250, 400));
@@ -374,7 +377,7 @@ public class Gui implements ActionListener, PropertyListener , Serializable{
 								null, "You must enter a valid name.");
 					}else{
 						playerNames.add(inputName);
-						playerNamesComboBox.addItem(inputName);
+						playerNamesComboBox.addItem(""+ (i+1) + ": " + inputName);
 						break;
 					}
 				}
@@ -494,7 +497,6 @@ public class Gui implements ActionListener, PropertyListener , Serializable{
 		refreshTokenLocations();
 		refreshButtons();
 		mainPanel.updateUI();
-
 	}
 
 	public void refreshDice(){
@@ -517,7 +519,7 @@ public class Gui implements ActionListener, PropertyListener , Serializable{
 			this.playerInfoLabels[i].setText(infoList.get(i));
 		}
 		
-		playerNamesComboBox.setSelectedItem(currentName);
+		playerNamesComboBox.setSelectedIndex(this.playerNames.indexOf(currentName));
 	}
 
 	public void refreshTokenLocations(){
