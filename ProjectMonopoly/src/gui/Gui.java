@@ -3,7 +3,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -19,6 +18,7 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -50,10 +50,10 @@ public class Gui implements ActionListener, PropertyListener , Serializable{
 	private static final int OUTER_LAYER = 2;
 
 	private JFrame mainFrame;
-	private JPanel mainPanel, boardPanel, menuPanel, menuButtonsPanel,
-	gameButtonsPanel, dicePanel, infoPanel, infoSelectionPanel;
-	private JButton newGameButton, loadButton, saveButton, rollButton,
-	buyTitleDeedsButton, endTurnButton, buildHouseButton, exitButton;
+	private JPanel mainPanel, boardPanel, menuPanel, menuButtonsPanel, upperTopMenuPanel,
+	gameButtonsPanel, botPanel, infoPanel, infoSelectionPanel, currentPlayerPanel;
+	private JButton newGameButton, loadButton, saveButton, rollButton, sellButton,
+	buyButton, endTurnButton, buildHouseButton, exitButton, tradeButton, mortgageButton;
 	private JComboBox<String> playerNamesComboBox;
 	private JLabel[] tokenLabels, playerInfoLabels, diceLabels;
 	private JLabel currentPlayerLabel, botLabel;
@@ -85,7 +85,7 @@ public class Gui implements ActionListener, PropertyListener , Serializable{
 		private BufferedImage image;
 		public MyMainPanel() {
 			try{
-				image = ImageIO.read(new File("bg_mainPanel.png"));
+				image = ImageIO.read(new File("bg_mainPanel.jpg"));
 			}catch(IOException e){
 				e.printStackTrace();
 			}
@@ -108,9 +108,12 @@ public class Gui implements ActionListener, PropertyListener , Serializable{
 		saveButton.addActionListener(this);
 		rollButton.addActionListener(this);
 		endTurnButton.addActionListener(this);
-		buyTitleDeedsButton.addActionListener(this);
+		buyButton.addActionListener(this);
 		buildHouseButton.addActionListener(this);
 		exitButton.addActionListener(this);
+		sellButton.addActionListener(this);
+		mortgageButton.addActionListener(this);
+		tradeButton.addActionListener(this);
 	}
 
 	private void addPropertyListeners() {
@@ -236,23 +239,20 @@ public class Gui implements ActionListener, PropertyListener , Serializable{
 	public void initializeMenu(){
 		menuPanel = new JPanel();
 		menuButtonsPanel = new JPanel();
-		dicePanel = new JPanel();
+		botPanel = new JPanel();
 		infoPanel = new JPanel();
 		infoSelectionPanel = new JPanel();
 		gameButtonsPanel = new JPanel();
-		currentPlayerLabel = new JLabel("<html><center><span style='font-size:24px'>" 
-				+ "Welcome to<br>Ultimate Monopoly</span>"
-				/*+ "<span style='font-size:11px'><br>prepared by team RND3 "
-				+ "for COMP 302 term project</span>"*/
-				+ "</center></html>", SwingConstants.CENTER);
+		currentPlayerPanel = new JPanel();
+		currentPlayerLabel = new JLabel("", SwingConstants.CENTER);
 		currentPlayerLabel.setForeground(Color.WHITE);
 		botLabel = new JLabel("", JLabel.CENTER);			
 		playerNamesComboBox = new JComboBox<String>();
-
+		upperTopMenuPanel = new JPanel();
 		JPanel topMenuPanel = new JPanel();
-		topMenuPanel.setLayout(new GridLayout(4, 0, 0, 35));
+		topMenuPanel.setLayout(new GridLayout(2, 0, 0, 25));
 		JPanel bottomMenuPanel = new JPanel();
-		bottomMenuPanel.setLayout(new GridLayout(0, 1));
+		bottomMenuPanel.setLayout(new BorderLayout());
 
 		diceLabels = new JLabel[3];
 		diceLabels[0] = new JLabel("", SwingConstants.CENTER);
@@ -274,36 +274,53 @@ public class Gui implements ActionListener, PropertyListener , Serializable{
 		exitButton = new JButton("Exit");
 		rollButton = new JButton("Play Turn");
 		endTurnButton = new JButton("End Turn");
-		buyTitleDeedsButton = new JButton("Buy Title Deeds");
+		buyButton = new JButton("Buy Title Deeds");
 		buildHouseButton = new JButton("Build House");
+		sellButton = new JButton("Sell");
+		mortgageButton = new JButton("Mortgage");
+		tradeButton = new JButton("Trade");
 		saveButton.setEnabled(false);
 		endTurnButton.setEnabled(false);
-		buyTitleDeedsButton.setEnabled(false);
+		buyButton.setEnabled(false);
 		buildHouseButton.setEnabled(false);
 		rollButton.setEnabled(false);
+		sellButton.setEnabled(false);
+		mortgageButton.setEnabled(false);
+		tradeButton.setEnabled(false);
 
-		menuButtonsPanel.setLayout(new GridLayout(0, 4, 20, 0));
+		menuButtonsPanel.setLayout(new GridLayout(0, 4, 25, 0));
 		menuButtonsPanel.add(newGameButton);
 		menuButtonsPanel.add(saveButton);
 		menuButtonsPanel.add(loadButton);
 		menuButtonsPanel.add(exitButton);
 		menuButtonsPanel.setOpaque(false);
 
-		gameButtonsPanel.setLayout(new GridLayout(0, 2, 20, 0));
-		gameButtonsPanel.add(buyTitleDeedsButton);
+		ImageIcon image = new ImageIcon("bot.png");
+		botLabel.setIcon(image);
+		botPanel.setOpaque(false);
+		botPanel.add(botLabel);
+		
+		upperTopMenuPanel.setLayout(new BorderLayout(0, 25));
+		menuButtonsPanel.setPreferredSize(new Dimension(0,50));
+		upperTopMenuPanel.add(menuButtonsPanel, BorderLayout.NORTH);
+		upperTopMenuPanel.add(botPanel);
+		upperTopMenuPanel.setOpaque(false);
+
+		gameButtonsPanel.setLayout(new GridLayout(2, 5, 25, 25));
+		gameButtonsPanel.add(buyButton);
+		gameButtonsPanel.add(sellButton);
+		gameButtonsPanel.add(mortgageButton);
 		gameButtonsPanel.add(buildHouseButton);
+		gameButtonsPanel.add(tradeButton);
 		gameButtonsPanel.setOpaque(false);
 
-		dicePanel.setLayout(new GridLayout(0, 5, 20, 20));
-		dicePanel.add(rollButton);
-		dicePanel.add(diceLabels[0]); // regular die 1
-		dicePanel.add(diceLabels[1]); // regular die 2
-		dicePanel.add(diceLabels[2]); // speed die
-		dicePanel.add(endTurnButton);
-		dicePanel.setOpaque(false);
-
-		menuPanel.setLayout(new GridLayout(2, 0, 0, 50));
-		menuPanel.setOpaque(false);
+		//dicePanel.setLayout(new GridLayout(0, 5, 20, 20));
+		gameButtonsPanel.add(rollButton);
+		gameButtonsPanel.add(diceLabels[0]); // regular die 1
+		gameButtonsPanel.add(diceLabels[1]); // regular die 2
+		gameButtonsPanel.add(diceLabels[2]); // speed die
+		gameButtonsPanel.add(endTurnButton);
+		//dicePanel.setOpaque(false);
 
 		infoSelectionPanel.setLayout(new BorderLayout());
 		playerNamesComboBox.setPreferredSize(new Dimension(0,40));
@@ -311,34 +328,36 @@ public class Gui implements ActionListener, PropertyListener , Serializable{
 		playerNamesComboBox.setFont(playerNamesComboBox.getFont().deriveFont(20.0f));
 		infoSelectionPanel.add(playerNamesComboBox, BorderLayout.NORTH);
 		infoSelectionPanel.add(infoPanel);
-		//infoPanel.setPreferredSize(new Dimension(250, 400));
-		//playerNamesComboBox.setPreferredSize(new Dimension(250, 50));
 		playerNamesComboBox.setVisible(false);
 		infoSelectionPanel.setOpaque(false);
 		infoPanel.setOpaque(false);
 
-		topMenuPanel.add(menuButtonsPanel);
-		topMenuPanel.add(new JPanel().add(currentPlayerLabel));
-		topMenuPanel.add(gameButtonsPanel);
-		topMenuPanel.add(dicePanel);
+		currentPlayerLabel.setForeground(Color.BLACK);
+		currentPlayerPanel.add(currentPlayerLabel);
+		currentPlayerPanel.setPreferredSize(new Dimension(0,40));
+		currentPlayerPanel.setOpaque(false);
+		bottomMenuPanel.add(currentPlayerPanel, BorderLayout.NORTH);
 		bottomMenuPanel.add(infoSelectionPanel);
-		topMenuPanel.setOpaque(false);
 		bottomMenuPanel.setOpaque(false);
+		
+		topMenuPanel.add(upperTopMenuPanel);
+		//topMenuPanel.add(botLabel);
+		topMenuPanel.add(gameButtonsPanel);
+		//topMenuPanel.add(dicePanel);
+		topMenuPanel.setOpaque(false);
 
-		/*bottomMenuPanel.add(botLabel, BorderLayout.CENTER);
-		ImageIcon image = new ImageIcon("bot.png");
-//		botLabel.setIcon(image);*/
-
+		menuPanel.setLayout(new GridLayout(2, 0, 0, 25));
+		menuPanel.setOpaque(false);
 		menuPanel.add(topMenuPanel);
 		menuPanel.add(bottomMenuPanel);
-		menuPanel.setBorder(new EmptyBorder(20, 40, 20, 40));
+		menuPanel.setBorder(new EmptyBorder(0, 20, 0, 25));
+		menuPanel.setPreferredSize(new Dimension(650, 1000));
 
 		JLabel emptyLabel = new JLabel();//
-		emptyLabel.setPreferredSize(new Dimension(50,1000));//
+		emptyLabel.setPreferredSize(new Dimension(50, 1000));//
 		mainPanel.add(emptyLabel);//
 
 		mainPanel.add(menuPanel);
-		menuPanel.setPreferredSize(new Dimension(600,1000));
 	}
 
 
@@ -375,6 +394,9 @@ public class Gui implements ActionListener, PropertyListener , Serializable{
 					if(inputName==null || inputName.length() < 1) {
 						JOptionPane.showMessageDialog(
 								null, "You must enter a valid name.");
+					}else if(playerNames.contains(inputName)){
+						JOptionPane.showMessageDialog(
+								null, "You must select a different name.");
 					}else{
 						playerNames.add(inputName);
 						playerNamesComboBox.addItem(""+ (i+1) + ": " + inputName);
@@ -399,8 +421,8 @@ public class Gui implements ActionListener, PropertyListener , Serializable{
 				if(tokenSize > 20) tokenSize = 20;
 				tokenLabels[i].setPreferredSize(new Dimension(tokenSize, tokenSize));
 			}
-			currentPlayerLabel.setText("<html><center><span style='font-size:20px'>" 
-					+ "Current Turn: <br></span></center></html>");			
+			currentPlayerLabel.setText("<html><center><span style='font-size:18px'>" 
+					+ "Current Turn: </span></center></html>");			
 			newGameButton.setEnabled(false);
 			rollButton.setEnabled(true);
 			saveButton.setEnabled(true);
@@ -408,6 +430,7 @@ public class Gui implements ActionListener, PropertyListener , Serializable{
 			playerNamesComboBox.addActionListener(this);
 			buildHouseButton.setEnabled(true);
 			infoPanel.setOpaque(true);
+			currentPlayerPanel.setOpaque(true);
 			gamePlay.playGame(playerNames);
 			addPropertyListeners();
 		}else if(e.getSource() == playerNamesComboBox) {
@@ -425,7 +448,7 @@ public class Gui implements ActionListener, PropertyListener , Serializable{
 			endTurnButton.setEnabled(false);
 			rollButton.setEnabled(true);
 			buildHouseButton.setEnabled(true);
-			if(buyTitleDeedsButton.isEnabled()) {
+			if(buyButton.isEnabled()) {
 				gamePlay.checkAuction();
 			}
 			gamePlay.endTurn();
@@ -445,7 +468,7 @@ public class Gui implements ActionListener, PropertyListener , Serializable{
 			}else {
 				return;
 			}
-		}else if(e.getSource() == buyTitleDeedsButton){
+		}else if(e.getSource() == buyButton){
 			if(gamePlay.buy()){
 				JOptionPane.showMessageDialog(
 						null, "You have successfully bought the square.");
@@ -508,9 +531,9 @@ public class Gui implements ActionListener, PropertyListener , Serializable{
 
 	public void refreshInfo(){
 		String currentName = gamePlay.getCurrentPlayerName();
-		
-		currentPlayerLabel.setText("<html><center><span style='font-size:20px'>" 
-				+ "Current Turn: <br> "
+
+		currentPlayerLabel.setText("<html><center><span style='font-size:18px'>" 
+				+ "Current Turn: "
 				+ currentName
 				+ "</span></center></html>");
 
@@ -518,7 +541,7 @@ public class Gui implements ActionListener, PropertyListener , Serializable{
 		for(int i=0; i< infoList.size(); i++){
 			this.playerInfoLabels[i].setText(infoList.get(i));
 		}
-		
+
 		playerNamesComboBox.setSelectedIndex(this.playerNames.indexOf(currentName));
 	}
 
@@ -535,7 +558,7 @@ public class Gui implements ActionListener, PropertyListener , Serializable{
 
 	public void refreshButtons(){
 		boolean buyable = gamePlay.isBuyable();
-		buyTitleDeedsButton.setEnabled(buyable);
+		buyButton.setEnabled(buyable);
 	}
 
 	@Override
@@ -601,7 +624,7 @@ public class Gui implements ActionListener, PropertyListener , Serializable{
 				gamePlay.endAuction(winner, highestBid, auctedSquare);
 			}else if(name.equals("mrMonopolyAction")) {
 				JOptionPane.showMessageDialog(
-						null, ((Player) value).getName() + ", you get an extra move for rolling Mr. Monopoly.\nNow, you will be transported to the nearest unowned street.");
+						null, ((Player) value).getName() + ", you get an extra move for rolling Mr. Monopoly.\nNow, you will be moved to the nearest unowned street.");
 				rollButton.doClick();
 			}else if(name.equals("busAction")) {
 				JOptionPane.showMessageDialog(
