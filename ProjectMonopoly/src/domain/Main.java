@@ -5,7 +5,8 @@ public class Main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		Gui myGui = new Gui();
+		Gui monopolyGUI = new Gui();
+		monopolyGUI.start();
 	}
 
 }

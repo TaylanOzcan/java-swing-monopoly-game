@@ -1,5 +1,12 @@
 package domain;
-public abstract class PropertySquare implements Square {
+
+import java.io.Serializable;
+
+public abstract class PropertySquare implements Square, Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	
 	int id;
 	String name;

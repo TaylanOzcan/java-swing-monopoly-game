@@ -38,7 +38,7 @@ import domain.SaveAndLoad;
 import domain.Square;
 import domain.StreetSquare;
 
-public class Gui implements ActionListener, PropertyListener , Serializable{
+public class Gui extends JFrame implements ActionListener, PropertyListener, Serializable{
 
 	/**
 	 * 
@@ -97,6 +97,10 @@ public class Gui implements ActionListener, PropertyListener , Serializable{
 	}
 
 	public Gui(){
+		
+	}
+	
+	public void start() {
 		this.gamePlay = new GamePlay();
 		initializeGui();
 		addActionListeners();
@@ -122,8 +126,8 @@ public class Gui implements ActionListener, PropertyListener , Serializable{
 	}
 
 	public void initializeGui(){
-		mainFrame = new JFrame("Monopoly");
-		mainFrame.addWindowListener(new WindowAdapter() {
+		//mainFrame = new JFrame("Monopoly");
+		this.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent windowEvent){
 				System.exit(0);
 			}        
@@ -135,11 +139,11 @@ public class Gui implements ActionListener, PropertyListener , Serializable{
 		initializeBoard();
 		initializeMenu();
 
-		mainFrame.add(mainPanel);
-		//mainFrame.pack();
-		mainFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		mainFrame.setUndecorated(true);
-		mainFrame.setVisible(true);
+		this.add(mainPanel);
+		//this.pack();
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		this.setUndecorated(true);
+		this.setVisible(true);
 	}
 
 	public void initializeBoard(){
@@ -299,7 +303,7 @@ public class Gui implements ActionListener, PropertyListener , Serializable{
 		botLabel.setIcon(image);
 		botPanel.setOpaque(false);
 		botPanel.add(botLabel);
-		
+
 		upperTopMenuPanel.setLayout(new BorderLayout(0, 25));
 		menuButtonsPanel.setPreferredSize(new Dimension(0,50));
 		upperTopMenuPanel.add(menuButtonsPanel, BorderLayout.NORTH);
@@ -339,7 +343,7 @@ public class Gui implements ActionListener, PropertyListener , Serializable{
 		bottomMenuPanel.add(currentPlayerPanel, BorderLayout.NORTH);
 		bottomMenuPanel.add(infoSelectionPanel);
 		bottomMenuPanel.setOpaque(false);
-		
+
 		topMenuPanel.add(upperTopMenuPanel);
 		//topMenuPanel.add(botLabel);
 		topMenuPanel.add(gameButtonsPanel);
@@ -456,8 +460,8 @@ public class Gui implements ActionListener, PropertyListener , Serializable{
 			refreshDice();
 		}else if(e.getSource() == loadButton){
 			SaveAndLoad.load(this);
-			gamePlay.playGame(playerNames);
-			loadButton.setEnabled(false);
+			//gamePlay.playGame(playerNames);
+			//loadButton.setEnabled(false);
 		}else if(e.getSource() == saveButton){
 			SaveAndLoad.save(this);
 			loadButton.setEnabled(true);
@@ -567,7 +571,6 @@ public class Gui implements ActionListener, PropertyListener , Serializable{
 
 	@Override
 	public void onPropertyEvent(Object source, String name, Object value) {
-		refreshTokenLocations();
 		if(source.getClass()==ActionHandler.class) {
 			if(name.equals("startAuction")) {
 				int highestBid = 0;
@@ -700,6 +703,7 @@ public class Gui implements ActionListener, PropertyListener , Serializable{
 				}
 			}
 		}
+		refreshTokenLocations();
 	}
 
 }
