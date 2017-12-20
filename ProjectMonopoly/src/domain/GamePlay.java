@@ -114,6 +114,10 @@ public class GamePlay implements Serializable{
 	public Square getSquare(int i) {
 		return SquareFactory.getInstance().getSquare(i);
 	}
+	
+	public Square[] getSquares() {
+		return SquareFactory.getInstance().getSquares();
+	}
 
 	public ArrayList<Square> getUnownedStreetSquares() {
 		return SquareFactory.getInstance().getUnownedStreetSquares();
@@ -125,6 +129,10 @@ public class GamePlay implements Serializable{
 
 	public Player getCurrentPlayer() {
 		return board.getCurrentPlayer();
+	}
+
+	public void moveTo(int squareIndex) {
+		board.moveTo(squareIndex);
 	}
 
 }

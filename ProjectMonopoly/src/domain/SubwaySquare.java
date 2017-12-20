@@ -12,7 +12,7 @@ public class SubwaySquare implements Square{
 	
 	@Override
 	public void getAction(Player p) {
-		// subway actions
+		p.setLandedOnSubway(true);
 	}
 	
 	@Override

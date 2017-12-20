@@ -57,6 +57,9 @@ public class Board implements Serializable{
 		}else {
 			currentPlayerIndex++;
 			currentPlayer = players.get(currentPlayerIndex % numOfPlayers);
+			if(currentPlayer.getLandedOnSubway()) {
+				actionHandler.landedOnSubwayAction(currentPlayer);
+			}
 		}
 	}
 
@@ -143,7 +146,7 @@ public class Board implements Serializable{
 	public void endTurn() {
 		Cup.clearFaceValues();
 		setNewCurrentPlayer();
-		actionHandler.newTurnAction(currentPlayer);
+		//actionHandler.newTurnAction(currentPlayer);
 	}
 	/**
 	 * @requires: the street to be buyable (not a chance/community...)
@@ -208,6 +211,11 @@ public class Board implements Serializable{
 		return "Board [players=" + players + ", currentPlayer=" + currentPlayer + ", currentPlayerIndex="
 				+ currentPlayerIndex + ", numOfPlayers=" + numOfPlayers + ", moveHandler=" + moveHandler
 				+ ", actionHandler=" + actionHandler + "]";
+	}
+
+	public void moveTo(int squareIndex) {
+		currentPlayer.setLocation(squareIndex);
+		currentPlayer.getSquareAction();
 	}
 	
 }

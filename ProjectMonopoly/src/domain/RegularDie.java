@@ -4,10 +4,10 @@ import java.util.Random;
 public class RegularDie implements Die {
 	
 	private int faceValue;
-	Random rnd;
+	//Random rnd;
 	
 	public RegularDie(){
-		this.rnd = new Random();
+		//this.rnd = new Random();
 	}
 	/**
 	 * @requires:The Die.
@@ -16,7 +16,8 @@ public class RegularDie implements Die {
 	 */
 	@Override
 	public int roll() {
-		faceValue = rnd.nextInt(6) + 1;
+		//faceValue = rnd.nextInt(6) + 1;
+		faceValue = ((int) (Math.random() * 6)) + 1;
 		return faceValue;
 	}
 	
@@ -32,7 +33,7 @@ public class RegularDie implements Die {
 
 	@Override
 	public String toString() {
-		return "RegularDie [faceValue=" + faceValue + ", rnd=" + rnd + "]";
+		return "RegularDie [faceValue=" + faceValue + "]";
 	}
 	
 	public void setCurrentValue(int i) {

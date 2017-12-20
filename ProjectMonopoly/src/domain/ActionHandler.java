@@ -53,6 +53,7 @@ public class ActionHandler {
 	public void mrMonopolyAction(Player currentPlayer) {
 		// send the player to nearest unowned square
 		publishPropertyEvent("mrMonopolyAction", currentPlayer/*may be changed with the square to be sent*/);
+		currentPlayer.setLocation(0);
 	}
 
 	public void busAction(Player currentPlayer) {
@@ -68,5 +69,10 @@ public class ActionHandler {
 
 	public void newTurnAction(Player currentPlayer) {
 		publishPropertyEvent("newTurnAction", currentPlayer);
+	}
+
+	public void landedOnSubwayAction(Player currentPlayer) {
+		currentPlayer.setLandedOnSubway(false);
+		publishPropertyEvent("landedOnSubwayAction", currentPlayer);
 	}
 }

@@ -127,9 +127,9 @@ public class SquareFactory {
 		squares[114] = new TestSquare(114, "UTE CAB COMPANY");
 		squares[115] = new BirthdayGiftSquare(115, "Birthday Gift");
 		squares[116] = new StreetSquare(116, "MULLHOLLAND DRIVE",350, 750, 1600, 1850, 2100, 3600, 70, 450,"Dark Brown");
-		squares[117] = new ChanceSquare(117, "CHANCE");
-		squares[118] = new StreetSquare(116, "VENTURA BOULEVARD",400, 825, 1800, 2175, 2550, 4050, 80, 480,"Dark Brown");
-		squares[119] = new StreetSquare(116, "RODEO DRIVE",450, 900, 2000, 2500, 3000, 4500, 90, 510,"Dark Brown");
+		squares[117] = new StreetSquare(117, "VENTURA BOULEVARD",400, 825, 1800, 2175, 2550, 4050, 80, 480,"Dark Brown");
+		squares[118] = new ChanceSquare(118, "CHANCE");
+		squares[119] = new StreetSquare(119, "RODEO DRIVE",450, 900, 2000, 2500, 3000, 4500, 90, 510,"Dark Brown");
 	}
 
 	public static SquareFactory getInstance() {

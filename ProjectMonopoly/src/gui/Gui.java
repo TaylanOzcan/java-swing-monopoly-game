@@ -429,6 +429,7 @@ public class Gui implements ActionListener, PropertyListener , Serializable{
 			playerNamesComboBox.setVisible(true);
 			playerNamesComboBox.addActionListener(this);
 			buildHouseButton.setEnabled(true);
+			sellButton.setEnabled(true);
 			infoPanel.setOpaque(true);
 			currentPlayerPanel.setOpaque(true);
 			gamePlay.playGame(playerNames);
@@ -477,6 +478,9 @@ public class Gui implements ActionListener, PropertyListener , Serializable{
 						null, "You cannot buy this square.");
 				return;
 			}
+		}else if(e.getSource() == sellButton) {
+			gamePlay.moveTo(64);
+			gamePlay.endTurn();
 		}else if(e.getSource() == buildHouseButton){
 			ArrayList<String> squareNames = gamePlay.getOwnedSquareNames();
 
@@ -509,7 +513,7 @@ public class Gui implements ActionListener, PropertyListener , Serializable{
 						buildingContainerPanels[index].addIcon();
 						JOptionPane.showMessageDialog(
 								null, "You have successfully built a " 
-										+ buildingContainerPanels[index].getBuildingName() + ".");
+										+ buildingContainerPanels[index].getBuildingName() + "." + index);
 					}
 				}
 				break;
@@ -563,6 +567,7 @@ public class Gui implements ActionListener, PropertyListener , Serializable{
 
 	@Override
 	public void onPropertyEvent(Object source, String name, Object value) {
+		refreshTokenLocations();
 		if(source.getClass()==ActionHandler.class) {
 			if(name.equals("startAuction")) {
 				int highestBid = 0;
@@ -635,6 +640,34 @@ public class Gui implements ActionListener, PropertyListener , Serializable{
 						null, ((Player) value).getName() + ", you get an extra move for rolling doubles.\nClick [Play Turn] to play it.");
 			}else if(name.equals("newTurnAction")) {
 				//playerNamesComboBox.setSelectedItem(((Player) value).getName());
+			}else if(name.equals("landedOnSubwayAction")) {
+				Square[] squares = gamePlay.getSquares();
+				JPanel panel = new JPanel();
+				panel.add(new JLabel(((Player) value).getName() + ", you landed on Subway square previous turn.\nSelect a square to move on.\n"));
+				DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
+
+				for(int i=0; i < squares.length; i++){
+					model.addElement(squares[i].getName());
+				}
+
+				JComboBox<String> comboBox = new JComboBox<String>(model);
+				panel.add(comboBox);
+
+				int result = JOptionPane.showConfirmDialog(
+						null, panel, "Squares", JOptionPane.OK_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+				while(true) {
+					if(result == JOptionPane.OK_OPTION) {
+						int index = comboBox.getSelectedIndex();
+						if(index < 0){
+							JOptionPane.showMessageDialog(
+									null, "No squares selected.");	
+						}else{
+							gamePlay.moveTo(index);
+							break;
+						}
+					}
+				}
 			}
 		}else if(source.getClass()==AuctionSquare.class) {
 			if(name.equals("auctionDialog")) {

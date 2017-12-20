@@ -4,10 +4,10 @@ import java.util.Random;
 public class SpeedDie implements Die {
 
 	private int faceValue;
-	Random rnd;
+	//Random rnd;
 	
 	public SpeedDie(){
-		this.rnd = new Random();
+		//this.rnd = new Random();
 	}
 
 	
@@ -22,8 +22,8 @@ public class SpeedDie implements Die {
 	 * @effects: returns an integer in range [-2,3] --- (1, 2, 3 are normal values and -2, -1, 0 are specials such as mr. monopoly and bus
 	 */
 	public int roll() {
-		
-		faceValue = rnd.nextInt(6) - 2;
+		//faceValue = rnd.nextInt(6) - 2;
+		faceValue = ((int) (Math.random() * 6) - 2);
 		return faceValue;
 	}
 	/**
@@ -51,7 +51,7 @@ public class SpeedDie implements Die {
 
 	@Override
 	public String toString() {
-		return "SpeedDie [faceValue=" + faceValue + ", rnd=" + rnd + "]";
+		return "SpeedDie [faceValue=" + faceValue + "]";
 	}
 
 	public void setCurrentValue(int i) {

@@ -17,13 +17,13 @@ public class MoveHandler implements Serializable{
 	public void movePlayer(Player p) {
 		int initLoc = p.getLocation();
 		int finalLoc;
-		
+
 		if(p.getRolledMonopoly()) {
-			mrMonopolyMove(p);
 			p.setRolledMonopoly(false);
+			return;
 		}else if(p.getRolledBus()) {
-			busMove(p);
 			p.setRolledBus(false);
+			return;
 		}else if(p.isInJail()) {
 			int totalRegFaceValue = Cup.rollRegularDice();
 			if(doublesRolled()) {
@@ -33,7 +33,7 @@ public class MoveHandler implements Serializable{
 			}
 		}else {
 			int totalFaceValue = Cup.rollAllDice(); //gets total face value from 2 reg and 1 speed die
-			
+
 			if(triplesRolled()) {
 				// player goes to any square
 				p.setRolledDoubles(false);
@@ -63,11 +63,9 @@ public class MoveHandler implements Serializable{
 				finalLoc -= 24;
 			}
 
-			p.setLocation(finalLoc);
 			p.setReverseDirection(false);
-
-			Square newSquare = SquareFactory.getInstance().getSquare(finalLoc);
-			newSquare.getAction(p);
+			p.setLocation(finalLoc);
+			p.getSquareAction();
 
 			int speedVal = Cup.speedDie.getCurrentValue();
 			if(speedVal < 1) {
@@ -77,7 +75,7 @@ public class MoveHandler implements Serializable{
 					p.setRolledBus(true);
 				}
 			}
-			
+
 		}
 	}
 
@@ -118,14 +116,6 @@ public class MoveHandler implements Serializable{
 
 	private boolean doublesRolled() {
 		return Cup.regDie1.getCurrentValue() == Cup.regDie2.getCurrentValue();
-	}
-
-	private  void mrMonopolyMove(Player p) {
-		// go to the nearest unowned street
-	}
-
-	private void busMove(Player p) {
-		// go to the nearest chance or community chest square
 	}
 
 }

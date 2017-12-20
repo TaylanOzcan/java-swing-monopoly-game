@@ -19,6 +19,7 @@ public class Player implements Serializable{
 	private ArrayList<String> chanceCards;
 	private ArrayList<String> communityCards;
 	private boolean inJail;
+	private boolean landedOnSubway;
 	private boolean rollsAgain;
 	private boolean rolledMonopoly;
 	private boolean rolledBus;
@@ -134,8 +135,14 @@ public class Player implements Serializable{
 
 	public void setLocation(int location) {
 		this.location = location;
+		//getSquareAction();
 	}
 
+	public void getSquareAction() {
+		Square newSquare = SquareFactory.getInstance().getSquare(location);
+		newSquare.getAction(this);
+	}
+	
 	public int getBalance() {
 		return balance;
 	}
@@ -231,8 +238,7 @@ public class Player implements Serializable{
 	 * @effects: return modified loc
 	 */
 	public int move(int rollValue) {
-		
-		this.location = (this.location + rollValue);
+		setLocation(this.location + rollValue);
 		return this.location;
 	}
 	/**
@@ -319,6 +325,14 @@ public class Player implements Serializable{
 		return "Player [name=" + name + ", location=" + location + ", balance=" + balance + ", CurrentPlayer="
 				+ CurrentPlayer + ", vouchers=" + vouchers + ", chanceCards=" + chanceCards + ", communityCards="
 				+ communityCards + ", inJail=" + inJail + ", ownedSquares=" + ownedSquares + "]";
+	}
+
+	public boolean getLandedOnSubway() {
+		return landedOnSubway;
+	}
+
+	public void setLandedOnSubway(boolean landedOnSubway) {
+		this.landedOnSubway = landedOnSubway;
 	}
 
 }
