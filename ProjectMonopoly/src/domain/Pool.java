@@ -1,6 +1,9 @@
 package domain;
 
-public class Pool {
+import java.io.Serializable;
+
+public class Pool{
+
 	private static int balance = 0;
 	/**
 	 * @requires:The pool to be created, and the player to have enough money to pay the pool.

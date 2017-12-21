@@ -1,6 +1,9 @@
 package domain;
-public class RegularSquare implements Square {
-	
+
+import java.io.Serializable;
+
+public class RegularSquare implements Square{
+
 	private int id;
 	private String name;
 	

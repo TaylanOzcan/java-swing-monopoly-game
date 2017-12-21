@@ -1,6 +1,9 @@
 package domain;
 
-public class RailroadSquare extends PropertySquare {
+import java.io.Serializable;
+
+public class RailroadSquare extends PropertySquare{
+
 	boolean hasDepot;
 	
 	@Override

@@ -1,6 +1,8 @@
 package domain;
- 
-public class GoToJailSquare implements Square {
+
+import java.io.Serializable;
+
+public class GoToJailSquare implements Square{
 
 	private int id;
 	private String name;

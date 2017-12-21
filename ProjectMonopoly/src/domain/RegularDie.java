@@ -1,8 +1,9 @@
 package domain;
+import java.io.Serializable;
 import java.util.Random;
 
-public class RegularDie implements Die {
-	
+public class RegularDie implements Die{
+
 	private int faceValue;
 	//Random rnd;
 	

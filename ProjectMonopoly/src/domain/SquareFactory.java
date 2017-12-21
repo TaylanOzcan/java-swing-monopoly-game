@@ -1,9 +1,10 @@
 package domain;
 import java.awt.Color;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class SquareFactory {
+public class SquareFactory{
 
 	private Square[] squares = new Square[120];
 	private static SquareFactory instance;

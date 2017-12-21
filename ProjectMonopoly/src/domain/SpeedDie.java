@@ -1,7 +1,8 @@
 package domain;
+import java.io.Serializable;
 import java.util.Random;
 
-public class SpeedDie implements Die {
+public class SpeedDie implements Die{
 
 	private int faceValue;
 	//Random rnd;

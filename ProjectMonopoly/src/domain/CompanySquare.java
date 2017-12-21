@@ -1,7 +1,9 @@
 package domain;
 
+import java.io.Serializable;
+
 public class CompanySquare extends PropertySquare{
-	
+
 	@Override
 	public void getAction(Player p) {
 		//pay rent if owned by another player

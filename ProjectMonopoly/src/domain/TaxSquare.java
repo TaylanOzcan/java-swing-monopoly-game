@@ -1,6 +1,9 @@
 package domain;
 
-public class TaxSquare implements Square {
+import java.io.Serializable;
+
+public class TaxSquare implements Square{
+
 	private int id;
 	private String name;
 	
@@ -12,7 +15,6 @@ public class TaxSquare implements Square {
 	@Override
 	public void getAction(Player p) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override

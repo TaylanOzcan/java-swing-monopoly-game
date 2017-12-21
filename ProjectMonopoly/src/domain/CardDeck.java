@@ -1,8 +1,10 @@
 package domain;
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class CardDeck {
+public class CardDeck{
+
 	private Queue<String> chanceCards;
 	private Queue<String> communityChestCards;
 	private Queue<String> travelVouchers;

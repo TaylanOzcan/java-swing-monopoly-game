@@ -1,7 +1,9 @@
 package domain;
 
+import java.io.Serializable;
+
 public class SubwaySquare implements Square{
-	
+
 	private int id;
 	private String name;
 	

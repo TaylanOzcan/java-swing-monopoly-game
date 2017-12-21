@@ -11,12 +11,8 @@ import java.util.ArrayList;
 
 import gui.Gui;
 
-public class SaveAndLoad implements Serializable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
+public class SaveAndLoad{
+	
 	public static void save(Gui g) {
 		try {
 			FileOutputStream fos = new FileOutputStream("monopolysaved.ser");
@@ -24,6 +20,8 @@ public class SaveAndLoad implements Serializable {
 
 			oos.writeObject(g);
 			oos.close();
+			fos.close();
+			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -38,7 +36,8 @@ public class SaveAndLoad implements Serializable {
 
 			g = (Gui) ois.readObject();
 			ois.close();
-
+			fis.close();
+			g.setVisible(true);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

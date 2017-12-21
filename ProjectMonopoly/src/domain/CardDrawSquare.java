@@ -1,6 +1,8 @@
 package domain;
 
-public abstract class CardDrawSquare implements Square {
+import java.io.Serializable;
+
+public abstract class CardDrawSquare implements Square{
 
 	public abstract String drawCard();
 

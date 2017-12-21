@@ -3,7 +3,6 @@ package domain;
 import java.io.Serializable;
 
 public class MoveHandler implements Serializable{
-
 	/**
 	 * 
 	 */

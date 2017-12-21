@@ -1,6 +1,9 @@
 package domain;
-public class TunnelSquare implements Square {
-	
+
+import java.io.Serializable;
+
+public class TunnelSquare implements Square{
+
 	private int id;
 	private String name;
 	

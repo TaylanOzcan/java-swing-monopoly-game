@@ -1,6 +1,8 @@
 package domain;
 
-public class Cup {
+import java.io.Serializable;
+
+public class Cup{
 
 	public static RegularDie regDie1 = new RegularDie();
 	public static RegularDie regDie2 = new RegularDie();

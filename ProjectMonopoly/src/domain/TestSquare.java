@@ -1,6 +1,9 @@
 package domain;
 
-public class TestSquare implements Square {
+import java.io.Serializable;
+
+public class TestSquare implements Square{
+
 	private int id;
 	private String name;
 	

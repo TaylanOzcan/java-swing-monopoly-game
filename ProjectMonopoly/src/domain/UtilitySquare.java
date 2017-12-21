@@ -1,7 +1,11 @@
 package domain;
 
-public class UtilitySquare extends PropertySquare {
+import java.io.Serializable;
+
+public class UtilitySquare extends PropertySquare{
+
 	boolean	hasStand;
+	
 	@Override
 	public void getAction(Player p) {
 		// TODO Auto-generated method stub

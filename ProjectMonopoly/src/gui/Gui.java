@@ -38,18 +38,12 @@ import domain.SaveAndLoad;
 import domain.Square;
 import domain.StreetSquare;
 
-public class Gui extends JFrame implements ActionListener, PropertyListener, Serializable{
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+public class Gui extends JFrame implements ActionListener, PropertyListener{
 
 	private static final int INNER_LAYER = 0;
 	private static final int MIDDLE_LAYER = 1;
 	private static final int OUTER_LAYER = 2;
 
-	private JFrame mainFrame;
 	private JPanel mainPanel, boardPanel, menuPanel, menuButtonsPanel, upperTopMenuPanel,
 	gameButtonsPanel, botPanel, infoPanel, infoSelectionPanel, currentPlayerPanel;
 	private JButton newGameButton, loadButton, saveButton, rollButton, sellButton,
@@ -66,7 +60,7 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 
 	class MyBoardPanel extends JPanel{
 		private static final long serialVersionUID = 1L;
-		private BufferedImage image;
+		private transient BufferedImage image;
 		public MyBoardPanel() {
 			try{
 				image = ImageIO.read(new File("lol.png"));
@@ -82,7 +76,7 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 
 	class MyMainPanel extends JPanel{
 		private static final long serialVersionUID = 1L;
-		private BufferedImage image;
+		private transient BufferedImage image;
 		public MyMainPanel() {
 			try{
 				image = ImageIO.read(new File("bg_mainPanel.jpg"));
@@ -390,7 +384,6 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 			tokenLabels = new JLabel[inputNumPlayers];
 			playerNames = new ArrayList<String>(inputNumPlayers);
 
-
 			for (int i = 0; i < inputNumPlayers; i++) {
 				while(true) {
 					String inputName = JOptionPane.showInputDialog(
@@ -460,11 +453,8 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 			refreshDice();
 		}else if(e.getSource() == loadButton){
 			SaveAndLoad.load(this);
-			//gamePlay.playGame(playerNames);
-			//loadButton.setEnabled(false);
 		}else if(e.getSource() == saveButton){
 			SaveAndLoad.save(this);
-			loadButton.setEnabled(true);
 		}else if(e.getSource() == exitButton) {
 			int dialogButton = JOptionPane.YES_NO_OPTION;
 			int dialogResult = JOptionPane.showConfirmDialog(null, "Do you want to exit the game?", "Exit",dialogButton);

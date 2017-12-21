@@ -1,5 +1,8 @@
 package domain;
-public class CommunityChestSquare extends CardDrawSquare {
+
+import java.io.Serializable;
+
+public class CommunityChestSquare extends CardDrawSquare{
 
 	private int id;
 	private String name;
