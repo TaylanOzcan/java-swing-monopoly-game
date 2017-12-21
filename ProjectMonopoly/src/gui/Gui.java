@@ -38,7 +38,11 @@ import domain.SaveAndLoad;
 import domain.Square;
 import domain.StreetSquare;
 
-public class Gui extends JFrame implements ActionListener, PropertyListener{
+public class Gui extends JFrame implements ActionListener, PropertyListener, Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private static final int INNER_LAYER = 0;
 	private static final int MIDDLE_LAYER = 1;
@@ -62,6 +66,9 @@ public class Gui extends JFrame implements ActionListener, PropertyListener{
 		private static final long serialVersionUID = 1L;
 		private transient BufferedImage image;
 		public MyBoardPanel() {
+			readImage();
+		}
+		public void readImage() {
 			try{
 				image = ImageIO.read(new File("lol.png"));
 			}catch(IOException e){
@@ -78,6 +85,9 @@ public class Gui extends JFrame implements ActionListener, PropertyListener{
 		private static final long serialVersionUID = 1L;
 		private transient BufferedImage image;
 		public MyMainPanel() {
+			readImage();
+		}
+		public void readImage() {
 			try{
 				image = ImageIO.read(new File("bg_mainPanel.jpg"));
 			}catch(IOException e){
@@ -91,9 +101,9 @@ public class Gui extends JFrame implements ActionListener, PropertyListener{
 	}
 
 	public Gui(){
-		
+
 	}
-	
+
 	public void start() {
 		this.gamePlay = new GamePlay();
 		initializeGui();
@@ -127,7 +137,7 @@ public class Gui extends JFrame implements ActionListener, PropertyListener{
 			}        
 		});
 
-		mainPanel = new MyMainPanel();
+		mainPanel = new MonopolyMainPanel();
 		mainPanel.setLayout(new GridBagLayout());
 
 		initializeBoard();
@@ -141,12 +151,10 @@ public class Gui extends JFrame implements ActionListener, PropertyListener{
 	}
 
 	public void initializeBoard(){
-		boardPanel = new MyBoardPanel();
+		boardPanel = new MonopolyBoardPanel();
 		boardPanel.setLayout(null);
 		mainPanel.add(boardPanel);
 		boardPanel.setPreferredSize(new Dimension(1000,1000));
-		Color boardColor = new Color (192,226,202);
-		boardPanel.setBackground(boardColor);
 
 		tokenPlacementPanels = new JPanel[120];
 		buildingContainerPanels = new BuildingContainerPanel[120];
@@ -507,13 +515,17 @@ public class Gui extends JFrame implements ActionListener, PropertyListener{
 						buildingContainerPanels[index].addIcon();
 						JOptionPane.showMessageDialog(
 								null, "You have successfully built a " 
-										+ buildingContainerPanels[index].getBuildingName() + "." + index);
+										+ buildingContainerPanels[index].getBuildingName() + ".");
 					}
 				}
 				break;
 			}
 		}
 
+		refreshAll();
+	}
+
+	public void refreshAll() {
 		refreshInfo();
 		refreshTokenLocations();
 		refreshButtons();
@@ -684,7 +696,7 @@ public class Gui extends JFrame implements ActionListener, PropertyListener{
 						int index = comboBox.getSelectedIndex();
 						if(index < 0){
 							JOptionPane.showMessageDialog(
-									null, "No squares selected.");	
+									null, "No squares selected.");
 						}else{
 							gamePlay.startAuction((StreetSquare)squares.get(index));
 							break;
@@ -694,6 +706,14 @@ public class Gui extends JFrame implements ActionListener, PropertyListener{
 			}
 		}
 		refreshTokenLocations();
+	}
+
+	public void refreshAfterLoad() {
+		((MonopolyBoardPanel) boardPanel).readImage();
+		((MonopolyMainPanel) mainPanel).readImage();
+		setVisible(true);
+		JOptionPane.showMessageDialog(
+				null, "Game was successfully loaded.");
 	}
 
 }

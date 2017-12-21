@@ -9,6 +9,8 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import javax.swing.SwingUtilities;
+
 import gui.Gui;
 
 public class SaveAndLoad{
@@ -34,10 +36,11 @@ public class SaveAndLoad{
 			FileInputStream fis = new FileInputStream("monopolysaved.ser");
 			ObjectInputStream ois = new ObjectInputStream(fis);
 
-			g = (Gui) ois.readObject();
+			Gui newGui = (Gui) ois.readObject();
+			newGui.refreshAfterLoad();
+			g.dispose();
 			ois.close();
 			fis.close();
-			g.setVisible(true);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

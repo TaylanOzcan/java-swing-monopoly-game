@@ -2,7 +2,11 @@ package domain;
 import java.awt.Color;
 import java.io.Serializable;
 
-public class StreetSquare extends PropertySquare{
+public class StreetSquare extends PropertySquare implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	int house1Price;
 	int house2Price;
