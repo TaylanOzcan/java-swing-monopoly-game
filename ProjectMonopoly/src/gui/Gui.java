@@ -429,9 +429,7 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 				int tokenSize = 114/inputNumPlayers - 5;
 				if(tokenSize > 20) tokenSize = 20;
 				tokenLabels[i].setPreferredSize(new Dimension(tokenSize, tokenSize));
-			}
-			currentPlayerLabel.setText("<html><center><span style='font-size:18px'>" 
-					+ "Current Turn: </span></center></html>");			
+			}	
 			newGameButton.setEnabled(false);
 			rollButton.setEnabled(true);
 			saveButton.setEnabled(true);
@@ -548,10 +546,9 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 	public void refreshInfo(){
 		String currentName = gamePlay.getCurrentPlayerName();
 
-		currentPlayerLabel.setText("<html><center><span style='font-size:18px'>" 
-				+ "Current Turn: "
+		currentPlayerLabel.setText("<html><center><span style='font-size:18px'>"
 				+ currentName
-				+ "</span></center></html>");
+				+ " plays the current turn.</span></center></html>");
 
 		ArrayList<String> infoList = gamePlay.getPlayerInfo();
 		for(int i=0; i< infoList.size(); i++){
@@ -655,7 +652,9 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 			}else if(name.equals("landedOnSubwayAction")) {
 				Square[] squares = gamePlay.getSquares();
 				JPanel panel = new JPanel();
-				panel.add(new JLabel(((Player) value).getName() + ", you landed on Subway square previous turn. \nSelect a square to move on. \n"));
+				panel.setLayout(new BorderLayout());
+				panel.add(new JLabel("<html>" + ((Player) value).getName()
+						+ ", you landed on Subway square previous turn.<br>Select a square to move on.</html>"), BorderLayout.NORTH);
 				DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
 
 				for(int i=0; i < squares.length; i++){
@@ -685,7 +684,8 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 			if(name.equals("auctionDialog")) {
 				ArrayList<Square> squares = gamePlay.getUnownedStreetSquares();
 				JPanel panel = new JPanel();
-				panel.add(new JLabel(((Player) value).getName() + ", select an unowned square for auction"));
+				panel.setLayout(new BorderLayout());
+				panel.add(new JLabel(((Player) value).getName() + ", select an unowned square for auction."), BorderLayout.NORTH);
 				DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
 
 				for(int i=0; i < squares.size(); i++){

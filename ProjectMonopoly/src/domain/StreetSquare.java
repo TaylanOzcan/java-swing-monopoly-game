@@ -114,11 +114,12 @@ public class StreetSquare extends PropertySquare implements Serializable{
 		this.isBuildable = isBuildable;
 	}
 	public boolean repOk() {
-		if(this.hotelPrice <= 0 || this.house1Price <= 0 || this.house2Price <= 0 || this.house3Price <= 0 || this.house4Price <= 0 || this.id < 0 || this.name == null || this.price <= 0 || this.rent <= 0 || this.skyscraperPrice <= 0) {
+		if(this.hotelPrice <= 0 || this.house1Price <= 0 || this.house2Price <= 0 
+				|| this.house3Price <= 0 || this.house4Price <= 0 || this.id < 0 
+				|| this.name == null || this.price <= 0 || this.rent <= 0 || this.skyscraperPrice <= 0) {
 			return false;
 		}
 		return true;
-
 	}
 
 	@Override
