@@ -34,6 +34,7 @@ import domain.AuctionSquare;
 import domain.GamePlay;
 import domain.Player;
 import domain.PropertyListener;
+import domain.PropertySquare;
 import domain.SaveAndLoad;
 import domain.Square;
 import domain.StreetSquare;
@@ -127,6 +128,9 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 	private void addPropertyListeners() {
 		gamePlay.getBoard().getActionHandler().addPropertyListener(this);
 		((AuctionSquare) gamePlay.getSquare(79)).addPropertyListener(this);
+		for(Player p: gamePlay.getPlayers()) {
+			p.addPropertyListener(this);
+		}
 	}
 
 	public void initializeGui(){
@@ -461,8 +465,10 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 			refreshDice();
 		}else if(e.getSource() == loadButton){
 			SaveAndLoad.load(this);
+			return;
 		}else if(e.getSource() == saveButton){
 			SaveAndLoad.save(this);
+			return;
 		}else if(e.getSource() == exitButton) {
 			int dialogButton = JOptionPane.YES_NO_OPTION;
 			int dialogResult = JOptionPane.showConfirmDialog(null, "Do you want to exit the game?", "Exit",dialogButton);
@@ -573,6 +579,7 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 
 	@Override
 	public void onPropertyEvent(Object source, String name, Object value) {
+		refreshAll();
 		if(source.getClass()==ActionHandler.class) {
 			if(name.equals("startAuction")) {
 				int highestBid = 0;
@@ -634,7 +641,7 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 				gamePlay.endAuction(winner, highestBid, auctedSquare);
 			}else if(name.equals("mrMonopolyAction")) {
 				JOptionPane.showMessageDialog(
-						null, ((Player) value).getName() + ", you get an extra move for rolling Mr. Monopoly.\nNow, you will be moved to the nearest unowned street.");
+						null, ((Player) value).getName() + ", you get an extra move for rolling Mr. Monopoly. \nNow, you will be moved to the nearest unowned street.");
 				rollButton.doClick();
 			}else if(name.equals("busAction")) {
 				JOptionPane.showMessageDialog(
@@ -642,13 +649,13 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 				rollButton.doClick();
 			}else if(name.equals("rollsAgainAction")) {
 				JOptionPane.showMessageDialog(
-						null, ((Player) value).getName() + ", you get an extra move for rolling doubles.\nClick [Play Turn] to play it.");
+						null, ((Player) value).getName() + ", you get an extra move for rolling doubles. \nClick Play Turn to play it.");
 			}else if(name.equals("newTurnAction")) {
 				//playerNamesComboBox.setSelectedItem(((Player) value).getName());
 			}else if(name.equals("landedOnSubwayAction")) {
 				Square[] squares = gamePlay.getSquares();
 				JPanel panel = new JPanel();
-				panel.add(new JLabel(((Player) value).getName() + ", you landed on Subway square previous turn.\nSelect a square to move on.\n"));
+				panel.add(new JLabel(((Player) value).getName() + ", you landed on Subway square previous turn. \nSelect a square to move on. \n"));
 				DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
 
 				for(int i=0; i < squares.length; i++){
@@ -658,10 +665,10 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 				JComboBox<String> comboBox = new JComboBox<String>(model);
 				panel.add(comboBox);
 
-				int result = JOptionPane.showConfirmDialog(
-						null, panel, "Squares", JOptionPane.OK_OPTION, JOptionPane.QUESTION_MESSAGE);
-
 				while(true) {
+					int result = JOptionPane.showConfirmDialog(
+							null, panel, "Squares", JOptionPane.OK_OPTION, JOptionPane.QUESTION_MESSAGE);
+
 					if(result == JOptionPane.OK_OPTION) {
 						int index = comboBox.getSelectedIndex();
 						if(index < 0){
@@ -688,10 +695,10 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 				JComboBox<String> comboBox = new JComboBox<String>(model);
 				panel.add(comboBox);
 
-				int result = JOptionPane.showConfirmDialog(
-						null, panel, "Squares", JOptionPane.OK_OPTION, JOptionPane.QUESTION_MESSAGE);
-
 				while(true) {
+					int result = JOptionPane.showConfirmDialog(
+							null, panel, "Squares", JOptionPane.OK_OPTION, JOptionPane.QUESTION_MESSAGE);
+
 					if(result == JOptionPane.OK_OPTION) {
 						int index = comboBox.getSelectedIndex();
 						if(index < 0){
@@ -703,6 +710,13 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 						}
 					}
 				}
+			}
+		}else if(source.getClass()==Player.class) {
+			if(name.equals("rentPaid")) {
+				PropertySquare square = ((PropertySquare) value);
+				JOptionPane.showMessageDialog(
+						null, ((Player)source).getName() + " has paid $" + square.getRent()
+						+ " to " + square.getOwner().getName() + " as rent for " + square.getName());
 			}
 		}
 		refreshTokenLocations();

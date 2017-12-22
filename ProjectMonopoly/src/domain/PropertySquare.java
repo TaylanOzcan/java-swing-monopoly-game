@@ -2,15 +2,35 @@ package domain;
 
 import java.io.Serializable;
 
-public abstract class PropertySquare implements Square{
+public abstract class PropertySquare implements Square, Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
-	int id;
-	String name;
-	int price;
-	int rent;
-	Player owner;
-	boolean isOwned;
+	protected int id;
+	protected String name;
+	protected int price;
+	protected int rent;
+	protected Player owner;
+	protected boolean isOwned;
 	
+	public int getId() {
+		return id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public int getRent() {
+		return rent;
+	}
+
+	public Player getOwner() {
+		return owner;
+	}
+
 	public PropertySquare() {
 		this.isOwned = false;
 		this.owner = null;
@@ -20,8 +40,8 @@ public abstract class PropertySquare implements Square{
 		return isOwned;
 	}
 	
-	public void setOwner(Player newowner){
-		this.owner = newowner;
+	public void setOwner(Player newOwner){
+		this.owner = newOwner;
 		this.isOwned = true;
 	}
 	/**

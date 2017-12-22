@@ -24,10 +24,9 @@ public class Player implements Serializable{
 	private boolean rolledBus;
 	private boolean rolledDoubles;
 	private int consecutiveDoublesCount;
-
 	private boolean reverseDirection;
 	private ArrayList<PropertySquare> ownedSquares;
-
+	private ArrayList<PropertyListener> propertyListeners;
 
 	public Player(String name) {
 		this.name = name;
@@ -40,8 +39,19 @@ public class Player implements Serializable{
 		this.chanceCards = new ArrayList<String>(5);
 		this.communityCards = new ArrayList<String>(5);	
 		this.ownedSquares = new ArrayList<PropertySquare>(10);
+		this.propertyListeners = new ArrayList<PropertyListener>();
 	}
 
+	public void addPropertyListener(PropertyListener pl) {
+		propertyListeners.add(pl);
+	}
+
+	public void publishPropertyEvent(String name, Object value) {
+		for(PropertyListener pl: propertyListeners) {
+			pl.onPropertyEvent(this, name, value);
+		}
+	}
+	
 	public boolean getRolledBus() {
 		return rolledBus;
 	}
@@ -173,9 +183,12 @@ public class Player implements Serializable{
 	 * @modifies: this.balance
 	 * @effects: subtracts rent price from this.balance and returns modified balance.
 	 */
-	public void payRent(int rentPrice, Player renter){
-		this.increaseBalance(-rentPrice);
-		renter.increaseBalance(rentPrice);
+	public void payRent(PropertySquare square){
+		int rentAmount = square.getRent();
+		Player renter = square.getOwner();
+		this.increaseBalance(-rentAmount);
+		renter.increaseBalance(rentAmount);
+		publishPropertyEvent("rentPaid", square);
 	}
 	/**
 	 * @requires: Nothing.

@@ -1,5 +1,4 @@
 package domain;
-import java.awt.Color;
 import java.io.Serializable;
 
 public class StreetSquare extends PropertySquare implements Serializable{
@@ -20,7 +19,7 @@ public class StreetSquare extends PropertySquare implements Serializable{
 	String color;
 	boolean isBuildable;
 	boolean isMortgaged;
-
+	
 	public StreetSquare(int id, String name, int house1Price, int house2Price, int house3Price, 
 			int house4Price, int hotelPrice, int skyscraperPrice, int rent, int price, String color){
 		this.id = id;
@@ -36,6 +35,7 @@ public class StreetSquare extends PropertySquare implements Serializable{
 		this.color = color;
 		this.isBuildable = true;
 	}
+
 	/**
 	 * @requires:The player to land on a Street square owned by another player.
 	 * @modifies:Player's balance.
@@ -45,7 +45,7 @@ public class StreetSquare extends PropertySquare implements Serializable{
 	public void getAction(Player p) {
 		if(isOwned()) {
 			if(owner != p) {
-				p.payRent(rent, owner);
+				p.payRent(this);
 			}
 		}else {
 			// notify gui to activate buy button if not owned
@@ -104,15 +104,6 @@ public class StreetSquare extends PropertySquare implements Serializable{
 
 	public String getColor() {
 		return color;
-	}
-
-	@Override
-	public String getName() {
-		return name;
-	}
-	@Override
-	public int getId() {
-		return id;
 	}
 
 	public boolean isBuildable() {
