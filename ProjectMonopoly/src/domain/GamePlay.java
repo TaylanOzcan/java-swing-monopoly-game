@@ -135,4 +135,8 @@ public class GamePlay implements Serializable{
 		board.moveTo(squareIndex);
 	}
 
+	public void moveToNearestUnownedStreetSquare(Player p) {
+		board.moveToNearestUnownedStreetSquare(p);
+	}
+
 }

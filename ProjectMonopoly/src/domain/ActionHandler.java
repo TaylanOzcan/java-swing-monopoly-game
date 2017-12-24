@@ -18,7 +18,6 @@ public class ActionHandler implements Serializable{
 		propertyListeners.add(pl);
 	}
 
-
 	public void publishPropertyEvent(String name, Object value) {
 		for(PropertyListener pl: propertyListeners) {
 			pl.onPropertyEvent(this, name, value);
@@ -39,7 +38,6 @@ public class ActionHandler implements Serializable{
 	 */
 	public void endAuction(Player winner, int highestBid, StreetSquare auctedSquare) {
 		winner.buyFor(auctedSquare, highestBid);
-		//System.out.println(winner + " bought " + auctedSquare.getName() + " for " + highestBid + " dollars.");
 	}
 	/**
 	 * @requires:
@@ -53,17 +51,14 @@ public class ActionHandler implements Serializable{
 		}
 	}
 
-
 	public void mrMonopolyAction(Player currentPlayer) {
 		// send the player to nearest unowned square
 		publishPropertyEvent("mrMonopolyAction", currentPlayer/*may be changed with the square to be sent*/);
-		currentPlayer.setLocation(0);
 	}
 
 	public void busAction(Player currentPlayer) {
 		// give a voucher to the player
 		publishPropertyEvent("busAction", currentPlayer/*may be changed with the voucher given*/);
-
 	}
 
 	public void rollsAgainAction(Player currentPlayer) {

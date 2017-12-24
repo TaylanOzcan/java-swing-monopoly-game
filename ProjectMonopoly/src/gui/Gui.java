@@ -639,6 +639,7 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 			}else if(name.equals("mrMonopolyAction")) {
 				JOptionPane.showMessageDialog(
 						null, ((Player) value).getName() + ", you get an extra move for rolling Mr. Monopoly. \nNow, you will be moved to the nearest unowned street.");
+				gamePlay.moveToNearestUnownedStreetSquare((Player) value);
 				rollButton.doClick();
 			}else if(name.equals("busAction")) {
 				JOptionPane.showMessageDialog(

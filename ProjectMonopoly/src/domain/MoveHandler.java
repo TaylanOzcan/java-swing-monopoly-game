@@ -1,6 +1,7 @@
 package domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class MoveHandler implements Serializable{
 	/**
@@ -14,7 +15,6 @@ public class MoveHandler implements Serializable{
 	 * @effects:Changes the players location.
 	 */
 	public void movePlayer(Player p) {
-		int initLoc = p.getLocation();
 		int finalLoc;
 
 		if(p.getRolledMonopoly()) {
@@ -27,7 +27,7 @@ public class MoveHandler implements Serializable{
 			int totalRegFaceValue = Cup.rollRegularDice();
 			if(doublesRolled()) {
 				p.getOutOfJail();
-				finalLoc = computeLoc(initLoc, totalRegFaceValue, false);
+				finalLoc = computeLoc(p, totalRegFaceValue, false);
 				p.setLocation(finalLoc);
 			}
 		}else {
@@ -49,18 +49,7 @@ public class MoveHandler implements Serializable{
 				p.setRolledDoubles(false);
 			}
 
-			finalLoc = computeLoc(initLoc, totalFaceValue, p.isReverseDirection());
-
-			if(finalLoc>=40 && finalLoc<55 && ((initLoc<40 && initLoc>24)
-					|| (initLoc<62 && initLoc>51 &&totalFaceValue%2==0))) {
-				finalLoc -= 40;
-				p.increaseBalance(200);
-			}else if(finalLoc>=120) {
-				finalLoc -= 56;
-			}else if(finalLoc>=64 && finalLoc<79 && ((initLoc<64 && initLoc>48)
-					|| (initLoc<36 && initLoc>25 &&totalFaceValue%2==0))) {
-				finalLoc -= 24;
-			}
+			finalLoc = computeLoc(p, totalFaceValue, p.isReverseDirection());
 
 			p.setReverseDirection(false);
 			p.setLocation(finalLoc);
@@ -78,7 +67,8 @@ public class MoveHandler implements Serializable{
 		}
 	}
 
-	private int computeLoc(int initLoc, int stepsToMove, boolean isReverse) {
+	private int computeLoc(Player p, int stepsToMove, boolean isReverse) {
+		int initLoc = p.getLocation();
 		int finalLoc = initLoc + (isReverse ? -stepsToMove : stepsToMove);
 
 		if(stepsToMove%2 == 0) {
@@ -106,6 +96,18 @@ public class MoveHandler implements Serializable{
 				}
 			}
 		}
+
+		if(finalLoc>=40 && finalLoc<55 && ((initLoc<40 && initLoc>24)
+				|| (initLoc<62 && initLoc>51 && stepsToMove%2==0))) {
+			finalLoc -= 40;
+			p.increaseBalance(200);
+		}else if(finalLoc>=120) {
+			finalLoc -= 56;
+		}else if(finalLoc>=64 && finalLoc<79 && ((initLoc<64 && initLoc>48)
+				|| (initLoc<36 && initLoc>25 && stepsToMove%2==0))) {
+			finalLoc -= 24;
+		}
+
 		return finalLoc;
 	}
 
@@ -115,6 +117,36 @@ public class MoveHandler implements Serializable{
 
 	private boolean doublesRolled() {
 		return Cup.regDie1.getCurrentValue() == Cup.regDie2.getCurrentValue();
+	}
+
+	private boolean evenRolled() {
+		return Cup.getTotalValue()%2 == 0;
+	}
+
+	public void moveToNearestUnownedStreetSquare(Player currentPlayer, ArrayList<Square> unownedStreets) {
+		ArrayList<Integer> idList = new ArrayList<Integer>(unownedStreets.size());
+		int location = currentPlayer.getLocation();
+		boolean isReverse = currentPlayer.isReverseDirection();
+		int minDistance = 120;
+		int locationToGo = location;
+		for(Square s: unownedStreets) {
+			idList.add(s.getId());
+		}
+		int distance;
+		for(int i=1; i<120; i++) {
+			int nextLoc = computeLoc(currentPlayer, i, isReverse);
+			if(idList.contains(nextLoc)) {
+				currentPlayer.setLocation(nextLoc);
+				return;
+				/*
+				distance = Math.abs(nextLoc - location);
+				if(distance < minDistance) {
+					minDistance = distance;
+					locationToGo = nextLoc;
+				}*/
+			}
+		}
+		//currentPlayer.setLocation(locationToGo);
 	}
 
 }

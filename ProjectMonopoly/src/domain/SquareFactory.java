@@ -151,7 +151,7 @@ public class SquareFactory{
 	 * @effects:Adds unowned Squares to the list unownedStreetSquares.
 	 */
 	public ArrayList<Square> getUnownedStreetSquares() {
-		ArrayList<Square> unownedStreetSquares = new ArrayList<Square>(10);
+		ArrayList<Square> unownedStreetSquares = new ArrayList<Square>();
 		for(int i=0; i<squares.length; i++) {
 			if(squares[i].getClass() == StreetSquare.class && !((StreetSquare)squares[i]).isOwned) {
 				unownedStreetSquares.add(squares[i]);

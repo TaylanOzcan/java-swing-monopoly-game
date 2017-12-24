@@ -7,6 +7,7 @@ public class Cup{
 	public static RegularDie regDie1 = new RegularDie();
 	public static RegularDie regDie2 = new RegularDie();
 	public static SpeedDie speedDie = new SpeedDie();
+	private static int total = 0;
 
 	/**
 	 * @requires:Nothing.
@@ -14,7 +15,7 @@ public class Cup{
 	 * @effects:Returns the value of dice roll total.
 	 */
 	public static int rollAllDice() {
-		int total = 0;
+		total = 0;
 		total += regDie1.roll();
 		total += regDie2.roll();
 		int speedVal = speedDie.roll();
@@ -31,9 +32,13 @@ public class Cup{
 	 * @effects  returns the total face value of 2 regular dice
 	 */
 	public static int rollRegularDice(){
-		int total = 0;
+		total = 0;
 		total += regDie1.roll();
 		total += regDie2.roll();
+		return total;
+	}
+	
+	public static int getTotalValue() {
 		return total;
 	}
 	

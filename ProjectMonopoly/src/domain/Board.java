@@ -217,5 +217,15 @@ public class Board implements Serializable{
 		currentPlayer.setLocation(squareIndex);
 		currentPlayer.getSquareAction();
 	}
+
+	public void moveToNearestUnownedStreetSquare(Player p) {
+		ArrayList<Square> squares = SquareFactory.getInstance().getUnownedStreetSquares();
+		/*String result="";
+		for(Square s: squares) {
+			result += "\n " + s.getName();
+		}
+		System.out.println(result);*/
+		moveHandler.moveToNearestUnownedStreetSquare(p, squares);
+	}
 	
 }
