@@ -34,8 +34,7 @@ public class MoveHandler implements Serializable{
 			int totalFaceValue = Cup.rollAllDice(); //gets total face value from 2 reg and 1 speed die
 
 			if(triplesRolled()) {
-				// player goes to any square
-				p.setRolledDoubles(false);
+				p.rolledTriples();
 				return;
 			}else if(doublesRolled()) {
 				p.rolledDoubles();

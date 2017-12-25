@@ -39,6 +39,7 @@ public class Player implements Serializable{
 		this.rollsAgain = false;
 		this.reverseDirection = false;
 		this.isBankrupted = false;
+		this.consecutiveDoublesCount = 0;
 		this.vouchers = new ArrayList<String>(5);
 		this.chanceCards = new ArrayList<String>(5);
 		this.communityCards = new ArrayList<String>(5);	
@@ -55,7 +56,7 @@ public class Player implements Serializable{
 			pl.onPropertyEvent(this, name, value);
 		}
 	}
-	
+
 	public boolean getRolledBus() {
 		return rolledBus;
 	}
@@ -79,13 +80,20 @@ public class Player implements Serializable{
 	public void rolledDoubles() {
 		if(rolledDoubles) {
 			consecutiveDoublesCount++;
+		}else {
+			consecutiveDoublesCount = 1;
 		}
 		setRolledDoubles(true);
+	}
+	
+	public void rolledTriples() {
+		rolledDoubles = false;
+		publishPropertyEvent("rolledTriples", null);
 	}
 
 	public void setRolledDoubles(boolean rolledDoubles) {
 		this.rolledDoubles = rolledDoubles;
-		if(rolledDoubles==false) consecutiveDoublesCount = 0;
+		if(rolledDoubles == false) consecutiveDoublesCount = 0;
 	}
 
 	public int getConsecutiveDoublesCount() {
@@ -115,6 +123,7 @@ public class Player implements Serializable{
 	public void goIntoJail() {
 		this.inJail = true;
 		this.setLocation(JAIL_LOCATION);
+		publishPropertyEvent("wentToJail", consecutiveDoublesCount==3);
 	}
 	/**
 	 * @requires:The player to be in Jail.
@@ -124,11 +133,11 @@ public class Player implements Serializable{
 	public void getOutOfJail() {
 		this.inJail = false;
 	}
-	
+
 	public boolean rollsAgain() {
 		return this.rollsAgain;
 	}
-	
+
 	public void setRollsAgain(boolean rollsAgain) {
 		this.rollsAgain = rollsAgain;
 	}
@@ -154,7 +163,7 @@ public class Player implements Serializable{
 		Square newSquare = SquareFactory.getInstance().getSquare(location);
 		newSquare.getAction(this);
 	}
-	
+
 	public int getBalance() {
 		return balance;
 	}

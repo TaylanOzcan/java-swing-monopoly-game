@@ -1,6 +1,4 @@
 package domain;
-import java.io.Serializable;
-import java.util.Random;
 
 public class RegularDie implements Die{
 

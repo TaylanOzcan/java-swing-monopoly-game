@@ -1,6 +1,4 @@
 package domain;
-import java.io.Serializable;
-import java.util.Random;
 
 public class SpeedDie implements Die{
 
@@ -35,7 +33,7 @@ public class SpeedDie implements Die{
 	public String DoSpecial() {
 	if(faceValue == -1 || faceValue == 0)
 		return "Mr Monopoly";
-	if (faceValue== -2)
+	if (faceValue == -2)
 		return "Bus Icon";
 	return null;
 	}

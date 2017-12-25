@@ -617,35 +617,10 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 			}else if(name.equals("newTurnAction")) {
 				//playerNamesComboBox.setSelectedItem(((Player) value).getName());
 			}else if(name.equals("landedOnSubwayAction")) {
-				Square[] squares = gamePlay.getSquares();
-				JPanel panel = new JPanel();
-				panel.setLayout(new BorderLayout());
-				panel.add(new JLabel("<html>" + ((Player) value).getName()
-						+ ", you landed on Subway square previous turn.<br>Select a square to move on.</html>"), BorderLayout.NORTH);
-				DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
-
-				for(int i=0; i < squares.length; i++){
-					model.addElement(squares[i].getName());
-				}
-
-				JComboBox<String> comboBox = new JComboBox<String>(model);
-				panel.add(comboBox);
-
-				while(true) {
-					int result = JOptionPane.showConfirmDialog(
-							null, panel, "Squares", JOptionPane.OK_OPTION, JOptionPane.QUESTION_MESSAGE);
-
-					if(result == JOptionPane.OK_OPTION) {
-						int index = comboBox.getSelectedIndex();
-						if(index < 0){
-							JOptionPane.showMessageDialog(
-									null, "No squares selected.");	
-						}else{
-							gamePlay.moveTo(index);
-							break;
-						}
-					}
-				}
+				JOptionPane.showMessageDialog(
+						null, ((Player)value).getName() + ", you landed on Subway square previous turn.\n"
+								+ "You can move to any square.");
+				showSquarePickBox((Player)value);
 			}
 		}else if(source.getClass()==AuctionSquare.class) {
 			if(name.equals("auctionDialog")) {
@@ -691,6 +666,19 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 				playerInfoLabels[p.getId()].setText("Bankrupted");
 				tokenLabels.get(p.getId()).setVisible(false);
 				endTurnButton.doClick();
+			}else if(name.equals("wentToJail")) {
+				if((boolean)value) {
+					JOptionPane.showMessageDialog(
+							null, ((Player)source).getName() + " has been sent to jail for rolling 3 doubles in a row.");
+				}else{
+					JOptionPane.showMessageDialog(
+							null, ((Player)source).getName() + " has been sent to jail for landing on Go To Jail square.");
+				}
+			}else if(name.equals("rolledTriples")) {
+				JOptionPane.showMessageDialog(
+						null, ((Player)source).getName() + ", you rolled triples.\n"
+								+ "You can move to any square.");
+				showSquarePickBox((Player)source);
 			}
 		}else if(source.getClass()==Board.class) {
 			if(name.equals("gameOver")) {
@@ -700,6 +688,38 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 			}
 		}
 		refreshTokenLocations();
+	}
+
+	private void showSquarePickBox(Player value) {
+		Square[] squares = gamePlay.getSquares();
+		JPanel panel = new JPanel();
+		panel.setLayout(new BorderLayout());
+		panel.add(new JLabel("<html>" + ((Player) value).getName()
+				+ ", select a square to move on.</html>"), BorderLayout.NORTH);
+		DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
+
+		for(int i=0; i < squares.length; i++){
+			model.addElement(squares[i].getName());
+		}
+
+		JComboBox<String> comboBox = new JComboBox<String>(model);
+		panel.add(comboBox);
+
+		while(true) {
+			int result = JOptionPane.showConfirmDialog(
+					null, panel, "Squares", JOptionPane.OK_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+			if(result == JOptionPane.OK_OPTION) {
+				int index = comboBox.getSelectedIndex();
+				if(index < 0){
+					JOptionPane.showMessageDialog(
+							null, "No squares selected.");	
+				}else{
+					gamePlay.moveTo(index);
+					break;
+				}
+			}
+		}
 	}
 
 	public void refreshAfterLoad() {
