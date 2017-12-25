@@ -19,7 +19,7 @@ public class StreetSquare extends PropertySquare implements Serializable{
 	String color;
 	boolean isBuildable;
 	boolean isMortgaged;
-	
+
 	public StreetSquare(int id, String name, int house1Price, int house2Price, int house3Price, 
 			int house4Price, int hotelPrice, int skyscraperPrice, int rent, int price, String color){
 		this.id = id;
@@ -61,26 +61,50 @@ public class StreetSquare extends PropertySquare implements Serializable{
 		if(nSkyscrapers == 1){
 			return -1;
 		}else if(nHotels == 1){
-			owner.pay(this.skyscraperPrice);
-			nHotels = 0;
-			nSkyscrapers = 1;
-			isBuildable = false;
+			if(owner.getBalance()<skyscraperPrice) {
+				return -2;
+			}else {
+				owner.pay(this.skyscraperPrice);
+				nHotels = 0;
+				nSkyscrapers = 1;
+				isBuildable = false;
+			}
 		}else if(nHouses==4){
-			owner.pay(this.hotelPrice);
-			nHouses = 0;
-			nHotels = 1;
+			if(owner.getBalance()<hotelPrice) {
+				return -2;
+			}else {
+				owner.pay(this.hotelPrice);
+				nHouses = 0;
+				nHotels = 1;
+			}	
 		}else if(nHouses==3){
-			owner.pay(this.house4Price);
-			nHouses++;
+			if(owner.getBalance()<house4Price) {
+				return -2;
+			}else {
+				owner.pay(this.house4Price);
+				nHouses++;
+			}
 		}else if(nHouses==2){
-			owner.pay(this.house3Price);
-			nHouses++;
+			if(owner.getBalance()<house3Price) {
+				return -2;
+			}else {
+				owner.pay(this.house3Price);
+				nHouses++;
+			}
 		}else if(nHouses==1){
-			owner.pay(this.house2Price);
-			nHouses++;
+			if(owner.getBalance()<house2Price) {
+				return -2;
+			}else {
+				owner.pay(this.house2Price);
+				nHouses++;
+			}
 		}else if(nHouses==0){
-			owner.pay(this.house1Price);
-			nHouses++;
+			if(owner.getBalance()<house1Price) {
+				return -2;
+			}else {
+				owner.pay(this.house1Price);
+				nHouses++;
+			}
 		}
 		return this.id;
 	}

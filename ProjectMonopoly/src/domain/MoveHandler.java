@@ -119,34 +119,23 @@ public class MoveHandler implements Serializable{
 		return Cup.regDie1.getCurrentValue() == Cup.regDie2.getCurrentValue();
 	}
 
-	private boolean evenRolled() {
-		return Cup.getTotalValue()%2 == 0;
-	}
-
 	public void moveToNearestUnownedStreetSquare(Player currentPlayer, ArrayList<Square> unownedStreets) {
+		if(unownedStreets.size()==0) {
+			return;
+		}
 		ArrayList<Integer> idList = new ArrayList<Integer>(unownedStreets.size());
 		int location = currentPlayer.getLocation();
 		boolean isReverse = currentPlayer.isReverseDirection();
-		int minDistance = 120;
-		int locationToGo = location;
 		for(Square s: unownedStreets) {
 			idList.add(s.getId());
 		}
-		int distance;
 		for(int i=1; i<120; i++) {
 			int nextLoc = computeLoc(currentPlayer, i, isReverse);
 			if(idList.contains(nextLoc)) {
 				currentPlayer.setLocation(nextLoc);
 				return;
-				/*
-				distance = Math.abs(nextLoc - location);
-				if(distance < minDistance) {
-					minDistance = distance;
-					locationToGo = nextLoc;
-				}*/
 			}
 		}
-		//currentPlayer.setLocation(locationToGo);
 	}
 
 }

@@ -31,6 +31,7 @@ import javax.swing.border.LineBorder;
 
 import domain.ActionHandler;
 import domain.AuctionSquare;
+import domain.Board;
 import domain.GamePlay;
 import domain.Player;
 import domain.PropertyListener;
@@ -54,7 +55,8 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 	private JButton newGameButton, loadButton, saveButton, rollButton, sellButton,
 	buyButton, endTurnButton, buildHouseButton, exitButton, tradeButton, mortgageButton;
 	private JComboBox<String> playerNamesComboBox;
-	private JLabel[] tokenLabels, playerInfoLabels, diceLabels;
+	private JLabel[] playerInfoLabels, diceLabels;
+	private ArrayList<JLabel> tokenLabels;
 	private JLabel currentPlayerLabel, botLabel;
 
 	private ArrayList<String> playerNames;
@@ -62,44 +64,6 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 
 	private JPanel[] tokenPlacementPanels;
 	private BuildingContainerPanel[] buildingContainerPanels;
-
-	class MyBoardPanel extends JPanel{
-		private static final long serialVersionUID = 1L;
-		private transient BufferedImage image;
-		public MyBoardPanel() {
-			readImage();
-		}
-		public void readImage() {
-			try{
-				image = ImageIO.read(new File("lol.png"));
-			}catch(IOException e){
-				e.printStackTrace();
-			}
-		}
-		public void paintComponent(Graphics g){
-			super.paintComponent(g);
-			g.drawImage(image, 0, 0, 1000, 1000, this);
-		}
-	}
-
-	class MyMainPanel extends JPanel{
-		private static final long serialVersionUID = 1L;
-		private transient BufferedImage image;
-		public MyMainPanel() {
-			readImage();
-		}
-		public void readImage() {
-			try{
-				image = ImageIO.read(new File("bg_mainPanel.jpg"));
-			}catch(IOException e){
-				e.printStackTrace();
-			}
-		}
-		public void paintComponent(Graphics g){
-			super.paintComponent(g);
-			g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
-		}
-	}
 
 	public Gui(){
 
@@ -131,6 +95,7 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 		for(Player p: gamePlay.getPlayers()) {
 			p.addPropertyListener(this);
 		}
+		gamePlay.getBoard().addPropertyListener(this);
 	}
 
 	public void initializeGui(){
@@ -393,7 +358,7 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 			}
 
 			playerInfoLabels = new JLabel[inputNumPlayers];
-			tokenLabels = new JLabel[inputNumPlayers];
+			tokenLabels = new ArrayList<JLabel>(inputNumPlayers);
 			playerNames = new ArrayList<String>(inputNumPlayers);
 
 			for (int i = 0; i < inputNumPlayers; i++) {
@@ -421,14 +386,14 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 				//playerInfoLabels[i].setPreferredSize(new Dimension((infoPanel.getSize().width / 2), infoPanel.getSize().height));
 				infoPanel.add(playerInfoLabels[i]);
 
-				tokenLabels[i] = new JLabel("" + (i+1), SwingConstants.CENTER);
-				tokenLabels[i].setBackground(Color.CYAN);
-				tokenLabels[i].setOpaque(true);
-				tokenLabels[i].setBorder(LineBorder.createGrayLineBorder());
+				tokenLabels.add(i, new JLabel("" + (i+1), SwingConstants.CENTER));
+				tokenLabels.get(i).setBackground(Color.CYAN);
+				tokenLabels.get(i).setOpaque(true);
+				tokenLabels.get(i).setBorder(LineBorder.createGrayLineBorder());
 
 				int tokenSize = 114/inputNumPlayers - 5;
 				if(tokenSize > 20) tokenSize = 20;
-				tokenLabels[i].setPreferredSize(new Dimension(tokenSize, tokenSize));
+				tokenLabels.get(i).setPreferredSize(new Dimension(tokenSize, tokenSize));
 			}	
 			newGameButton.setEnabled(false);
 			rollButton.setEnabled(true);
@@ -437,6 +402,7 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 			playerNamesComboBox.addActionListener(this);
 			buildHouseButton.setEnabled(true);
 			sellButton.setEnabled(true);
+			mortgageButton.setEnabled(true);
 			infoPanel.setOpaque(true);
 			currentPlayerPanel.setOpaque(true);
 			gamePlay.playGame(playerNames);
@@ -481,12 +447,14 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 						null, "You have successfully bought the square.");
 			}else{
 				JOptionPane.showMessageDialog(
-						null, "You cannot buy this square.");
+						null, "You don't have enough balance.");
 				return;
 			}
 		}else if(e.getSource() == sellButton) {
 			gamePlay.moveTo(64);
 			gamePlay.endTurn();
+		}else if(e.getSource() == mortgageButton) {
+			gamePlay.getCurrentPlayer().increaseBalance(-3201);
 		}else if(e.getSource() == buildHouseButton){
 			ArrayList<String> squareNames = gamePlay.getOwnedSquareNames();
 
@@ -511,9 +479,13 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 					return;
 				}else{
 					int index = gamePlay.buildHouse(comboBox.getSelectedIndex());
-					if(index < 0){
+					if(index == -1){
 						JOptionPane.showMessageDialog(
 								null, "You have already built a skyscraper.\nYou cannot build more.");
+						return;
+					}else if(index == -2) {
+						JOptionPane.showMessageDialog(
+								null, "You don't have enough balance.");
 						return;
 					}else{
 						buildingContainerPanels[index].addIcon();
@@ -545,27 +517,21 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 
 	public void refreshInfo(){
 		String currentName = gamePlay.getCurrentPlayerName();
-
 		currentPlayerLabel.setText("<html><center><span style='font-size:18px'>"
 				+ currentName
 				+ " plays the current turn.</span></center></html>");
 
 		ArrayList<String> infoList = gamePlay.getPlayerInfo();
 		for(int i=0; i< infoList.size(); i++){
-			this.playerInfoLabels[i].setText(infoList.get(i));
+			playerInfoLabels[i].setText(infoList.get(i));
 		}
-
-		playerNamesComboBox.setSelectedIndex(this.playerNames.indexOf(currentName));
+		playerNamesComboBox.setSelectedIndex(playerNames.indexOf(currentName));
 	}
 
 	public void refreshTokenLocations(){
 		ArrayList<Integer> positions = gamePlay.getPlayerPositions();
-		for(int i=0; i < tokenPlacementPanels.length; i++){
-			for(int j=0; j < positions.size(); j++){
-				if(i == positions.get(j)){
-					tokenPlacementPanels[i].add(tokenLabels[j]);
-				}
-			}
+		for(int i=0; i < positions.size(); i++){
+			tokenPlacementPanels[positions.get(i)].add(tokenLabels.get(i));
 		}
 	}
 
@@ -586,7 +552,7 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 				JOptionPane.showMessageDialog(
 						null, "Auction is starting for " + auctedSquare.getName());
 
-				for(Player p: gamePlay.getPlayers()) {
+				for(Player p: gamePlay.getPlayingPlayers()) {
 					players.add(p);
 				}
 
@@ -717,7 +683,20 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 				PropertySquare square = ((PropertySquare) value);
 				JOptionPane.showMessageDialog(
 						null, ((Player)source).getName() + " has paid $" + square.getRent()
-						+ " to " + square.getOwner().getName() + " as rent for " + square.getName());
+						+ " to " + square.getOwner().getName() + " for " + square.getName() + " rentals.");
+			}else if(name.equals("bankrupted")) {
+				Player p = (Player)source;
+				JOptionPane.showMessageDialog(
+						null, p.getName() + " went bankrupt.");
+				playerInfoLabels[p.getId()].setText("Bankrupted");
+				tokenLabels.get(p.getId()).setVisible(false);
+				endTurnButton.doClick();
+			}
+		}else if(source.getClass()==Board.class) {
+			if(name.equals("gameOver")) {
+				JOptionPane.showMessageDialog(
+						null, ((Player)value).getName() + " has won the game!");
+				dispose();
 			}
 		}
 		refreshTokenLocations();
@@ -726,6 +705,8 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 	public void refreshAfterLoad() {
 		((MonopolyBoardPanel) boardPanel).readImage();
 		((MonopolyMainPanel) mainPanel).readImage();
+		((JLabel)playerNamesComboBox.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
+		playerNamesComboBox.setFont(playerNamesComboBox.getFont().deriveFont(20.0f));
 		setVisible(true);
 		JOptionPane.showMessageDialog(
 				null, "Game was successfully loaded.");

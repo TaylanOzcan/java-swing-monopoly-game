@@ -82,6 +82,10 @@ public class GamePlay implements Serializable{
 	public ArrayList<Player> getPlayers() {
 		return board.getPlayers();
 	}
+	
+	public ArrayList<Player> getPlayingPlayers() {
+		return board.getPlayingPlayers();
+	}
 
 	public ArrayList<String> getPlayerInfo() {
 		return board.getPlayerInfo();

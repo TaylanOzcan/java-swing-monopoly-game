@@ -14,7 +14,7 @@ class StreetSquareTesting {
 
 	@Test
 	public void testHouse() {
-		Player p = new Player("a");
+		Player p = new Player(0, "a");
 		StreetSquare s1 = new StreetSquare(0, "name", 10, 10, 10, 10, 10, 10, 10, 10, "red");
 		s1.setOwner(p);
 		s1.build();
@@ -24,7 +24,7 @@ class StreetSquareTesting {
 	}
 	@Test
 	public void testHotel() {
-		Player p = new Player("aa");
+		Player p = new Player(1, "aa");
 		StreetSquare s2 = new StreetSquare(0, "abc", 10, 10, 10, 10, 10, 10, 10, 10, "green");
 		s2.setOwner(p);
 		s2.build();  // #1.ev
@@ -38,7 +38,7 @@ class StreetSquareTesting {
 	
 	@Test
 	public void testSkyscraper() {
-		Player p = new Player("aaa");
+		Player p = new Player(2, "aaa");
 		StreetSquare s3 = new StreetSquare(0, "def", 10, 10, 10, 10, 10, 10, 10, 10, "yellow");
 		s3.setOwner(p);
 		s3.build();
