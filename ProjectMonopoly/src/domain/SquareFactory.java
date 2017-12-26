@@ -7,6 +7,7 @@ import java.util.HashMap;
 public class SquareFactory{
 
 	private Square[] squares = new Square[120];
+	private String[] Colors ;
 	private static SquareFactory instance;
 
 	private SquareFactory() {
@@ -140,6 +141,14 @@ public class SquareFactory{
 
 	public Square getSquare(int i){
 		return squares[i];
+	}
+	public ArrayList<StreetSquare> getSquareByColor(String Color) {
+		ArrayList<StreetSquare> streetArray = null ;
+		for (int i=0 ; i< 120 ; i++) {
+			if (this.squares[i].getColor() == Color)
+			streetArray.add((StreetSquare) squares[i]);	
+		}
+		return streetArray;
 	}
 
 	public Square[] getSquares(){

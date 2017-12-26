@@ -37,4 +37,7 @@ public class VoucherSquare extends CardDrawSquare{
 	public String drawCard() {
 		return CardDeck.getInstance().drawVoucher();
 	}
+	public String getColor() {
+		return null;
+	}
 }

@@ -22,7 +22,9 @@ public class UtilitySquare extends PropertySquare{
 		return 0;
 	}
 
-
+	public String getColor() {
+		return null;
+	}
 
 
 

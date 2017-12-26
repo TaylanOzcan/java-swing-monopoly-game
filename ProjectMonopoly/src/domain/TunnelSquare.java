@@ -29,7 +29,9 @@ public class TunnelSquare implements Square{
 	public String getName() {
 		return name;
 	}
-
+	public String getColor() {
+		return null;
+	}
 	@Override
 	public int getId() {
 		return id;

@@ -28,5 +28,8 @@ public class TestSquare implements Square{
 		// TODO Auto-generated method stub
 		return id;
 	}
+	public String getColor() {
+		return null;
+	}
 
 }

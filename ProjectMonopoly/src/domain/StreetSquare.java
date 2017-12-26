@@ -108,6 +108,33 @@ public class StreetSquare extends PropertySquare implements Serializable{
 		}
 		return this.id;
 	}
+	public int Demolish(){
+		if(nSkyscrapers == 1){
+			nHotels = 1;
+			nSkyscrapers = 0;
+			isBuildable = true;;
+		}else if(nHotels == 1){
+				nHotels = 0;
+				nHouses = 4;
+				isBuildable = true;
+			
+		}else if(nHouses==4){
+				nHouses = 3;
+			
+		}else if(nHouses==3){
+				nHouses--;
+		}else if(nHouses==2){
+				nHouses--;
+			
+		}else if(nHouses==1){
+
+				nHouses--;
+			
+		}else if(nHouses==0){
+				return -2;
+		}
+		return this.id;
+	}
 
 	public int getSkyscraperPrice() {
 		return skyscraperPrice;
