@@ -35,14 +35,6 @@ public class CardDeck{
 		chanceCards.add("Changing Lanes");
 
 		//communityChestCards Cards Data 
-		communityChestCards.add("Insurance Premiums Due");
-		communityChestCards.add("Happy Birthday!");
-		communityChestCards.add("Business Trip");
-		communityChestCards.add("Entrepreneur of the Year!");
-		communityChestCards.add("You’re getting Married");
-		communityChestCards.add("Elected District Attorney");
-		communityChestCards.add("BARGAIN BUSINESS!");
-		communityChestCards.add("Be Kind, Rewind");
 		communityChestCards.add("Get Out of Jail Free!");
 		communityChestCards.add("Bank Error in Your Favor!");
 		communityChestCards.add("You Win 2nd Place in an Board Game Remix Design Contest!");

@@ -2,22 +2,39 @@ package domain;
 
 import java.io.Serializable;
 
-public class ChanceSquare extends CardDrawSquare{
+public class ChanceSquare extends CardDrawSquare  {
 
 	private int id;
 	private String name;
+
 	
 	public ChanceSquare(int id, String name){
 		this.id = id;
 		this.name = name;
+
 	}
 	
 	@Override
 	public void getAction(Player p) {
-		String chanceCard = drawCard();
-		//CardActionHandler will handle the action
-		//not yet implemented
-	}
+		String CurrentCard = drawCard();
+
+			if (CurrentCard == "Get Out of Jail Free!") {
+				p.addChanceCard("Get Out of Jail Free!");
+			}
+			if (CurrentCard == "Advance to the Stock Exchange") {
+				p.setLocation(52);
+			}
+			if (CurrentCard == "Traffic Ticket!") {
+				p.EditBalance("decrease",15);
+			}
+			if (CurrentCard == "Hurracaine Card") {
+				p.setHurricane(true);
+			}
+		}
+	
+	public String getColor() {
+		return null;
+	}	
 
 	@Override
 	public String getName() {

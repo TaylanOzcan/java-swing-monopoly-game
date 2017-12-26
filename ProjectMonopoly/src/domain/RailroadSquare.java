@@ -25,7 +25,9 @@ public class RailroadSquare extends PropertySquare{
 	}
 
 
-
+	public String getColor() {
+		return null;
+	}
 
 
 }

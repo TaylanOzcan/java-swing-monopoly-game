@@ -29,6 +29,7 @@ public class Player implements Serializable{
 	private boolean isBankrupted;
 	private ArrayList<PropertySquare> ownedSquares;
 	private ArrayList<PropertyListener> propertyListeners;
+	private boolean HurricaneActiveted;
 
 	public Player(int id, String name) {
 		this.name = name;
@@ -45,6 +46,7 @@ public class Player implements Serializable{
 		this.communityCards = new ArrayList<String>(5);	
 		this.ownedSquares = new ArrayList<PropertySquare>(10);
 		this.propertyListeners = new ArrayList<PropertyListener>();
+		this.HurricaneActiveted = false;
 	}
 
 	public void addPropertyListener(PropertyListener pl) {
@@ -359,6 +361,13 @@ public class Player implements Serializable{
 
 	public int getId() {
 		return id;
+	}
+	public boolean getHurricane () {
+		return HurricaneActiveted;
+	}
+	public void setHurricane(boolean t) {
+	this.HurricaneActiveted= t;
+		
 	}
 
 	public boolean isBankrupted() {

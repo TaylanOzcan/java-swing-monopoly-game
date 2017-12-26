@@ -19,4 +19,7 @@ public class CompanySquare extends PropertySquare{
 	public int getId() {
 		return id;
 	}
+	public String getColor() {
+		return null;
+	}
 }

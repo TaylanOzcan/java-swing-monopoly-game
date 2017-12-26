@@ -251,6 +251,13 @@ public class Board implements Serializable{
 				+ currentPlayerIndex + ", numOfPlayers=" + numOfPlayers + ", moveHandler=" + moveHandler
 				+ ", actionHandler=" + actionHandler + "]";
 	}
+	public void HurracaneCard (String Color) {
+		ArrayList<StreetSquare> Squares = SquareFactory.getInstance().getSquareByColor(Color);
+		if (this.currentPlayer.getHurricane()) {
+		Squares.get(0).Demolish();
+		Squares.get(1).Demolish();
+		Squares.get(2).Demolish();}
+	}
 
 	public void moveTo(int squareIndex) {
 		currentPlayer.setLocation(squareIndex);

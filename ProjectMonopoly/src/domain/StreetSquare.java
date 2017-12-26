@@ -52,6 +52,7 @@ public class StreetSquare extends PropertySquare implements Serializable{
 		}
 	}
 
+
 	/**
 	 * @requires:The player to own the square he wants to build on.
 	 * @modifies:The property of the square.

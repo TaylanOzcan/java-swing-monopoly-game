@@ -39,4 +39,7 @@ public class AuctionSquare implements Square{
 			pl.onPropertyEvent(this, name, value);
 		}
 	}
+	public String getColor() {
+		return null;
+	}
 }
