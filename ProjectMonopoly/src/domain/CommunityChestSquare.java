@@ -1,7 +1,5 @@
 package domain;
 
-import java.io.Serializable;
-
 public class CommunityChestSquare extends CardDrawSquare{
 
 	private int id;
@@ -44,11 +42,4 @@ public class CommunityChestSquare extends CardDrawSquare{
 	public String drawCard() {
 		return CardDeck.getInstance().drawCommunityCard();
 	}
-
-	@Override
-	public String getColor() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

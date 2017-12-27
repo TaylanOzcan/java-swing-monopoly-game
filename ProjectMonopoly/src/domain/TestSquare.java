@@ -1,7 +1,5 @@
 package domain;
 
-import java.io.Serializable;
-
 public class TestSquare implements Square{
 
 	private int id;
@@ -28,8 +26,4 @@ public class TestSquare implements Square{
 		// TODO Auto-generated method stub
 		return id;
 	}
-	public String getColor() {
-		return null;
-	}
-
 }

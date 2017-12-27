@@ -1,5 +1,6 @@
 package domain;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class StreetSquare extends PropertySquare implements Serializable{
 	/**
@@ -19,6 +20,7 @@ public class StreetSquare extends PropertySquare implements Serializable{
 	String color;
 	boolean isBuildable;
 	boolean isMortgaged;
+	private ArrayList<PropertyListener> propertyListeners;
 
 	public StreetSquare(int id, String name, int house1Price, int house2Price, int house3Price, 
 			int house4Price, int hotelPrice, int skyscraperPrice, int rent, int price, String color){
@@ -34,6 +36,17 @@ public class StreetSquare extends PropertySquare implements Serializable{
 		this.skyscraperPrice = skyscraperPrice;
 		this.color = color;
 		this.isBuildable = true;
+		propertyListeners = new ArrayList<PropertyListener>();
+	}
+
+	public void addPropertyListener(PropertyListener pl) {
+		propertyListeners.add(pl);
+	}
+
+	public void publishPropertyEvent(String name, Object value) {
+		for(PropertyListener pl: propertyListeners) {
+			pl.onPropertyEvent(this, name, value);
+		}
 	}
 
 	/**
@@ -58,12 +71,13 @@ public class StreetSquare extends PropertySquare implements Serializable{
 	 * @modifies:The property of the square.
 	 * @effects:Adds either a hotel,a house or a skyscraper to the square.
 	 */
-	public int build(){
+	public void build(){
+		int result = this.id;
 		if(nSkyscrapers == 1){
-			return -1;
+			result = -1;
 		}else if(nHotels == 1){
 			if(owner.getBalance()<skyscraperPrice) {
-				return -2;
+				result = -2;
 			}else {
 				owner.pay(this.skyscraperPrice);
 				nHotels = 0;
@@ -72,7 +86,7 @@ public class StreetSquare extends PropertySquare implements Serializable{
 			}
 		}else if(nHouses==4){
 			if(owner.getBalance()<hotelPrice) {
-				return -2;
+				result = -2;
 			}else {
 				owner.pay(this.hotelPrice);
 				nHouses = 0;
@@ -80,61 +94,57 @@ public class StreetSquare extends PropertySquare implements Serializable{
 			}	
 		}else if(nHouses==3){
 			if(owner.getBalance()<house4Price) {
-				return -2;
+				result = -2;
 			}else {
 				owner.pay(this.house4Price);
 				nHouses++;
 			}
 		}else if(nHouses==2){
 			if(owner.getBalance()<house3Price) {
-				return -2;
+				result = -2;
 			}else {
 				owner.pay(this.house3Price);
 				nHouses++;
 			}
 		}else if(nHouses==1){
 			if(owner.getBalance()<house2Price) {
-				return -2;
+				result = -2;
 			}else {
 				owner.pay(this.house2Price);
 				nHouses++;
 			}
 		}else if(nHouses==0){
 			if(owner.getBalance()<house1Price) {
-				return -2;
+				result = -2;
 			}else {
 				owner.pay(this.house1Price);
 				nHouses++;
 			}
 		}
-		return this.id;
+		publishPropertyEvent("build", result);
 	}
-	public int Demolish(){
+
+	public void demolish(){
+		int result = this.id;
 		if(nSkyscrapers == 1){
 			nHotels = 1;
 			nSkyscrapers = 0;
-			isBuildable = true;;
+			isBuildable = true;
 		}else if(nHotels == 1){
-				nHotels = 0;
-				nHouses = 4;
-				isBuildable = true;
-			
+			nHotels = 0;
+			nHouses = 4;
 		}else if(nHouses==4){
-				nHouses = 3;
-			
+			nHouses--;
 		}else if(nHouses==3){
-				nHouses--;
+			nHouses--;
 		}else if(nHouses==2){
-				nHouses--;
-			
-		}else if(nHouses==1){
-
-				nHouses--;
-			
+			nHouses--;
+		}else if(nHouses==1) {
+			nHouses--;
 		}else if(nHouses==0){
-				return -2;
+			result = -1;
 		}
-		return this.id;
+		publishPropertyEvent("demolish", result);
 	}
 
 	public int getSkyscraperPrice() {
@@ -180,6 +190,10 @@ public class StreetSquare extends PropertySquare implements Serializable{
 				+ house3Price + ", house4Price=" + house4Price + ", hotelPrice=" + hotelPrice + ", skyscraperPrice="
 				+ skyscraperPrice + ", nHouses=" + nHouses + ", nHotels=" + nHotels + ", nSkyscrapers=" + nSkyscrapers
 				+ ", color=" + color + ", isBuildable=" + isBuildable + ", isMortgaged=" + isMortgaged + "]";
+	}
+
+	public boolean hasBuilding() {
+		return (nHouses>0 || nHotels>0 || nSkyscrapers>0);
 	}
 
 }

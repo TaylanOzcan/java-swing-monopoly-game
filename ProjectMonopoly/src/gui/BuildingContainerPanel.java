@@ -1,8 +1,6 @@
 package gui;
 
 import java.awt.GridLayout;
-
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class BuildingContainerPanel extends ContainerPanel {
@@ -51,8 +49,7 @@ public class BuildingContainerPanel extends ContainerPanel {
 		this.add(emptyPanel);
 	}
 
-	public void addIcon()
-	{
+	public void addIcon(){
 		if(hasSkyscraper){
 			return;
 		}else if(hasHotel){
@@ -70,6 +67,28 @@ public class BuildingContainerPanel extends ContainerPanel {
 			this.add(IconFactory.newHotelLabel());
 			nHouses=0;
 			hasHotel = true;
+		}
+	}
+	
+	public void removeIcon(){
+		if(hasSkyscraper){
+			this.removeAll();
+			this.arrangeLayout();
+			this.add(IconFactory.newHotelLabel());
+			hasSkyscraper = false;
+			hasHotel = true;
+		}else if(hasHotel){
+			this.removeAll();
+			this.initializeLayout(direction);
+			this.add(IconFactory.newHouseLabel());
+			this.add(IconFactory.newHouseLabel());
+			this.add(IconFactory.newHouseLabel());
+			this.add(IconFactory.newHouseLabel());
+			hasHotel = false;
+			nHouses = 4;
+		}else if(nHouses > 0){
+			this.remove(0);
+			nHouses--;
 		}
 	}
 

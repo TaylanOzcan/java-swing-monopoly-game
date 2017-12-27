@@ -21,6 +21,7 @@ public class SaveAndLoad{
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
 
 			oos.writeObject(g);
+			g.refreshAfterSave();
 			oos.close();
 			fos.close();
 			

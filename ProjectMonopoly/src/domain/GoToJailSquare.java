@@ -1,7 +1,5 @@
 package domain;
 
-import java.io.Serializable;
-
 public class GoToJailSquare implements Square{
 
 	private int id;
@@ -30,8 +28,4 @@ public class GoToJailSquare implements Square{
 	public int getId() {
 		return id;
 	}
-	public String getColor() {
-		return null;
-	}
-
 }

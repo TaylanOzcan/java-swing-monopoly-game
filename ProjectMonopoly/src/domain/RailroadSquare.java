@@ -1,7 +1,5 @@
 package domain;
 
-import java.io.Serializable;
-
 public class RailroadSquare extends PropertySquare{
 
 	boolean hasDepot;
@@ -23,11 +21,4 @@ public class RailroadSquare extends PropertySquare{
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
-
-	public String getColor() {
-		return null;
-	}
-
-
 }

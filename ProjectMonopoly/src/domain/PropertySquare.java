@@ -62,8 +62,6 @@ public abstract class PropertySquare implements Square, Serializable{
 		this.isOwned = isOwned;
 	}
 
-	
-
 	@Override
 	public String toString() {
 		return "PropertySquare [id=" + id + ", name=" + name + ", price=" + price + ", rent=" + rent + ", owner="

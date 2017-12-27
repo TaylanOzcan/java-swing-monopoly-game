@@ -31,7 +31,4 @@ public class BonusSquare implements Square{
 	public int getId() {
 		return id;
 	}
-	public String getColor() {
-		return null;
-	}
 }

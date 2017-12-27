@@ -1,5 +1,4 @@
 package domain;
-import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -23,7 +22,7 @@ public class CardDeck{
 		chanceCards.add("Get Out of Jail Free!");
 		chanceCards.add("Make General Repairs to all your properties.");
 		chanceCards.add("Traffic Ticket!");
-		chanceCards.add("Buyer’s Market!");
+		chanceCards.add("Buyer's Market!");
 		chanceCards.add("Business Trip");
 		chanceCards.add("Excellent Accounting");
 		chanceCards.add("Property Taxes");

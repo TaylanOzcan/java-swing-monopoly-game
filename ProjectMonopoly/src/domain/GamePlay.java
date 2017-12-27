@@ -30,8 +30,8 @@ public class GamePlay implements Serializable{
 		board.mortgage();
 	}
 
-	public int buildHouse(int squareIndex){
-		return board.buildHouse(squareIndex);
+	public void buildHouse(int squareIndex){
+		board.buildHouse(squareIndex);
 	}
 
 	public void squeeze(){
@@ -141,6 +141,30 @@ public class GamePlay implements Serializable{
 
 	public void moveToNearestUnownedStreetSquare(Player p) {
 		board.moveToNearestUnownedStreetSquare(p);
+	}
+
+	public void useCard(int selection) {
+		board.useCard(selection);
+	}
+
+	public ArrayList<String> getChanceCards() {
+		return board.getCurrentPlayer().getChanceCards();
+	}
+
+	public ArrayList<String> getCommunityCards() {
+		return board.getCurrentPlayer().getCommunityCards();
+	}
+
+	public ArrayList<String> getVouchers() {
+		return board.getCurrentPlayer().getVouchers();
+	}
+
+	public ArrayList<String> getColorsOfConstructedStreets() {
+		return SquareFactory.getInstance().getColorsOfConstructedStreets();
+	}
+
+	public void hurricaneCard(String color) {
+		board.hurricaneCard(color);
 	}
 
 }

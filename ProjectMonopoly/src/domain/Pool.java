@@ -1,20 +1,19 @@
 package domain;
 
-import java.io.Serializable;
-
 public class Pool{
 
 	private static int balance = 0;
+	
 	/**
 	 * @requires:The pool to be created, and the player to have enough money to pay the pool.
 	 * @modifies: amount,Balance
 	 * @effects:Pays the pool the required price.
 	 */
 	public static void payPool (Player p, int amount) {
-	
 		balance = balance + amount;
-		p.increaseBalance(-amount);
+		p.pay(amount);
 	}
+	
 	/**
 	 * @requires:Nothing.
 	 * @modifies:Player and pool balance.

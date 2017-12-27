@@ -29,7 +29,7 @@ public class Player implements Serializable{
 	private boolean isBankrupted;
 	private ArrayList<PropertySquare> ownedSquares;
 	private ArrayList<PropertyListener> propertyListeners;
-	private boolean HurricaneActiveted;
+	private boolean hurricaneActivated;
 
 	public Player(int id, String name) {
 		this.name = name;
@@ -44,9 +44,9 @@ public class Player implements Serializable{
 		this.vouchers = new ArrayList<String>(5);
 		this.chanceCards = new ArrayList<String>(5);
 		this.communityCards = new ArrayList<String>(5);	
-		this.ownedSquares = new ArrayList<PropertySquare>(10);
+		this.ownedSquares = new ArrayList<PropertySquare>();
 		this.propertyListeners = new ArrayList<PropertyListener>();
-		this.HurricaneActiveted = false;
+		this.hurricaneActivated = false;
 	}
 
 	public void addPropertyListener(PropertyListener pl) {
@@ -87,7 +87,7 @@ public class Player implements Serializable{
 		}
 		setRolledDoubles(true);
 	}
-	
+
 	public void rolledTriples() {
 		rolledDoubles = false;
 		publishPropertyEvent("rolledTriples", null);
@@ -326,6 +326,17 @@ public class Player implements Serializable{
 	public ArrayList<String> getCommunityCards() {
 		return communityCards;
 	}
+	
+	public void useCard(int selection, CardActionsHandler handler) {
+		int cardType = selection / 100;
+		if(cardType == 1) {
+			handler.useCard(this, chanceCards.remove(selection % 100));
+		}else if(cardType == 2) {
+			handler.useCard(this, communityCards.remove(selection % 100));
+		}else {
+			handler.useCard(this, vouchers.remove(selection % 100));
+		}
+	}
 	/**
 	 * @requires: Nothing
 	 * @modifies: squareToBuy
@@ -362,12 +373,12 @@ public class Player implements Serializable{
 	public int getId() {
 		return id;
 	}
-	public boolean getHurricane () {
-		return HurricaneActiveted;
+
+	public boolean getHurricane() {
+		return hurricaneActivated;
 	}
 	public void setHurricane(boolean t) {
-	this.HurricaneActiveted= t;
-		
+		this.hurricaneActivated= t;
 	}
 
 	public boolean isBankrupted() {

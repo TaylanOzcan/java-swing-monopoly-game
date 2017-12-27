@@ -1,23 +1,29 @@
 package domain;
-import java.io.Serializable;
+
 import java.util.ArrayList;
 
 public class CardActionsHandler{
 
-private Square square;
-private ArrayList<Player> players;
-private String CurrentCard;
-private Player cp;
+	private ArrayList<PropertyListener> propertyListeners;
 
-public CardActionsHandler (ArrayList<Player> players,Square square) {
-	this.players=players;
-	this.square=square;
-	for(int i=0;i< players.size();i++) {
-		if(players.get(i).IsCurrent())
-			cp=players.get(i);
+	public CardActionsHandler() {
+		propertyListeners = new ArrayList<PropertyListener>();
 	}
-}
 
+	public void addPropertyListener(PropertyListener pl) {
+		propertyListeners.add(pl);
+	}
 
+	public void publishPropertyEvent(String name, Object value) {
+		for(PropertyListener pl: propertyListeners) {
+			pl.onPropertyEvent(this, name, value);
+		}
+	}
+	
+	public void useCard(Player p, String card) {
+		if(card.equals("Hurricane")) {
+			publishPropertyEvent("hurricane", p);
+		}
+	}
 
 }

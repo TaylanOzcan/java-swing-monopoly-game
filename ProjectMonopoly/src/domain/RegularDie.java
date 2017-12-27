@@ -7,6 +7,7 @@ public class RegularDie implements Die{
 	
 	public RegularDie(){
 		//this.rnd = new Random();
+		faceValue = -3;
 	}
 	/**
 	 * @requires:The Die.

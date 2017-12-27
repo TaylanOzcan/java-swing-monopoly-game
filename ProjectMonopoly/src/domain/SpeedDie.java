@@ -7,12 +7,10 @@ public class SpeedDie implements Die{
 	
 	public SpeedDie(){
 		//this.rnd = new Random();
-	}
+		faceValue = -3;
+	}	
 
-	
-
-	public int getValue() { //comments above
-		
+	public int getValue() {
 	return faceValue;
 	}
 	/**

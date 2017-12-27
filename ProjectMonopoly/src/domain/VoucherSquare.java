@@ -1,7 +1,5 @@
 package domain;
 
-import java.io.Serializable;
-
 public class VoucherSquare extends CardDrawSquare{
 
 	private int id;
@@ -36,8 +34,5 @@ public class VoucherSquare extends CardDrawSquare{
 	@Override
 	public String drawCard() {
 		return CardDeck.getInstance().drawVoucher();
-	}
-	public String getColor() {
-		return null;
 	}
 }

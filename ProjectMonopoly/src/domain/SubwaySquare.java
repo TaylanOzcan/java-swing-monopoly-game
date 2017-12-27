@@ -1,7 +1,5 @@
 package domain;
 
-import java.io.Serializable;
-
 public class SubwaySquare implements Square{
 
 	private int id;
@@ -25,8 +23,5 @@ public class SubwaySquare implements Square{
 	@Override
 	public int getId() {
 		return id;
-	}
-	public String getColor() {
-		return null;
 	}
 }

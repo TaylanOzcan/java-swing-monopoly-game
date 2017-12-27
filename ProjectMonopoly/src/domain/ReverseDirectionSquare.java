@@ -28,7 +28,4 @@ public class ReverseDirectionSquare implements Square {
 	public int getId() {
 		return id;
 	}
-	public String getColor() {
-		return null;
-	}
 }

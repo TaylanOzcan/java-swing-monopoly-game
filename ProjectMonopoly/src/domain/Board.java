@@ -12,6 +12,7 @@ public class Board implements Serializable{
 	private int currentPlayerIndex;
 	private int numOfPlayers;
 	private MoveHandler moveHandler;
+	private CardActionsHandler cardHandler;
 	private ActionHandler actionHandler;
 	private ArrayList<PropertyListener> propertyListeners;
 
@@ -20,6 +21,7 @@ public class Board implements Serializable{
 		this.players = new ArrayList<Player>(numOfPlayers);
 		this.moveHandler = new MoveHandler();
 		this.actionHandler = new ActionHandler();
+		this.cardHandler = new CardActionsHandler();
 		createPlayers(playerNames);
 		this.currentPlayerIndex = 0;
 		this.currentPlayer = players.get(0);
@@ -88,6 +90,9 @@ public class Board implements Serializable{
 	public ActionHandler getActionHandler() {
 		return this.actionHandler;
 	}
+	public CardActionsHandler getCardHandler() {
+		return cardHandler;
+	}
 	/**
 	 * @requires: Nothing
 	 * @modifies: Nothing
@@ -140,9 +145,9 @@ public class Board implements Serializable{
 	 * @effects : it returns the street index that we want to build a street on
 	 */
 
-	public int buildHouse(int squareIndex) {
+	public void buildHouse(int squareIndex) {
 		StreetSquare squareToBuildHouse = (StreetSquare)currentPlayer.getOwnedSquares().get(squareIndex);
-		return squareToBuildHouse.build();
+		squareToBuildHouse.build();
 	}
 
 	public void squeeze() {
@@ -251,12 +256,12 @@ public class Board implements Serializable{
 				+ currentPlayerIndex + ", numOfPlayers=" + numOfPlayers + ", moveHandler=" + moveHandler
 				+ ", actionHandler=" + actionHandler + "]";
 	}
-	public void HurracaneCard (String Color) {
-		ArrayList<StreetSquare> Squares = SquareFactory.getInstance().getSquareByColor(Color);
-		if (this.currentPlayer.getHurricane()) {
-			Squares.get(0).Demolish();
-		Squares.get(1).Demolish();
-		Squares.get(2).Demolish();}
+
+	public void hurricaneCard (String Color) {
+		ArrayList<StreetSquare> squares = SquareFactory.getInstance().getSquareByColor(Color);
+		for(StreetSquare s: squares) {
+			s.demolish();
+		}
 	}
 
 	public void moveTo(int squareIndex) {
@@ -267,6 +272,10 @@ public class Board implements Serializable{
 	public void moveToNearestUnownedStreetSquare(Player p) {
 		ArrayList<Square> squares = SquareFactory.getInstance().getUnownedStreetSquares();
 		moveHandler.moveToNearestUnownedStreetSquare(p, squares);
+	}
+
+	public void useCard(int selection) {
+		currentPlayer.useCard(selection, cardHandler);
 	}
 
 }

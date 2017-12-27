@@ -1,7 +1,5 @@
 package domain;
 
-import java.io.Serializable;
-
 public class TaxRefundSquare implements Square{
 
 	private int id;
@@ -25,12 +23,8 @@ public class TaxRefundSquare implements Square{
 	public String getName() {
 		return name;
 	}
-	public String getColor() {
-		return null;
-	}
 	@Override
 	public int getId() {
 		return id;
 	}
-
 }

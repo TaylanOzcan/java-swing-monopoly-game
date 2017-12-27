@@ -1,7 +1,5 @@
 package domain;
 
-import java.io.Serializable;
-
 public class RegularSquare implements Square{
 
 	private int id;
@@ -26,8 +24,4 @@ public class RegularSquare implements Square{
 	public int getId() {
 		return id;
 	}
-	public String getColor() {
-		return null;
-	}
-
 }

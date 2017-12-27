@@ -31,10 +31,6 @@ public class ChanceSquare extends CardDrawSquare  {
 				p.setHurricane(true);
 			}
 		}
-	
-	public String getColor() {
-		return null;
-	}	
 
 	@Override
 	public String getName() {

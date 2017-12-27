@@ -1,7 +1,5 @@
 package domain;
 
-import java.io.Serializable;
-
 public class CompanySquare extends PropertySquare{
 
 	@Override
@@ -18,8 +16,5 @@ public class CompanySquare extends PropertySquare{
 	@Override
 	public int getId() {
 		return id;
-	}
-	public String getColor() {
-		return null;
 	}
 }

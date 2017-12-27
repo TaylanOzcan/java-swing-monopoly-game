@@ -1,13 +1,10 @@
 package domain;
-import java.awt.Color;
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class SquareFactory{
 
 	private Square[] squares = new Square[120];
-	private String[] Colors ;
+	//private String[] Colors ;
 	private static SquareFactory instance;
 
 	private SquareFactory() {
@@ -142,18 +139,21 @@ public class SquareFactory{
 	public Square getSquare(int i){
 		return squares[i];
 	}
-	public ArrayList<StreetSquare> getSquareByColor(String Color) {
-		ArrayList<StreetSquare> streetArray = null ;
+
+	public ArrayList<StreetSquare> getSquareByColor(String color) {
+		ArrayList<StreetSquare> streetList = new ArrayList<StreetSquare>(4);
 		for (int i=0 ; i< 120 ; i++) {
-			if (this.squares[i].getColor() == Color)
-			streetArray.add((StreetSquare) squares[i]);	
+			if (squares[i].getClass() == StreetSquare.class && ((StreetSquare)squares[i]).getColor() == color) {
+				streetList.add((StreetSquare) squares[i]);	
+			}
 		}
-		return streetArray;
+		return streetList;
 	}
 
 	public Square[] getSquares(){
 		return squares;
 	}
+
 	/**
 	 * @requires:Nothing.
 	 * @modifies:unownedStreetSquares
@@ -167,6 +167,17 @@ public class SquareFactory{
 			}
 		}
 		return unownedStreetSquares;
+	}
+
+	public ArrayList<String> getColorsOfConstructedStreets() {
+		ArrayList<String> colors = new ArrayList<String>(4);
+		for (int i=0 ; i< 120 ; i++) {
+			if (squares[i].getClass() == StreetSquare.class && ((StreetSquare)squares[i]).hasBuilding()) {
+				colors.add(((StreetSquare) squares[i]).getColor());
+				i += 4;
+			}
+		}
+		return colors;
 	}
 
 }
