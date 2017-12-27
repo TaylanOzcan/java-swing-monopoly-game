@@ -1,17 +1,13 @@
 package domain;
 
-import java.io.Serializable;
-
 public class ChanceSquare extends CardDrawSquare  {
 
 	private int id;
 	private String name;
 
-	
 	public ChanceSquare(int id, String name){
 		this.id = id;
 		this.name = name;
-
 	}
 	
 	@Override

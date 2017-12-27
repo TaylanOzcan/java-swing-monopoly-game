@@ -1,7 +1,5 @@
 package domain;
 
-import java.io.Serializable;
-
 public class BonusSquare implements Square{
 
 	private int id;

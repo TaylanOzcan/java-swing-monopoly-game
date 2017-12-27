@@ -17,13 +17,11 @@ public class TestSquare implements Square{
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return name;
 	}
 
 	@Override
 	public int getId() {
-		// TODO Auto-generated method stub
 		return id;
 	}
 }

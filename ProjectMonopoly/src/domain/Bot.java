@@ -1,7 +1,5 @@
 package domain;
 
-import java.io.Serializable;
-
 public class Bot {
 
 	private static final int HAPPY = 0;

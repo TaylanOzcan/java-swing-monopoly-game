@@ -3,6 +3,13 @@ package domain;
 public class RailroadSquare extends PropertySquare{
 
 	boolean hasDepot;
+	private int id;
+	private String name;
+	
+	public RailroadSquare(int id, String name){
+		this.id = id;
+		this.name = name;
+	}
 	
 	@Override
 	public void getAction(Player p) {
@@ -12,13 +19,11 @@ public class RailroadSquare extends PropertySquare{
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		return name;
 	}
 
 	@Override
 	public int getId() {
-		// TODO Auto-generated method stub
-		return 0;
+		return id;
 	}
 }
