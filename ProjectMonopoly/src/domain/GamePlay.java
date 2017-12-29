@@ -25,7 +25,7 @@ public class GamePlay implements Serializable{
 	public boolean buy(){
 		return board.buy();
 	}
-
+	
 	public	void mortgage(){
 		board.mortgage();
 	}
@@ -160,11 +160,15 @@ public class GamePlay implements Serializable{
 	}
 
 	public ArrayList<String> getColorsOfConstructedStreets() {
-		return SquareFactory.getInstance().getColorsOfConstructedStreets();
+		return board.getColorsOfConstructedStreets();
 	}
 
 	public void hurricaneCard(String color) {
 		board.hurricaneCard(color);
+	}
+
+	public ArrayList<StreetSquare> getStreetSquares() {
+		return SquareFactory.getInstance().getStreetSquares();
 	}
 
 }

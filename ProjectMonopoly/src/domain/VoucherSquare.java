@@ -13,6 +13,7 @@ public class VoucherSquare extends CardDrawSquare{
 	@Override
 	public void getAction(Player p) {
 		String voucher = drawCard();
+		p.addVoucher(voucher);
 		//CardActionHandler will handle the action
 		//not yet implemented
 	}
@@ -20,7 +21,7 @@ public class VoucherSquare extends CardDrawSquare{
 	@Override
 	public String getName() {
 		return this.name;
-	}
+	}	
 
 	@Override
 	public int getId() {

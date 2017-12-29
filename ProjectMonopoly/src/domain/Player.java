@@ -177,22 +177,6 @@ public class Player implements Serializable{
 		}
 	}
 
-	public void addVoucher(String newVoucher) {
-		this.vouchers.add(newVoucher);
-	}
-	/**
-	 * @requires:The player to have a voucher.
-	 * @modifies:Player's voucher amount.
-	 * @effects:Delete a voucher from a player.
-	 */
-	public void deleteVoucher(String voucher){
-		if(this.vouchers.contains(voucher)){
-			this.vouchers.remove(voucher);
-		}else{
-			//give an error
-		}
-	}
-
 	public ArrayList<PropertySquare> getOwnedSquares() {
 		return ownedSquares;
 	}
@@ -215,6 +199,7 @@ public class Player implements Serializable{
 	 */
 	public void addChanceCard(String newCard) {
 		this.chanceCards.add(newCard);
+		publishPropertyEvent("chanceCardAdded", newCard);
 	}
 	/**
 	 * @requires:  this.chanceCards contains card
@@ -225,19 +210,7 @@ public class Player implements Serializable{
 		if(this.chanceCards.contains(card)){
 			this.chanceCards.remove(card);}
 	}
-	/**
-	 * @requires:Nothing
-	 * @modifies:Player's balance.
-	 * @effects: Increase or Decrease player balance.
-	 */
-	public void EditBalance(String Type,int money){
-		if (Type=="Increase") {
-			int b = balance + money;
-			setBalance(b);}
-		if (Type=="Decrease") {
-			int b = balance - money;
-			setBalance(b);}
-	}
+	
 	/**
 	 * @requires: Nothing.
 	 * @modifies: this.communityCards.
@@ -245,6 +218,7 @@ public class Player implements Serializable{
 	 */
 	public void addCommunityCard(String newCard) {
 		this.communityCards.add(newCard);
+		publishPropertyEvent("communityCardAdded", newCard);
 	}
 	/**
 	 * @requires:  this.communityCards contains card
@@ -258,6 +232,38 @@ public class Player implements Serializable{
 			//give an error
 		}
 	}
+	
+	public void addVoucher(String newVoucher) {
+		this.vouchers.add(newVoucher);
+		publishPropertyEvent("voucherAdded", newVoucher);
+	}
+	/**
+	 * @requires:The player to have a voucher.
+	 * @modifies:Player's voucher amount.
+	 * @effects:Delete a voucher from a player.
+	 */
+	public void deleteVoucher(String voucher){
+		if(this.vouchers.contains(voucher)){
+			this.vouchers.remove(voucher);
+		}else{
+			//give an error
+		}
+	}
+	
+	/**
+	 * @requires:Nothing
+	 * @modifies:Player's balance.
+	 * @effects: Increase or Decrease player balance.
+	 */
+	public void EditBalance(String Type,int money){
+		if (Type=="Increase") {
+			int b = balance + money;
+			setBalance(b);}
+		if (Type=="Decrease") {
+			int b = balance - money;
+			setBalance(b);}
+	}
+
 	/**
 	 * @requires: Nothing.
 	 * @modifies: this.loc
@@ -315,6 +321,12 @@ public class Player implements Serializable{
 		return true;
 	}
 
+	public void sell(int squareIndex) {
+		PropertySquare ps = ownedSquares.get(squareIndex);
+		this.increaseBalance(ps.getPrice() / 2);
+		this.removeOwnedSquare(ps);
+	}
+	
 	public ArrayList<String> getVouchers() {
 		return vouchers;
 	}
@@ -342,9 +354,14 @@ public class Player implements Serializable{
 	 * @modifies: squareToBuy
 	 * @effects: adds squareToBuy to this.ownedSquares
 	 */
-	public void addOwnedSquare(PropertySquare squareToBuy){
-		squareToBuy.setOwner(this);
-		this.ownedSquares.add(squareToBuy);
+	public void addOwnedSquare(PropertySquare squareToAdd){
+		squareToAdd.setOwner(this);
+		this.ownedSquares.add(squareToAdd);
+	}
+	
+	public void removeOwnedSquare(PropertySquare squareToRemove) {
+		squareToRemove.deleteOwner();
+		this.ownedSquares.remove(squareToRemove);
 	}
 
 	public boolean repOk() {

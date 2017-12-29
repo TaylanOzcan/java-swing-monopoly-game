@@ -13,6 +13,8 @@ public class CommunityChestSquare extends CardDrawSquare{
 	@Override
 	public void getAction(Player p) {
 		String communityCard = drawCard();
+		p.addCommunityCard(communityCard);
+		/*
 		if (communityCard == "Get Out of Jail Free!") {
 			p.addCommunityCard("Get Out of Jail Free!");
 		}
@@ -22,6 +24,7 @@ public class CommunityChestSquare extends CardDrawSquare{
 		if (communityCard == "You Win 2nd Place in an Board Game Remix Design Contest!") {
 			p.EditBalance("Increase",10);
 		}
+		*/
 	}
 
 	@Override

@@ -1,12 +1,12 @@
 package domain;
+import java.util.Collections;
 import java.util.LinkedList;
-import java.util.Queue;
 
 public class CardDeck{
 
-	private Queue<String> chanceCards;
-	private Queue<String> communityChestCards;
-	private Queue<String> travelVouchers;
+	private LinkedList<String> chanceCards;
+	private LinkedList<String> communityChestCards;
+	private LinkedList<String> travelVouchers;
 	
 	private static CardDeck instance;
 	
@@ -18,9 +18,9 @@ public class CardDeck{
 		//Adding chanceCards Cards To the deck 
 		chanceCards.add("Advance to the Pay Corner");
 		chanceCards.add("Advance to the Nearest Railroad");
-		chanceCards.add("Advance to Illinois Ave.");
+		chanceCards.add("Advance to Illinois Ave");
 		chanceCards.add("Get Out of Jail Free!");
-		chanceCards.add("Make General Repairs to all your properties.");
+		chanceCards.add("Make General Repairs to All Your Properties");
 		chanceCards.add("Traffic Ticket!");
 		chanceCards.add("Buyer's Market!");
 		chanceCards.add("Business Trip");
@@ -43,6 +43,10 @@ public class CardDeck{
 		travelVouchers.add("BUS TICKET");
 		travelVouchers.add("FREE CAB FARE MOVE BACK 3 SPACES");
 		travelVouchers.add("FREE CAB FARE MOVE AHEAD 3 SPACES");
+		
+		Collections.shuffle(chanceCards);
+		Collections.shuffle(communityChestCards);
+		Collections.shuffle(travelVouchers);
 	}
 
 	public static CardDeck getInstance() {

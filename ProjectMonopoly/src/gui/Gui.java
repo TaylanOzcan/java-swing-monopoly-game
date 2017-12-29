@@ -11,6 +11,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.Serializable;
 import java.util.ArrayList;
+import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -23,8 +24,10 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import domain.ActionHandler;
+import domain.AnimatedTimer;
 import domain.AuctionSquare;
 import domain.Board;
+import domain.Bot;
 import domain.CardActionsHandler;
 import domain.GamePlay;
 import domain.Player;
@@ -32,7 +35,6 @@ import domain.PropertyListener;
 import domain.PropertySquare;
 import domain.SaveAndLoad;
 import domain.Square;
-import domain.SquareFactory;
 import domain.StreetSquare;
 
 public class Gui extends JFrame implements ActionListener, PropertyListener, Serializable{
@@ -55,19 +57,17 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 	private JLabel[] playerInfoLabels, diceLabels;
 	private ArrayList<JLabel> tokenLabels;
 	private JLabel currentPlayerLabel, botLabel;
-
 	private ArrayList<String> playerNames;
 	private GamePlay gamePlay;
-
 	private JPanel[] tokenPlacementPanels;
 	private BuildingContainerPanel[] buildingContainerPanels;
-
-	public Gui(){
-
-	}
+	private int currentLocation;
+	
+	private AnimatorPanel animatorPanel;
 
 	public void start() {
 		this.gamePlay = new GamePlay();
+		currentLocation = 0;
 		initializeGui();
 		addActionListeners();
 	}
@@ -95,13 +95,12 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 		}
 		gamePlay.getBoard().addPropertyListener(this);
 		gamePlay.getBoard().getCardHandler().addPropertyListener(this);
-		for(Square s: gamePlay.getUnownedStreetSquares()) {
-			((StreetSquare) s).addPropertyListener(this);
+		for(StreetSquare s: gamePlay.getStreetSquares()) {
+			s.addPropertyListener(this);
 		}
 	}
 
 	public void initializeGui(){
-		//mainFrame = new JFrame("Monopoly");
 		this.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent windowEvent){
 				System.exit(0);
@@ -138,9 +137,9 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 		int step=0, startIndex=0, endIndex=0, startLoc=0, height=114, width=57;
 
 		switch(layer) {
-		case INNER_LAYER: startIndex=40;endIndex=64;startLoc=638;height=108;width=55;break;
+		case INNER_LAYER: startIndex=40;endIndex=64;startLoc=638;height=111;width=55;break;
 		case MIDDLE_LAYER: startIndex=0;endIndex=40;startLoc=756;break;
-		case OUTER_LAYER: startIndex=64;endIndex=120;startLoc=877;height=116;width=58;break;
+		case OUTER_LAYER: startIndex=64;endIndex=120;startLoc=877;height=118;width=58;break;
 		}
 
 		step = (endIndex - startIndex)/4;
@@ -148,8 +147,7 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 		for(int i=startIndex; i<endIndex; i++){
 			JPanel currentPanel = new JPanel();
 			currentPanel.setOpaque(false);
-			//currentPanel.setBorder(BorderFactory.createLineBorder(Color.red));
-
+			//currentPanel.setBorder(BorderFactory.createLineBorder(Color.red, 3));
 			char direction = '0';
 			int stepDistance = (startIndex==0 ? (i%step)*width : ((i%startIndex)%step)*width);
 
@@ -249,26 +247,17 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 
 		newGameButton = new JButton("New Game");
 		loadButton = new JButton("Load");
-		saveButton = new JButton("Save");
+		saveButton = new JButton("Save");saveButton.setEnabled(false);
 		exitButton = new JButton("Exit");
-		rollButton = new JButton("Play Turn");
-		endTurnButton = new JButton("End Turn");
-		buyButton = new JButton("Buy Title Deeds");
-		buildHouseButton = new JButton("Build House");
-		sellButton = new JButton("Sell");
-		mortgageButton = new JButton("Mortgage");
-		tradeButton = new JButton("Trade");
-		useCardButton = new JButton("Use Card");
-		saveButton.setEnabled(false);
-		endTurnButton.setEnabled(false);
-		buyButton.setEnabled(false);
-		buildHouseButton.setEnabled(false);
-		rollButton.setEnabled(false);
-		sellButton.setEnabled(false);
-		mortgageButton.setEnabled(false);
-		tradeButton.setEnabled(false);
-		useCardButton.setEnabled(false);
-
+		rollButton = new JButton("Play Turn");rollButton.setEnabled(false);
+		endTurnButton = new JButton("End Turn");endTurnButton.setEnabled(false);
+		buyButton = new JButton("Buy Title Deed");buyButton.setEnabled(false);
+		buildHouseButton = new JButton("Build House");buildHouseButton.setEnabled(false);
+		sellButton = new JButton("Sell");sellButton.setEnabled(false);
+		mortgageButton = new JButton("Mortgage");mortgageButton.setEnabled(false);
+		tradeButton = new JButton("Trade");tradeButton.setEnabled(false);
+		useCardButton = new JButton("Use Card");useCardButton.setEnabled(false);
+		
 		menuButtonsPanel.setLayout(new GridLayout(0, 4, 25, 0));
 		menuButtonsPanel.add(newGameButton);
 		menuButtonsPanel.add(saveButton);
@@ -276,15 +265,23 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 		menuButtonsPanel.add(exitButton);
 		menuButtonsPanel.setOpaque(false);
 
-		ImageIcon image = new ImageIcon("bot.png");
-		botLabel.setIcon(image);
-		botPanel.setOpaque(false);
-		botPanel.add(botLabel);
+		Bot bot = new Bot();
+		animatorPanel = new AnimatorPanel();
+		AnimatedBot animatedBot = new AnimatedBot(bot);
+		AnimatedTimer animatedTimer = new AnimatedTimer(bot);
+		animatorPanel.addDrawable(animatedTimer);
+		animatorPanel.addDrawable(animatedBot);
+		animatorPanel.setVisible(true);
+		
+		//ImageIcon image = new ImageIcon("bot.png");
+		//botLabel.setIcon(image);
+		//botPanel.setOpaque(false);
+		//botPanel.add(botLabel);
 
 		upperTopMenuPanel.setLayout(new BorderLayout(0, 25));
 		menuButtonsPanel.setPreferredSize(new Dimension(0,50));
 		upperTopMenuPanel.add(menuButtonsPanel, BorderLayout.NORTH);
-		upperTopMenuPanel.add(botPanel);
+		upperTopMenuPanel.add(animatorPanel);
 		upperTopMenuPanel.setOpaque(false);
 
 		upperGameButtonsPanel.setLayout(new GridLayout(2, 3, 25, 10));
@@ -308,8 +305,6 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 		gameButtonsPanel.add(upperGameButtonsPanel);
 		gameButtonsPanel.add(lowerGameButtonsPanel);
 		gameButtonsPanel.setOpaque(false);
-
-
 
 		infoSelectionPanel.setLayout(new BorderLayout());
 		playerNamesComboBox.setPreferredSize(new Dimension(0,40));
@@ -345,18 +340,14 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 		JLabel emptyLabel = new JLabel();//
 		emptyLabel.setPreferredSize(new Dimension(50, 1000));//
 		mainPanel.add(emptyLabel);//
-
 		mainPanel.add(menuPanel);
 	}
 
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
 		if(e.getSource() == newGameButton){
 			String input = JOptionPane.showInputDialog(
 					null, "Select the number of players");
-
 			int inputNumPlayers;
 			try{
 				inputNumPlayers = Integer.parseInt(input);
@@ -370,11 +361,9 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 						null, "You must enter a number.");
 				return;
 			}
-
 			playerInfoLabels = new JLabel[inputNumPlayers];
 			tokenLabels = new ArrayList<JLabel>(inputNumPlayers);
 			playerNames = new ArrayList<String>(inputNumPlayers);
-
 			for (int i = 0; i < inputNumPlayers; i++) {
 				while(true) {
 					String inputName = JOptionPane.showInputDialog(
@@ -392,7 +381,6 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 					}
 				}
 			}
-
 			for (int i = 0; i < inputNumPlayers ; i++) {
 				playerInfoLabels[i] = new JLabel("", SwingConstants.CENTER);
 				playerInfoLabels[i].setBackground(Color.WHITE);
@@ -466,8 +454,17 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 				return;
 			}
 		}else if(e.getSource() == sellButton) {
-			gamePlay.moveTo(64);
-			gamePlay.endTurn();
+			ArrayList<String> squareNames = gamePlay.getOwnedSquareNames();
+			int index = showSelectionBox(squareNames, "Select a title deed to sell:", "Title Deeds");
+			if(index == -2) { //Cancel clicked
+				return;
+			}else if(index == -1){ //No item selected
+				JOptionPane.showMessageDialog(
+						null, "No title deeds selected.");	
+				return;
+			}else if(index > -1){ // An item selected
+				gamePlay.sell(index);
+			}
 		}else if(e.getSource() == mortgageButton) {
 			gamePlay.getCurrentPlayer().increaseBalance(-3201);
 		}else if(e.getSource() == tradeButton) {
@@ -476,87 +473,48 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 			ArrayList<String> cards = new ArrayList<String>();
 			int selection = 100;
 
-			JPanel panel = new JPanel();
-			panel.add(new JLabel("Select card type:"));
-			DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
-			model.addElement("Chance");
-			model.addElement("Community Chest");
-			model.addElement("Voucher");
-			JComboBox<String> comboBox = new JComboBox<String>(model);
-			panel.add(comboBox);
-			int result = JOptionPane.showConfirmDialog(
-					null, panel, "Card Type", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
-			switch (result) {
-			case JOptionPane.OK_OPTION:
-				if(comboBox.getSelectedIndex() < 0){
-					JOptionPane.showMessageDialog(
-							null, "No card types selected.");	
-					return;
-				}else if(comboBox.getSelectedIndex() == 0){
-					cards = gamePlay.getChanceCards();
-				}else if(comboBox.getSelectedIndex() == 1){
-					cards = gamePlay.getCommunityCards();
-					selection = 200;
-				}else {
-					cards = gamePlay.getVouchers();
-					selection = 300;
-				}
-				break;
-			case JOptionPane.CANCEL_OPTION:
+			ArrayList<String> cardTypes = new ArrayList<String>(3);
+			cardTypes.add("Chance");cardTypes.add("Community Chest");cardTypes.add("Voucher");
+			int index = showSelectionBox(cardTypes, "Select card type:", "Card Types");
+			if(index == -2) { //Cancel clicked
 				return;
+			}else if(index == -1){ //No item selected
+				JOptionPane.showMessageDialog(
+						null, "No card types selected.");	
+				return;
+			}else if(index == 0){
+				cards = gamePlay.getChanceCards();
+			}else if(index == 1){
+				cards = gamePlay.getCommunityCards();
+				selection = 200;
+			}else {
+				cards = gamePlay.getVouchers();
+				selection = 300;
 			}
 
-			panel = new JPanel();
-			panel.add(new JLabel("Select a card to use:"));
-			model = new DefaultComboBoxModel<String>();
-			for(int i=0; i < cards.size(); i++){
-				model.addElement(cards.get(i));
-			}
-			comboBox = new JComboBox<String>(model);
-			panel.add(comboBox);
-			result = JOptionPane.showConfirmDialog(
-					null, panel, "Cards", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
-			switch (result) {
-			case JOptionPane.OK_OPTION:
-				if(comboBox.getSelectedIndex() < 0){
-					JOptionPane.showMessageDialog(
-							null, "No cards selected.");	
-					return;
-				}else{
-					selection += comboBox.getSelectedIndex();
-					gamePlay.useCard(selection);
-					// show message
-				}
-				break;
-			case JOptionPane.CANCEL_OPTION:
+			index = showSelectionBox(cards, "Select a card to use:", "Cards");	
+			if(index == -2) {
 				return;
+			}else if(index == -1){
+				JOptionPane.showMessageDialog(
+						null, "No cards selected.");	
+				return;
+			}else{
+				selection += index;
+				gamePlay.useCard(selection);
+				// show message
 			}
 		}else if(e.getSource() == buildHouseButton){
 			ArrayList<String> squareNames = gamePlay.getOwnedSquareNames();
-
-			JPanel panel = new JPanel();
-			panel.add(new JLabel("Select a square to build house:"));
-			DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
-
-			for(int i=0; i < squareNames.size(); i++){
-				model.addElement(squareNames.get(i));
-			}
-
-			JComboBox<String> comboBox = new JComboBox<String>(model);
-			panel.add(comboBox);
-
-			int result = JOptionPane.showConfirmDialog(
-					null, panel, "Squares", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
-			switch (result) {
-			case JOptionPane.OK_OPTION:
-				if(comboBox.getSelectedIndex() < 0){
-					JOptionPane.showMessageDialog(
-							null, "No squares selected.");	
-					return;
-				}else{
-					gamePlay.buildHouse(comboBox.getSelectedIndex());
-				}
-				break;
+			int index = showSelectionBox(squareNames, "Select a square to build house:", "Squares");
+			if(index == -2) { //Cancel clicked
+				return;
+			}else if(index == -1){ //No item selected
+				JOptionPane.showMessageDialog(
+						null, "No squares selected.");	
+				return;
+			}else if(index > -1){ // An item selected
+				gamePlay.buildHouse(index);
 			}
 		}
 
@@ -596,11 +554,14 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 		for(int i=0; i < positions.size(); i++){
 			tokenPlacementPanels[positions.get(i)].add(tokenLabels.get(i));
 		}
+
+		((JPanel) boardPanel.getComponent(currentLocation)).setBorder(null);
+		currentLocation = gamePlay.getCurrentPlayer().getLocation();
+		((JPanel) boardPanel.getComponent(currentLocation)).setBorder(BorderFactory.createLineBorder(Color.red, 3));
 	}
 
 	public void refreshButtons(){
-		boolean buyable = gamePlay.isBuyable();
-		buyButton.setEnabled(buyable);
+		buyButton.setEnabled(gamePlay.isBuyable());
 	}
 
 	@Override
@@ -611,22 +572,17 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 				int highestBid = 0;
 				ArrayList<Player> players = new ArrayList<Player>(8);
 				StreetSquare auctedSquare = (StreetSquare) value;
-
 				JOptionPane.showMessageDialog(
 						null, "Auction is starting for " + auctedSquare.getName());
-
 				for(Player p: gamePlay.getPlayingPlayers()) {
 					players.add(p);
 				}
-
 				int counter = players.size();
 				Player winner=players.get(counter-1);
-
 				while(counter>1) {
 					for(int i=0; i<counter; i++) {
 						Player p = players.get(i);
 						int balance = p.getBalance();
-
 						while(true) {
 							String input = JOptionPane.showInputDialog(
 									null, p.getName() + ", place your bid for " + auctedSquare.getName() +
@@ -742,6 +698,20 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 						null, ((Player)source).getName() + ", you rolled triples.\n"
 								+ "You can move to any square.");
 				showSquarePickBox((Player)source);
+			}else if(name.equals("chanceCardAdded")) {
+				JOptionPane.showMessageDialog(
+						null, ((Player)source).getName() + ", you received the following chance card:\n"
+								+ value);
+			}else if(name.equals("communityCardAdded")) {
+
+				JOptionPane.showMessageDialog(
+						null, ((Player)source).getName() + ", you received the following community chest card:\n"
+								+ value);
+			}else if(name.equals("voucherAdded")) {
+
+				JOptionPane.showMessageDialog(
+						null, ((Player)source).getName() + ", you received the following voucher:\n"
+								+ value);
 			}
 		}else if(source.getClass()==Board.class) {
 			if(name.equals("gameOver")) {
@@ -755,7 +725,8 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 
 				JPanel panel = new JPanel();
 				panel.setLayout(new BorderLayout());
-				panel.add(new JLabel(((Player) value).getName() + ", select a color group to demolish buildings:"), BorderLayout.NORTH);
+				panel.add(new JLabel(((Player) value).getName() 
+						+ ", select a color group to demolish buildings:"), BorderLayout.NORTH);
 				DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
 				for(int i=0; i < colors.size(); i++){
 					model.addElement(colors.get(i));
@@ -764,7 +735,7 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 				panel.add(comboBox);
 				while(true) {
 					int result = JOptionPane.showConfirmDialog(
-							null, panel, "Colors", JOptionPane.OK_OPTION, JOptionPane.QUESTION_MESSAGE);
+							null, panel, "Colors", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
 
 					if(result == JOptionPane.OK_OPTION) {
 						String color = (String) comboBox.getSelectedItem();
@@ -775,6 +746,8 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 							gamePlay.hurricaneCard(color);
 							break;
 						}
+					}else {
+						break;
 					}
 				}
 			}
@@ -834,6 +807,28 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 					break;
 				}
 			}
+		}
+	}
+
+	public int showSelectionBox(ArrayList<String> list, String text, String header) {
+		JPanel panel = new JPanel();
+		panel.add(new JLabel(text));
+		DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
+
+		for(int i=0; i < list.size(); i++){
+			model.addElement(list.get(i));
+		}
+
+		JComboBox<String> comboBox = new JComboBox<String>(model);
+		panel.add(comboBox);
+
+		int option = JOptionPane.showConfirmDialog(
+				null, panel, header, JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+		if(option == JOptionPane.OK_OPTION) {
+			return comboBox.getSelectedIndex();
+		}else {
+			return -2;
 		}
 	}
 

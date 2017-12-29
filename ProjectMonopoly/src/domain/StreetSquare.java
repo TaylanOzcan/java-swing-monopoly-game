@@ -8,18 +8,19 @@ public class StreetSquare extends PropertySquare implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 
-	int house1Price;
-	int house2Price;
-	int house3Price;
-	int house4Price;
-	int hotelPrice;
-	int skyscraperPrice;
-	int nHouses;
-	int nHotels;
-	int nSkyscrapers;
-	String color;
-	boolean isBuildable;
-	boolean isMortgaged;
+	private int house1Price;
+	private int house2Price;
+	private int house3Price;
+	private int house4Price;
+	private int hotelPrice;
+	private int skyscraperPrice;
+	private int nHouses;
+	private int nHotels;
+	private int nSkyscrapers;
+	private String color;
+	private boolean isBuildable;
+	private boolean isMortgaged;
+	private boolean hasBuilding;
 	private ArrayList<PropertyListener> propertyListeners;
 
 	public StreetSquare(int id, String name, int house1Price, int house2Price, int house3Price, 
@@ -36,7 +37,9 @@ public class StreetSquare extends PropertySquare implements Serializable{
 		this.skyscraperPrice = skyscraperPrice;
 		this.color = color;
 		this.isBuildable = true;
-		propertyListeners = new ArrayList<PropertyListener>();
+		this.isMortgaged = false;
+		this.hasBuilding = false;
+		this.propertyListeners = new ArrayList<PropertyListener>();
 	}
 
 	public void addPropertyListener(PropertyListener pl) {
@@ -119,6 +122,7 @@ public class StreetSquare extends PropertySquare implements Serializable{
 			}else {
 				owner.pay(this.house1Price);
 				nHouses++;
+				hasBuilding = true;
 			}
 		}
 		publishPropertyEvent("build", result);
@@ -141,6 +145,7 @@ public class StreetSquare extends PropertySquare implements Serializable{
 			nHouses--;
 		}else if(nHouses==1) {
 			nHouses--;
+			hasBuilding = false;
 		}else if(nHouses==0){
 			result = -1;
 		}
@@ -193,7 +198,7 @@ public class StreetSquare extends PropertySquare implements Serializable{
 	}
 
 	public boolean hasBuilding() {
-		return (nHouses>0 || nHotels>0 || nSkyscrapers>0);
+		return hasBuilding;
 	}
 
 }

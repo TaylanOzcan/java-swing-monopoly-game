@@ -4,7 +4,7 @@ import java.util.ArrayList;
 public class SquareFactory{
 
 	private Square[] squares = new Square[120];
-	//private String[] Colors ;
+	private ArrayList<StreetSquare> streetSquares = new ArrayList<StreetSquare>(64);
 	private static SquareFactory instance;
 
 	private SquareFactory() {
@@ -129,29 +129,44 @@ public class SquareFactory{
 		squares[117] = new StreetSquare(117, "VENTURA BOULEVARD",400, 825, 1800, 2175, 2550, 4050, 80, 480,"Dark Brown");
 		squares[118] = new ChanceSquare(118, "CHANCE");
 		squares[119] = new StreetSquare(119, "RODEO DRIVE",450, 900, 2000, 2500, 3000, 4500, 90, 510,"Dark Brown");
+
+		setStreetSquares();
 	}
+
 
 	public static SquareFactory getInstance() {
 		if(instance == null) instance = new SquareFactory();
 		return instance;
+	}	
+
+	private void setStreetSquares() {
+		for (int i=0 ; i< 120 ; i++) {
+			if (squares[i].getClass() == StreetSquare.class) {
+				streetSquares.add((StreetSquare) squares[i]);	
+			}
+		}
+	}
+
+	public Square[] getSquares(){
+		return squares;
 	}
 
 	public Square getSquare(int i){
 		return squares[i];
 	}
 
-	public ArrayList<StreetSquare> getSquareByColor(String color) {
+	public ArrayList<StreetSquare> getStreetSquares() {
+		return streetSquares;
+	}
+
+	public ArrayList<StreetSquare> getStreetSquaresByColor(String color) {
 		ArrayList<StreetSquare> streetList = new ArrayList<StreetSquare>(4);
-		for (int i=0 ; i< 120 ; i++) {
-			if (squares[i].getClass() == StreetSquare.class && ((StreetSquare)squares[i]).getColor() == color) {
-				streetList.add((StreetSquare) squares[i]);	
+		for (StreetSquare s: streetSquares) {
+			if (s.getColor() == color) {
+				streetList.add(s);	
 			}
 		}
 		return streetList;
-	}
-
-	public Square[] getSquares(){
-		return squares;
 	}
 
 	/**
@@ -161,23 +176,12 @@ public class SquareFactory{
 	 */
 	public ArrayList<Square> getUnownedStreetSquares() {
 		ArrayList<Square> unownedStreetSquares = new ArrayList<Square>();
-		for(int i=0; i<squares.length; i++) {
-			if(squares[i].getClass() == StreetSquare.class && !((StreetSquare)squares[i]).isOwned) {
-				unownedStreetSquares.add(squares[i]);
+		for(StreetSquare s: streetSquares) {
+			if(!s.isOwned) {
+				unownedStreetSquares.add(s);
 			}
 		}
 		return unownedStreetSquares;
-	}
-
-	public ArrayList<String> getColorsOfConstructedStreets() {
-		ArrayList<String> colors = new ArrayList<String>(4);
-		for (int i=0 ; i< 120 ; i++) {
-			if (squares[i].getClass() == StreetSquare.class && ((StreetSquare)squares[i]).hasBuilding()) {
-				colors.add(((StreetSquare) squares[i]).getColor());
-				i += 4;
-			}
-		}
-		return colors;
 	}
 
 }

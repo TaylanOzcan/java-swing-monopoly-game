@@ -117,6 +117,11 @@ public class Board implements Serializable{
 	public boolean buy() {
 		return currentPlayer.buy();
 	}
+
+	public void sell(int squareIndex) {
+		currentPlayer.sell(squareIndex);
+	}
+
 	/**
 	 * @requires: Nothing
 	 * @modifies: Nothing
@@ -160,10 +165,6 @@ public class Board implements Serializable{
 
 	}
 
-	public void sell(int squareIndex) {
-		// TODO Auto-generated method stub
-
-	}
 	/**
 	 * @requires: the street to be buyable (not a chance/community...)
 	 * @modifies: Nothing
@@ -258,7 +259,7 @@ public class Board implements Serializable{
 	}
 
 	public void hurricaneCard (String Color) {
-		ArrayList<StreetSquare> squares = SquareFactory.getInstance().getSquareByColor(Color);
+		ArrayList<StreetSquare> squares = SquareFactory.getInstance().getStreetSquaresByColor(Color);
 		for(StreetSquare s: squares) {
 			s.demolish();
 		}
@@ -276,6 +277,21 @@ public class Board implements Serializable{
 
 	public void useCard(int selection) {
 		currentPlayer.useCard(selection, cardHandler);
+	}
+
+	public ArrayList<String> getColorsOfConstructedStreets() {
+		ArrayList<String> colors = new ArrayList<String>();
+		for(Player p: players) {
+			for(PropertySquare s: p.getOwnedSquares()) {
+				if(s.getClass() == StreetSquare.class && ((StreetSquare) s).hasBuilding()) {
+					String color = ((StreetSquare) s).getColor();
+					if(!colors.contains(color)) {
+						colors.add(color);
+					}
+				}
+			}
+		}
+		return colors;
 	}
 
 }
