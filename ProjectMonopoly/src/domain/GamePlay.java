@@ -9,7 +9,7 @@ public class GamePlay implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	private Board board;
-	
+
 	public Board getBoard() {
 		return board;
 	}
@@ -25,7 +25,7 @@ public class GamePlay implements Serializable{
 	public boolean buy(){
 		return board.buy();
 	}
-	
+
 	public	void mortgage(){
 		board.mortgage();
 	}
@@ -42,8 +42,8 @@ public class GamePlay implements Serializable{
 		board.trade(p2Index, square1Index, square2Index);
 	}
 
-	public void sell(int squareIndex){
-		board.sell(squareIndex);
+	public void sell(int squareIndex, Player buyer, int price){
+		board.sell(squareIndex, buyer, price);
 	}
 
 	public void endTurn() {
@@ -70,7 +70,12 @@ public class GamePlay implements Serializable{
 	public ArrayList<Integer> getPlayerPositions() {
 		ArrayList<Integer> positions = new ArrayList<Integer>(board.getPlayers().size());
 		for(Player p: board.getPlayers()){
-			positions.add(p.getLocation());
+			int position = p.getLocation();
+			if(position == 10 && !p.isInJail()) {
+				positions.add(120); // means visitor in jail
+			}else {
+				positions.add(p.getLocation());
+			}
 		}
 		return positions;
 	}
@@ -82,7 +87,7 @@ public class GamePlay implements Serializable{
 	public ArrayList<Player> getPlayers() {
 		return board.getPlayers();
 	}
-	
+
 	public ArrayList<Player> getPlayingPlayers() {
 		return board.getPlayingPlayers();
 	}
@@ -114,11 +119,11 @@ public class GamePlay implements Serializable{
 	public void startAuction(StreetSquare s) {
 		board.getActionHandler().startAuction(s);
 	}
-	
+
 	public Square getSquare(int i) {
 		return SquareFactory.getInstance().getSquare(i);
 	}
-	
+
 	public Square[] getSquares() {
 		return SquareFactory.getInstance().getSquares();
 	}
@@ -169,6 +174,14 @@ public class GamePlay implements Serializable{
 
 	public ArrayList<StreetSquare> getStreetSquares() {
 		return SquareFactory.getInstance().getStreetSquares();
+	}
+
+	public Bot getBot() {
+		return board.getBot();
+	}
+
+	public void notifyBot() {
+		board.notifyBot();
 	}
 
 }

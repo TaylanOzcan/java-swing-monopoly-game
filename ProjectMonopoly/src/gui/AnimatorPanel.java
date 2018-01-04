@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import javax.swing.*;
 
@@ -10,6 +11,7 @@ public class AnimatorPanel extends JPanel implements Runnable{
 	private boolean animatorStopped = true, firstTime = true;
 
 	public AnimatorPanel() {
+		this.setBackground(new Color(200,220,240));
 	}
 
 	public void setVisible(boolean display) {

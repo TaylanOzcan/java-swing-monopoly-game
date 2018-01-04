@@ -62,7 +62,7 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 	private JPanel[] tokenPlacementPanels;
 	private BuildingContainerPanel[] buildingContainerPanels;
 	private int currentLocation;
-	
+	private boolean gameStarted;
 	private AnimatorPanel animatorPanel;
 
 	public void start() {
@@ -94,7 +94,7 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 			p.addPropertyListener(this);
 		}
 		gamePlay.getBoard().addPropertyListener(this);
-		gamePlay.getBoard().getCardHandler().addPropertyListener(this);
+		CardActionsHandler.getInstance().addPropertyListener(this);
 		for(StreetSquare s: gamePlay.getStreetSquares()) {
 			s.addPropertyListener(this);
 		}
@@ -126,7 +126,7 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 		mainPanel.add(boardPanel);
 		boardPanel.setPreferredSize(new Dimension(1000,1000));
 
-		tokenPlacementPanels = new JPanel[120];
+		tokenPlacementPanels = new JPanel[121];
 		buildingContainerPanels = new BuildingContainerPanel[120];
 		addPanelsIntoBoard(MIDDLE_LAYER);
 		addPanelsIntoBoard(INNER_LAYER);
@@ -203,9 +203,17 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 				currentPanel.add(buildingContainerPanel);
 			}else{
 				currentPanel.add(buildingContainerPanel);
-				currentPanel.add(new JLabel());
-				currentPanel.add(tokenPlacementPanel);
-				currentPanel.add(new JLabel());
+				if(i==10) { // if it is jail square, add another panel to place jail visitors
+					currentPanel.add(tokenPlacementPanel);
+					currentPanel.add(new JLabel());
+					tokenPlacementPanels[120] = new JPanel();
+					tokenPlacementPanels[120].setOpaque(false); 
+					currentPanel.add(tokenPlacementPanels[120]);
+				}else {
+					currentPanel.add(new JLabel());
+					currentPanel.add(tokenPlacementPanel);
+					currentPanel.add(new JLabel());
+				}
 			}
 			boardPanel.add(currentPanel);
 		}
@@ -226,6 +234,7 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 		botLabel = new JLabel("", JLabel.CENTER);			
 		playerNamesComboBox = new JComboBox<String>();
 		upperTopMenuPanel = new JPanel();
+		animatorPanel = new AnimatorPanel();
 		JPanel topMenuPanel = new JPanel();
 		topMenuPanel.setLayout(new GridLayout(2, 0, 0, 25));
 		JPanel bottomMenuPanel = new JPanel();
@@ -253,11 +262,11 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 		endTurnButton = new JButton("End Turn");endTurnButton.setEnabled(false);
 		buyButton = new JButton("Buy Title Deed");buyButton.setEnabled(false);
 		buildHouseButton = new JButton("Build House");buildHouseButton.setEnabled(false);
-		sellButton = new JButton("Sell");sellButton.setEnabled(false);
-		mortgageButton = new JButton("Mortgage");mortgageButton.setEnabled(false);
-		tradeButton = new JButton("Trade");tradeButton.setEnabled(false);
+		sellButton = new JButton("Sell Title Deed");sellButton.setEnabled(false);
+		mortgageButton = new JButton("Test / Move Manually");mortgageButton.setEnabled(false);
+		tradeButton = new JButton("Test / Get Hurricane Card");tradeButton.setEnabled(false);
 		useCardButton = new JButton("Use Card");useCardButton.setEnabled(false);
-		
+
 		menuButtonsPanel.setLayout(new GridLayout(0, 4, 25, 0));
 		menuButtonsPanel.add(newGameButton);
 		menuButtonsPanel.add(saveButton);
@@ -265,14 +274,6 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 		menuButtonsPanel.add(exitButton);
 		menuButtonsPanel.setOpaque(false);
 
-		Bot bot = new Bot();
-		animatorPanel = new AnimatorPanel();
-		AnimatedBot animatedBot = new AnimatedBot(bot);
-		AnimatedTimer animatedTimer = new AnimatedTimer(bot);
-		animatorPanel.addDrawable(animatedTimer);
-		animatorPanel.addDrawable(animatedBot);
-		animatorPanel.setVisible(true);
-		
 		//ImageIcon image = new ImageIcon("bot.png");
 		//botLabel.setIcon(image);
 		//botPanel.setOpaque(false);
@@ -289,8 +290,8 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 		upperGameButtonsPanel.add(sellButton);
 		upperGameButtonsPanel.add(mortgageButton);
 		upperGameButtonsPanel.add(buildHouseButton);
-		upperGameButtonsPanel.add(tradeButton);
 		upperGameButtonsPanel.add(useCardButton);
+		upperGameButtonsPanel.add(tradeButton);
 		upperGameButtonsPanel.setOpaque(false);
 
 		lowerGameButtonsPanel.setLayout(new GridLayout(0, 5, 25, 0));
@@ -345,6 +346,7 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		if(gameStarted) gamePlay.notifyBot();
 		if(e.getSource() == newGameButton){
 			String input = JOptionPane.showInputDialog(
 					null, "Select the number of players");
@@ -408,8 +410,18 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 			currentPlayerPanel.setOpaque(true);
 			tradeButton.setEnabled(true);
 			useCardButton.setEnabled(true);
+
 			gamePlay.playGame(playerNames);
 			addPropertyListeners();
+
+			Bot bot = gamePlay.getBot();
+			AnimatedBot animatedBot = new AnimatedBot(bot);
+			AnimatedTimer animatedTimer = new AnimatedTimer(bot);
+			animatorPanel.addDrawable(animatedTimer);
+			animatorPanel.addDrawable(animatedBot);
+			animatorPanel.setVisible(true);
+
+			gameStarted = true;
 		}else if(e.getSource() == playerNamesComboBox) {
 			for(Component c : infoPanel.getComponents()) {
 				c.setVisible(false);
@@ -460,13 +472,36 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 				return;
 			}else if(index == -1){ //No item selected
 				JOptionPane.showMessageDialog(
-						null, "No title deeds selected.");	
+						null, "No title deeds selected.");
 				return;
 			}else if(index > -1){ // An item selected
-				gamePlay.sell(index);
+				ArrayList<Player> players = gamePlay.getPlayingPlayers();
+				ArrayList<String> playerNames = new ArrayList<String>(8);
+				Player currentPlayer = gamePlay.getCurrentPlayer();
+				players.remove(currentPlayer);
+				for(Player p: players) {
+					if(p!=currentPlayer) {
+						playerNames.add(p.getName());
+					}
+				}
+				int playerIndex = showSelectionBox(playerNames, "Who will buy the deed?", "Players");
+				if(index == -2) { //Cancel clicked
+					return;
+				}else if(index == -1){ //No item selected
+					JOptionPane.showMessageDialog(
+							null, "No players selected.");	
+					return;
+				}else if(index > -1){ // An item selected
+					String input = JOptionPane.showInputDialog(
+							null, "Enter the agreed price:");
+					int price = Integer.parseInt(input);
+					gamePlay.sell(index, players.get(playerIndex), price);
+				}
 			}
+
+
 		}else if(e.getSource() == mortgageButton) {
-			gamePlay.getCurrentPlayer().increaseBalance(-3201);
+			showSquarePickBox(gamePlay.getCurrentPlayer());
 		}else if(e.getSource() == tradeButton) {
 			gamePlay.getCurrentPlayer().addChanceCard("Hurricane");
 		}else if(e.getSource() == useCardButton) {			
@@ -540,7 +575,7 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 		String currentName = gamePlay.getCurrentPlayerName();
 		currentPlayerLabel.setText("<html><center><span style='font-size:18px'>"
 				+ currentName
-				+ " plays the current turn.</span></center></html>");
+				+ " plays the current turn</span></center></html>");
 
 		ArrayList<String> infoList = gamePlay.getPlayerInfo();
 		for(int i=0; i< infoList.size(); i++){
@@ -628,11 +663,11 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 				rollButton.doClick();
 			}else if(name.equals("busAction")) {
 				JOptionPane.showMessageDialog(
-						null, ((Player) value).getName() + ", you get a voucher for rolling Bus.");
+						null, ((Player) value).getName() + ", you get a voucher for rolling Bus");
 				rollButton.doClick();
 			}else if(name.equals("rollsAgainAction")) {
 				JOptionPane.showMessageDialog(
-						null, ((Player) value).getName() + ", you get an extra move for rolling doubles. \nClick Play Turn to play it.");
+						null, ((Player) value).getName() + ", you get an extra move for rolling doubles.");
 			}else if(name.equals("newTurnAction")) {
 				//playerNamesComboBox.setSelectedItem(((Player) value).getName());
 			}else if(name.equals("landedOnSubwayAction")) {
@@ -691,7 +726,7 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 							null, ((Player)source).getName() + " has been sent to jail for rolling 3 doubles in a row.");
 				}else{
 					JOptionPane.showMessageDialog(
-							null, ((Player)source).getName() + " has been sent to jail for landing on Go To Jail square.");
+							null, ((Player)source).getName() + " has been sent to jail.");
 				}
 			}else if(name.equals("rolledTriples")) {
 				JOptionPane.showMessageDialog(
@@ -703,12 +738,10 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 						null, ((Player)source).getName() + ", you received the following chance card:\n"
 								+ value);
 			}else if(name.equals("communityCardAdded")) {
-
 				JOptionPane.showMessageDialog(
 						null, ((Player)source).getName() + ", you received the following community chest card:\n"
 								+ value);
 			}else if(name.equals("voucherAdded")) {
-
 				JOptionPane.showMessageDialog(
 						null, ((Player)source).getName() + ", you received the following voucher:\n"
 								+ value);
@@ -718,6 +751,9 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 				JOptionPane.showMessageDialog(
 						null, ((Player)value).getName() + " has won the game!");
 				dispose();
+			}else if(name.equals("colorGroup")) {
+				JOptionPane.showMessageDialog(
+						null, ((Player)value).getName() + ", you need to have at least 2 properties for this color group to start building houses.");
 			}
 		}else if(source.getClass()==CardActionsHandler.class) {
 			if(name.equals("hurricane")) {

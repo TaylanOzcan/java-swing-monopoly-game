@@ -19,7 +19,7 @@ public class SquareFactory{
 		squares[7] = new ChanceSquare(7, "CHANCE");
 		squares[8] = new StreetSquare(8, "VERMONT AVENUE", 30, 90, 270, 400, 550, 1050, 6, 100, "Light Blue");
 		squares[9] = new StreetSquare(9, "CONNECTICUT AVENUE", 40, 100, 300, 450, 600, 1100, 8, 120, "Light Blue");
-		squares[10] = new RegularSquare(10, "10");
+		squares[10] = new RegularSquare(10, "JAIL");
 		squares[11] = new StreetSquare(11, "ST. CHARLES PLACE", 50, 150, 450, 625, 750, 1250, 10, 140, "Light Purple");
 		squares[12] = new RegularSquare(12, "12");
 		squares[13] = new StreetSquare(13, "STATES AVENUE", 50, 150, 450, 625, 750, 1250, 10, 140, "Light Purple");
@@ -78,7 +78,7 @@ public class SquareFactory{
 		squares[66] = new CommunityChestSquare(66, "COMMUNITY CHEST");
 		squares[67] = new StreetSquare(67, "NICOLLET AVENUE",5, 15, 45, 80, 125, 625, 1, 30,"Light Pink");
 		squares[68] = new StreetSquare(68, "HENNEPIN AVENUE",15, 45, 120, 240, 350, 850, 3, 60,"Light Pink");
-		squares[69] = new TestSquare(69, "BUS TICKET");
+		squares[69] = new BusTicketSquare(69, "BUS TICKET");
 		squares[70] = new TestSquare(70, "CHECKER CAB COMPANY");
 		squares[71] = new TestSquare(71, "RAILROAD");
 		squares[72] = new StreetSquare(72, "ESPLANADE AVENUE",25, 80, 225, 360, 600, 1000, 5, 90,"Light Green");
@@ -121,7 +121,7 @@ public class SquareFactory{
 		squares[109] = new StreetSquare(109, "WALLNUT STREET",225, 630, 1450, 1750, 2050, 3550, 55, 420,"Light Orange");
 		squares[110] = new CommunityChestSquare(110, "COMMUNITY CHEST");
 		squares[111] = new StreetSquare(111, "MARKET STREET",225, 630, 1450, 1750, 2050, 3550, 55, 420,"Light Orange");
-		squares[112] = new TestSquare(112, "BUS TICKET");
+		squares[112] = new BusTicketSquare(112, "BUS TICKET");
 		squares[113] = new TestSquare(113, "SEWAGE SYSTEM");
 		squares[114] = new TestSquare(114, "UTE CAB COMPANY");
 		squares[115] = new BirthdayGiftSquare(115, "Birthday Gift");

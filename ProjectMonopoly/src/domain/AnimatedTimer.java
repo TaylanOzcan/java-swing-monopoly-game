@@ -27,6 +27,8 @@ public class AnimatedTimer extends JLabel implements Drawable, PropertyListener{
 		if(source.getClass() == Bot.class) {
 			if(name.equals("timeChange")) {
 				time = (int) value;
+			}else if(name.equals("timeInitialized")) {
+				time = 0;
 			}
 		}
 	}

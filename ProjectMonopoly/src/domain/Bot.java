@@ -29,6 +29,12 @@ public class Bot implements Runnable{
 			pl.onPropertyEvent(this, name, value);
 		}
 	}
+		
+	public synchronized void notified() {
+		this.counter = 0;
+		this.time = 0;
+		publishPropertyEvent("counterInitialized", null);
+	}
 
 	public synchronized void setState(int newState) {
 		this.state = newState;

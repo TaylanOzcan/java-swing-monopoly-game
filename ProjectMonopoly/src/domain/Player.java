@@ -14,7 +14,6 @@ public class Player implements Serializable{
 	private int location;
 	private int balance;
 	private int id;
-	private boolean CurrentPlayer;
 	private ArrayList<String> vouchers;
 	private ArrayList<String> chanceCards;
 	private ArrayList<String> communityCards;
@@ -45,7 +44,7 @@ public class Player implements Serializable{
 		this.chanceCards = new ArrayList<String>(5);
 		this.communityCards = new ArrayList<String>(5);	
 		this.ownedSquares = new ArrayList<PropertySquare>();
-		this.propertyListeners = new ArrayList<PropertyListener>();
+		this.propertyListeners = new ArrayList<PropertyListener>(1);
 		this.hurricaneActivated = false;
 	}
 
@@ -110,10 +109,6 @@ public class Player implements Serializable{
 		this.reverseDirection = reverseDirection;
 	}
 
-	public boolean IsCurrent() {
-		return this.CurrentPlayer;
-	}
-
 	public boolean isInJail() {
 		return this.inJail;
 	}
@@ -124,6 +119,10 @@ public class Player implements Serializable{
 	 */
 	public void goIntoJail() {
 		this.inJail = true;
+		this.setRolledMonopoly(false);
+		this.setRolledBus(false);
+		this.setRolledDoubles(false);
+		this.setRollsAgain(false);
 		this.setLocation(JAIL_LOCATION);
 		publishPropertyEvent("wentToJail", consecutiveDoublesCount==3);
 	}
@@ -321,10 +320,12 @@ public class Player implements Serializable{
 		return true;
 	}
 
-	public void sell(int squareIndex) {
+	public void sell(int squareIndex, Player buyer, int price) {
 		PropertySquare ps = ownedSquares.get(squareIndex);
-		this.increaseBalance(ps.getPrice() / 2);
+		this.increaseBalance(price);
 		this.removeOwnedSquare(ps);
+		buyer.pay(price);
+		buyer.addOwnedSquare(ps);
 	}
 	
 	public ArrayList<String> getVouchers() {
@@ -339,15 +340,25 @@ public class Player implements Serializable{
 		return communityCards;
 	}
 	
-	public void useCard(int selection, CardActionsHandler handler) {
+	public void useCard(int selection) {
 		int cardType = selection / 100;
 		if(cardType == 1) {
-			handler.useCard(this, chanceCards.remove(selection % 100));
+			useChanceCard(selection % 100);
 		}else if(cardType == 2) {
-			handler.useCard(this, communityCards.remove(selection % 100));
+			useCommunityCard(selection % 100);
 		}else {
-			handler.useCard(this, vouchers.remove(selection % 100));
+			useVoucher(selection % 100);
 		}
+	}
+	
+	public void useVoucher(int index) {
+		CardActionsHandler.getInstance().useCard(this, vouchers.remove(index));
+	}
+	public void useCommunityCard(int index) {
+		CardActionsHandler.getInstance().useCard(this, communityCards.remove(index));
+	}
+	public void useChanceCard(int index) {
+		CardActionsHandler.getInstance().useCard(this, chanceCards.remove(index));
 	}
 	/**
 	 * @requires: Nothing
@@ -374,8 +385,8 @@ public class Player implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Player [name=" + name + ", location=" + location + ", balance=" + balance + ", CurrentPlayer="
-				+ CurrentPlayer + ", vouchers=" + vouchers + ", chanceCards=" + chanceCards + ", communityCards="
+		return "Player [name=" + name + ", location=" + location + ", balance=" + balance 
+				+ ", vouchers=" + vouchers + ", chanceCards=" + chanceCards + ", communityCards="
 				+ communityCards + ", inJail=" + inJail + ", ownedSquares=" + ownedSquares + "]";
 	}
 

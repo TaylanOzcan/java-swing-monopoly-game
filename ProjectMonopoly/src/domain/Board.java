@@ -12,19 +12,19 @@ public class Board implements Serializable{
 	private int currentPlayerIndex;
 	private int numOfPlayers;
 	private MoveHandler moveHandler;
-	private CardActionsHandler cardHandler;
 	private ActionHandler actionHandler;
 	private ArrayList<PropertyListener> propertyListeners;
+	private Bot bot;
 
 	public Board(ArrayList<String> playerNames){
 		this.numOfPlayers = playerNames.size();
 		this.players = new ArrayList<Player>(numOfPlayers);
 		this.moveHandler = new MoveHandler();
 		this.actionHandler = new ActionHandler();
-		this.cardHandler = new CardActionsHandler();
 		createPlayers(playerNames);
 		this.currentPlayerIndex = 0;
 		this.currentPlayer = players.get(0);
+		this.bot = new Bot();
 		this.propertyListeners = new ArrayList<PropertyListener>();
 	}
 
@@ -90,9 +90,7 @@ public class Board implements Serializable{
 	public ActionHandler getActionHandler() {
 		return this.actionHandler;
 	}
-	public CardActionsHandler getCardHandler() {
-		return cardHandler;
-	}
+
 	/**
 	 * @requires: Nothing
 	 * @modifies: Nothing
@@ -118,8 +116,8 @@ public class Board implements Serializable{
 		return currentPlayer.buy();
 	}
 
-	public void sell(int squareIndex) {
-		currentPlayer.sell(squareIndex);
+	public void sell(int squareIndex, Player buyer, int price) {
+		currentPlayer.sell(squareIndex, buyer, price);
 	}
 
 	/**
@@ -151,8 +149,15 @@ public class Board implements Serializable{
 	 */
 
 	public void buildHouse(int squareIndex) {
-		StreetSquare squareToBuildHouse = (StreetSquare)currentPlayer.getOwnedSquares().get(squareIndex);
-		squareToBuildHouse.build();
+		ArrayList<PropertySquare> ownedSquares = currentPlayer.getOwnedSquares();
+		StreetSquare squareToBuildHouse = (StreetSquare)ownedSquares.get(squareIndex);
+		for(PropertySquare p: ownedSquares) {
+			if(p!=squareToBuildHouse && ((StreetSquare)p).getColor().equals(squareToBuildHouse.getColor())) {
+				squareToBuildHouse.build();
+				return;
+			}
+		}
+		publishPropertyEvent("colorGroup", currentPlayer);
 	}
 
 	public void squeeze() {
@@ -276,7 +281,7 @@ public class Board implements Serializable{
 	}
 
 	public void useCard(int selection) {
-		currentPlayer.useCard(selection, cardHandler);
+		currentPlayer.useCard(selection);
 	}
 
 	public ArrayList<String> getColorsOfConstructedStreets() {
@@ -292,6 +297,14 @@ public class Board implements Serializable{
 			}
 		}
 		return colors;
+	}
+
+	public Bot getBot() {
+		return bot;
+	}
+
+	public void notifyBot() {
+		bot.notified();
 	}
 
 }

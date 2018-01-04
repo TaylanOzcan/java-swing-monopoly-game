@@ -1,11 +1,11 @@
 package domain;
 
-public class VoucherSquare extends CardDrawSquare{
+public class BusTicketSquare extends CardDrawSquare{
 
 	private int id;
 	private String name;
 	
-	public VoucherSquare(int id, String name){
+	public BusTicketSquare(int id, String name){
 		this.id = id;
 		this.name = name;
 	}

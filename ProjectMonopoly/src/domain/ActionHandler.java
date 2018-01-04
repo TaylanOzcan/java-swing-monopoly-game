@@ -57,8 +57,9 @@ public class ActionHandler implements Serializable{
 	}
 
 	public void busAction(Player currentPlayer) {
-		// give a voucher to the player
+		String voucher = CardDeck.getInstance().drawVoucher();
 		publishPropertyEvent("busAction", currentPlayer/*may be changed with the voucher given*/);
+		currentPlayer.addVoucher(voucher);
 	}
 
 	public void rollsAgainAction(Player currentPlayer) {
