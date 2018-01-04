@@ -26,3 +26,4 @@ class MonopolyBoardPanel extends JPanel{
 		g.drawImage(image, 0, 0, 1000, 1000, this);
 	}
 }
+/* s */ 
