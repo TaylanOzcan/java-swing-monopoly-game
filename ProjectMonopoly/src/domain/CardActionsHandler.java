@@ -29,7 +29,23 @@ public class CardActionsHandler implements Serializable{
 	public void useCard(Player p, String card) {
 		if(card.equals("Hurricane")) {
 			publishPropertyEvent("hurricane", p);
+		}else if (card.equals("Get Out of Jail Free!")) {
+			p.getOutOfJail();
+			
+		}else if (card.equals("Go Back (3) Spaces")){
+			p.move(-3);
+		}else if (card.equals("School Fees")) {
+			Pool.payPool(p, 150);
+		}else if (card.equals("Advance to Illinois Ave.")) {
+			p.setLocation(24);
+		}else if (card.equals("Go To Jail!")) {
+			p.goIntoJail();
+		}else if (card.equals("Business Trip")) {
+			p.addVoucher(CardDeck.getInstance().drawVoucher());
+		}else if (card.equals("Tech Bubble Bursts")) {
+			Pool.payPool(p, 150);
 		}
-	}
+		
+	}}
 
-}
+	

@@ -16,27 +16,29 @@ public class CardDeck{
 		travelVouchers = new LinkedList<String>();
 		
 		//Adding chanceCards Cards To the deck 
-		chanceCards.add("Advance to the Pay Corner");
-		chanceCards.add("Advance to the Nearest Railroad");
-		chanceCards.add("Advance to Illinois Ave");
+		//chanceCards.add("Advance to the Pay Corner");
+		//chanceCards.add("Advance to the Nearest Railroad");
+		chanceCards.add("Hurricane");
 		chanceCards.add("Get Out of Jail Free!");
-		chanceCards.add("Make General Repairs to All Your Properties");
-		chanceCards.add("Traffic Ticket!");
-		chanceCards.add("Buyer's Market!");
-		chanceCards.add("Business Trip");
-		chanceCards.add("Excellent Accounting");
-		chanceCards.add("Property Taxes");
-		chanceCards.add("Advance to Squeeze Play");
-		chanceCards.add("Get Taken for a Ride");
-		chanceCards.add("Pay Back!");
-		chanceCards.add("MARDI GRAS!");
-		chanceCards.add("Changing Lanes");
-		chanceCards.add("Changing Lanes");
-
+		//chanceCards.add("Make General Repairs to All Your Properties");
+		//chanceCards.add("Traffic Ticket!");
+		//chanceCards.add("Buyer's Market!");
+		//chanceCards.add("Business Trip");
+		//chanceCards.add("Excellent Accounting");
+		//chanceCards.add("Property Taxes");
+		//chanceCards.add("Advance to Squeeze Play");
+		//chanceCards.add("Get Taken for a Ride");
+		//chanceCards.add("Pay Back!");
+		//chanceCards.add("MARDI GRAS!");
+		//chanceCards.add("Changing Lanes");
+		//chanceCards.add("Changing Lanes");
+		chanceCards.add("Go Back (3) Spaces");
+		chanceCards.add("School Fees");
+		chanceCards.add("Advance to Illinois Ave.");
 		//communityChestCards Cards Data 
-		communityChestCards.add("Get Out of Jail Free!");
-		communityChestCards.add("Bank Error in Your Favor!");
-		communityChestCards.add("You Win 2nd Place in an Board Game Remix Design Contest!");
+		communityChestCards.add("Go To Jail!");
+		communityChestCards.add("Business Trip");
+		communityChestCards.add("Tech Bubble Bursts");
 		
 		//travelVouchers Cards Data 
 		travelVouchers.add("TRANSIT TOKEN");
