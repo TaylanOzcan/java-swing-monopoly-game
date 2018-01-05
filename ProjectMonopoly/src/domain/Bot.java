@@ -1,9 +1,15 @@
 package domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Bot implements Runnable{
+public class Bot implements Runnable, Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	public static final int INITIAL = -1;
 	public static final int HAPPY = 0;
 	public static final int SAD = 1;
@@ -18,7 +24,6 @@ public class Bot implements Runnable{
 		this.propertyListeners = new ArrayList<PropertyListener>();
 		new Thread(this).start();
 	}
-	
 
 	public void addPropertyListener(PropertyListener pl) {
 		propertyListeners.add(pl);
@@ -33,6 +38,7 @@ public class Bot implements Runnable{
 	public synchronized void notified() {
 		this.counter = 0;
 		this.time = 0;
+		if(state!=INITIAL) setState(INITIAL);
 		publishPropertyEvent("counterInitialized", null);
 	}
 

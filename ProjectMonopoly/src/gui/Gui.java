@@ -13,7 +13,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -24,7 +23,6 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import domain.ActionHandler;
-import domain.AnimatedTimer;
 import domain.AuctionSquare;
 import domain.Board;
 import domain.Bot;
@@ -278,6 +276,8 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 		//botLabel.setIcon(image);
 		//botPanel.setOpaque(false);
 		//botPanel.add(botLabel);
+		animatorPanel.addDrawable(new AnimatedText("WELCOME TO MONOPOLY"), 0);
+		animatorPanel.setVisible(true);
 
 		upperTopMenuPanel.setLayout(new BorderLayout(0, 25));
 		menuButtonsPanel.setPreferredSize(new Dimension(0,50));
@@ -417,10 +417,10 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 			Bot bot = gamePlay.getBot();
 			AnimatedBot animatedBot = new AnimatedBot(bot);
 			AnimatedTimer animatedTimer = new AnimatedTimer(bot);
+			animatorPanel.removeAllDrawables();
 			animatorPanel.addDrawable(animatedTimer);
 			animatorPanel.addDrawable(animatedBot);
-			animatorPanel.setVisible(true);
-
+			
 			gameStarted = true;
 		}else if(e.getSource() == playerNamesComboBox) {
 			for(Component c : infoPanel.getComponents()) {

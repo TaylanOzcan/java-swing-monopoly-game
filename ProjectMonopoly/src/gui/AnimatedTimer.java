@@ -1,10 +1,11 @@
-package domain;
+package gui;
 
 import java.awt.Color;
 
 import javax.swing.JLabel;
 
-import gui.Drawable;
+import domain.Bot;
+import domain.PropertyListener;
 
 public class AnimatedTimer extends JLabel implements Drawable, PropertyListener{
 
