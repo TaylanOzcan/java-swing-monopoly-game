@@ -12,8 +12,12 @@ public class ChanceSquare extends CardDrawSquare  {
 
 	@Override
 	public void getAction(Player p) {
-		String currentCard = drawCard();
-		p.addChanceCard(currentCard);
+		String chanceCard = drawCard();
+		p.addChanceCard(chanceCard);
+		if (chanceCard.equals("Advance to Illinois Ave.") || chanceCard.equals("School Fees")
+				|| chanceCard.equals("Go Back (3) Spaces")) {
+			p.useChanceCard(p.getChanceCards().size() - 1);
+		}
 		/*
 			if (currentCard == "Get Out of Jail Free!") {
 				p.addChanceCard("Get Out of Jail Free!");

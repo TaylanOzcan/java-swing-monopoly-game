@@ -14,7 +14,8 @@ public class CommunityChestSquare extends CardDrawSquare{
 	public void getAction(Player p) {
 		String communityCard = drawCard();
 		p.addCommunityCard(communityCard);
-		if (communityCard.equals("Go To Jail!")) {
+		if (communityCard.equals("Go To Jail!") || communityCard.equals("Business Trip")
+				|| communityCard.equals("Tech Bubble Bursts")) {
 			p.useCommunityCard(p.getCommunityCards().size() - 1);
 		}
 		/*

@@ -12,14 +12,14 @@ import javax.swing.*;
 
 public class AnimatorPanel extends JPanel implements Runnable{
 
-	private static final int SLEEP_TIME = 100;
+	private static final int SLEEP_TIME = 125;
 	private ArrayList<Drawable> elementsToDraw = new ArrayList<Drawable>();
 	private boolean animatorStopped = true, firstTime = true;
 	private transient BufferedImage image;
 
 	public AnimatorPanel() {
 		readImage();
-		this.setBorder(BorderFactory.createLineBorder(new Color(30,60,30), 5));
+		setBorder(BorderFactory.createLineBorder(new Color(20,80,80), 3));
 	}
 	
 	public void readImage() {

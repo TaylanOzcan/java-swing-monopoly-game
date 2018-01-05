@@ -47,6 +47,7 @@ public class CardActionsHandler implements Serializable{
 			p.setLocation(24);
 		}else if (card.equals("Business Trip")) {
 			p.addVoucher(CardDeck.getInstance().drawVoucher());
+			p.addVoucher(CardDeck.getInstance().drawVoucher());
 		}else if (card.equals("Tech Bubble Bursts")) {
 			Pool.payPool(p, 150);
 		}	

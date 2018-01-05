@@ -20,6 +20,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import domain.ActionHandler;
@@ -46,7 +47,7 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 	private static final int OUTER_LAYER = 2;
 
 	private JPanel mainPanel, boardPanel, menuPanel, menuButtonsPanel, upperTopMenuPanel,
-	gameButtonsPanel, botPanel, infoPanel, infoSelectionPanel, currentPlayerPanel,
+	gameButtonsPanel, infoPanel, infoSelectionPanel, currentPlayerPanel,
 	upperGameButtonsPanel, lowerGameButtonsPanel;
 	private JButton newGameButton, loadButton, saveButton, rollButton, sellButton,
 	buyButton, endTurnButton, buildHouseButton, exitButton, tradeButton, mortgageButton,
@@ -54,7 +55,7 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 	private JComboBox<String> playerNamesComboBox;
 	private JLabel[] playerInfoLabels, diceLabels;
 	private ArrayList<JLabel> tokenLabels;
-	private JLabel currentPlayerLabel, botLabel;
+	private JLabel currentPlayerLabel;
 	private ArrayList<String> playerNames;
 	private GamePlay gamePlay;
 	private JPanel[] tokenPlacementPanels;
@@ -220,7 +221,6 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 	public void initializeMenu(){
 		menuPanel = new JPanel();
 		menuButtonsPanel = new JPanel();
-		botPanel = new JPanel();
 		infoPanel = new JPanel();
 		infoSelectionPanel = new JPanel();
 		gameButtonsPanel = new JPanel();
@@ -229,7 +229,6 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 		currentPlayerPanel = new JPanel();
 		currentPlayerLabel = new JLabel("", SwingConstants.CENTER);
 		currentPlayerLabel.setForeground(Color.WHITE);
-		botLabel = new JLabel("", JLabel.CENTER);			
 		playerNamesComboBox = new JComboBox<String>();
 		upperTopMenuPanel = new JPanel();
 		animatorPanel = new AnimatorPanel();
@@ -252,18 +251,19 @@ public class Gui extends JFrame implements ActionListener, PropertyListener, Ser
 		diceLabels[2].setOpaque(true);
 		diceLabels[2].setBorder(LineBorder.createGrayLineBorder());
 
-		newGameButton = new JButton("New Game");
-		loadButton = new JButton("Load");
-		saveButton = new JButton("Save");saveButton.setEnabled(false);
-		exitButton = new JButton("Exit");
-		rollButton = new JButton("Play Turn");rollButton.setEnabled(false);
-		endTurnButton = new JButton("End Turn");endTurnButton.setEnabled(false);
-		buyButton = new JButton("Buy Title Deed");buyButton.setEnabled(false);
-		buildHouseButton = new JButton("Build House");buildHouseButton.setEnabled(false);
-		sellButton = new JButton("Sell Title Deed");sellButton.setEnabled(false);
-		mortgageButton = new JButton("Test / Move Manually");mortgageButton.setEnabled(false);
-		tradeButton = new JButton("Test / Get Hurricane Card");tradeButton.setEnabled(false);
-		useCardButton = new JButton("Use Card");useCardButton.setEnabled(false);
+		Border border = BorderFactory.createLineBorder(new Color(20,80,80), 2);
+		newGameButton = new JButton("New Game");newGameButton.setBorder(border);
+		loadButton = new JButton("Load");loadButton.setBorder(border);loadButton.setBorder(border);
+		saveButton = new JButton("Save");saveButton.setEnabled(false);saveButton.setBorder(border);
+		exitButton = new JButton("Exit");exitButton.setBorder(border);
+		rollButton = new JButton("Play Turn");rollButton.setEnabled(false);rollButton.setBorder(border);
+		endTurnButton = new JButton("End Turn");endTurnButton.setEnabled(false);endTurnButton.setBorder(border);
+		buyButton = new JButton("Buy Title Deed");buyButton.setEnabled(false);buyButton.setBorder(border);
+		buildHouseButton = new JButton("Build House");buildHouseButton.setEnabled(false);buildHouseButton.setBorder(border);
+		sellButton = new JButton("Sell Title Deed");sellButton.setEnabled(false);sellButton.setBorder(border);
+		mortgageButton = new JButton("Test / Move Manually");mortgageButton.setEnabled(false);sellButton.setBorder(border);
+		tradeButton = new JButton("Test / Get Hurricane Card");tradeButton.setEnabled(false);tradeButton.setBorder(border);
+		useCardButton = new JButton("Use Card");useCardButton.setEnabled(false);useCardButton.setBorder(border);
 
 		menuButtonsPanel.setLayout(new GridLayout(0, 4, 25, 0));
 		menuButtonsPanel.add(newGameButton);

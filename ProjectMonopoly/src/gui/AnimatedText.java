@@ -38,10 +38,10 @@ public class AnimatedText extends JLabel implements Drawable, PropertyListener{
 		int x, y;
 		
 		if(this.getWidth() + getX() > 600) directionX = false;
-		else if(getX() < 10) directionX = true;
+		else if(getX() < 5) directionX = true;
 		
 		if(this.getHeight() + getY() > 160) directionY = false;
-		else if(getY() < 5) directionY = true;
+		else if(getY() < 0) directionY = true;
 		
 		if(directionX) x = getX() + 5;
 		else x = getX() - 5;

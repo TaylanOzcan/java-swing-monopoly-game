@@ -36,6 +36,7 @@ public class CardDeck{
 		chanceCards.add("School Fees");
 		chanceCards.add("Advance to Illinois Ave.");
 		//communityChestCards Cards Data 
+		communityChestCards.add("Get Out of Jail Free!");
 		communityChestCards.add("Go To Jail!");
 		communityChestCards.add("Business Trip");
 		communityChestCards.add("Tech Bubble Bursts");
@@ -65,7 +66,7 @@ public class CardDeck{
 	}
 	
 	public String drawVoucher() {
-		return travelVouchers.remove();
+		return travelVouchers.get((int) (Math.random()*4));
 	}
 
 }
